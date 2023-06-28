@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="abroad-info-wrap">
+
+                <!-- 페이지별 타이틀 -->
+                <div class="page-title"><span>유학 정보</span></div>
+
+                <!-- 스크롤 베뉴 -->
+                <div class="scroll-menu">
+                    <ul>
+                        <li class="focus">처음</li>
+                        <li>과정 소개</li>
+                        <li>추천 대학</li>
+                        <li>진학 사례</li>
+                        <i class="underline"></i>
+                    </ul>
+                </div>
+
+                <div class="content-wrap">
+                    <div>
+                        <div class="info-area">
+                            <div class="part one">
+                                <!-- 처음 -->
+                                <div class="img-area">
+                                    <img src="/tourhelperUser/images/part1.jpg" onerror="this.style.background='var(--light-grey2)';"/>
+                                </div>
+                            </div>
+                            <div class="part two">
+                                <!-- 과정 소개 -->
+                                <div class="img-area">
+                                    <img src="/tourhelperUser/images/part2.jpg" onerror="this.style.background='var(--light-grey2)';"/>
+                                </div>
+                            </div>
+                            <div class="part three">
+                                <!-- 추천 대학 -->
+                                <div>
+                                    <div class="title">
+                                        <span>추천 대학</span>
+                                        <div>
+                                            <span>더보기</span>
+                                            <i></i>
+                                        </div>
+                                    </div>
+                                    <div class="list-wrap swiper">
+                                        <div id="school-list-swiper-div" class="list-area swiper-wrapper">
+                                            <!--<div class="box swiper-slide">
+                                                <div class="img-area"><img src="/tourhelperUser/images/sample_school.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>경인여대경인여대경인여대경인여대경인여대&nbsp;(2년제&nbsp;/&nbsp;5학기)</span>
+                                                </div>
+                                            </div>
+                                            <div class="box swiper-slide">
+                                                <div class="img-area"><img src="/tourhelperUser/images/sample_school.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>경인여대&nbsp;(2년제&nbsp;/&nbsp;5학기)</span>
+                                                </div>
+                                            </div>
+                                            <div class="box swiper-slide">
+                                                <div class="img-area"><img src="/tourhelperUser/images/sample_school.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>경인여대&nbsp;(2년제&nbsp;/&nbsp;5학기)</span>
+                                                </div>
+                                            </div>
+                                            <div class="box swiper-slide">
+                                                <div class="img-area"><img src="/tourhelperUser/images/sample_school.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>경인여대&nbsp;(2년제&nbsp;/&nbsp;5학기)</span>
+                                                </div>
+                                            </div>
+                                            <div class="box swiper-slide">
+                                                <div class="img-area"><img src="/tourhelperUser/images/sample_school.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>경인여대&nbsp;(2년제&nbsp;/&nbsp;5학기)</span>
+                                                </div>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="arrow-prev-area"><i class="prev"></i></div>
+                                    <div class="arrow-next-area"><i class="next"></i></div>
+                                </div>
+                            </div>
+                            <div class="part four">
+                                <!-- 진학 사례 -->
+                                <div class="img-area">
+                                    <img src="" onerror="this.style.background='var(--light-grey2)';"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-area">
+                    <button class="btn-yellow" onclick="location.href='/consult'">유학 상담</button>
+                    <button class="btn-red" onclick="location.href='/abroad/list'">신청하러 가기</button>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <!-- 반응형 이미지 슬라이드 script -->
+            <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+            <script>
+                $(document).ready(function (){
+                    goPage();
+                });
+
+                $(window).resize(function() {
+                    goPage();
+                });
+
+                function goPage(){
+                    if(matchMedia("screen and (max-width: 1199px)").matches){
+                        // 추천대학 더보기
+                        $('.abroad-info-wrap .content-wrap .part.three .title > div i').on('click', function (){
+                            location.href='/abroad/list'
+                        });
+                    }
+                    if(matchMedia("screen and (min-width: 1200px)").matches){
+                        // 추천대학 더보기
+                        $('.abroad-info-wrap .content-wrap .part.three .title > div').on('click', function (){
+                            location.href='/abroad/list'
+                        });
+                    }
+                }
+
+                getSchoolList();
+
+                function getSchoolList() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/common/school",
+                        async:false,
+                        data:{
+                            "size":4,
+                            "page":0
+                        },
+                        success:function(data){
+                            let list = data.content;
+                            let sTag = '';
+                            if(data!=null && list.length!=0) {
+                                let num = 1;
+                                for(num=1; num<5; num++) {
+                                    for(i=0; i<list.length; i++) {
+                                        let imgUrl = '/tourhelperUser/images/sample_school.jpg';
+                                        if(list[i].thumbnailImage!=null && list[i].thumbnailImage.url!='') {
+                                            imgUrl = list[i].thumbnailImage.url;
+                                        }
+                                        let details = list[i].courseDetail.split('|');
+                                        let terms = '';
+                                        details.forEach(function (arg) {
+                                            let args = arg.split('/');
+                                            terms += args[0] + '/'
+                                        });
+                                        terms = terms.substring(0, terms.length - 1);
+
+                                        sTag += '<div class="box swiper-slide">' +
+                                            '<div class="img-area"><img src="'+imgUrl+'" onerror="this.style.background=\'var(--light-grey2)\'"  onclick="location.href=\'/abroad/detail?schoolSeq='+list[i].firstCourseSeq+'\'" ></div>' +
+                                            '<div class="title" style="cursor: pointer;" onclick="location.href=\'/abroad/detail?schoolSeq='+list[i].firstCourseSeq+'\'">' +
+                                            '<span>'+list[i].firstCourseTitle+'&nbsp;('+terms+')</span>' +
+                                            '</div>' +
+                                            '</div>';
+
+                                        num++;
+                                    }
+                                }
+                            }
+                            $("#school-list-swiper-div").html(sTag);
+
+                        }
+                    });
+                }
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

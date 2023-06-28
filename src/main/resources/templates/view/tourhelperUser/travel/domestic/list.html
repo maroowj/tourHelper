@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="travel-list-wrap domestic">
+
+                <!-- 페이지별 타이틀 -->
+                <div class="page-title"><span>국내 여행정보</span></div>
+
+                <div class="content-wrap">
+                    <div>
+                        <div class="search-wrap">
+                            <input id="keyword" class="search nostyle" type="text" placeholder="검색어 입력"/>
+                            <div id="btn-search" class="btn-search"><i></i></div>
+                        </div>
+                        <div id="tour-list-div" class="list-wrap">
+                            <!--<div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">여행정보 제목 여행정보 제목 여행정보 제목 여행정보 제목 여행정보 제목 여행정보 제목</span>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">여행정보 제목</span>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">여행정보 제목</span>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">여행정보 제목</span>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">여행정보 제목</span>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">여행정보 제목</span>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">여행정보 제목</span>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script>
+                let totalPages;
+                let page = 1;
+                let size = 8;
+                let country = "대한민국"; // 미얀마 여행 or 국내 여행 페이지에 따라 '미얀마' 또는 '대한민국' 로 변수 값만 변경
+                let keyword;
+
+                getTourList();
+
+                $("#keyword").on("keydown", function(e) {
+                    if(e.keyCode==13) {
+                        $("#btn-search").click();
+                    }
+                });
+
+                $("#btn-search").on("click", function() {
+                    page=1;
+                    getTourList();
+                });
+
+                function getTourList() {
+                    keyword = $("#keyword").val();
+                    $.ajax({
+                        type: "get",
+                        url: "/api/common/tour",
+                        async:false,
+                        data: {
+                            "size": size,
+                            "page": page-1,
+                            "country": country,
+                            "type": "courseTitle",
+                            "keyword": keyword
+                        },
+                        success: function (data) {
+                            totalPages = data.totalPages;
+                            let list = data.content;
+                            let tag = '';
+                            if (list != null && list.length != 0) {
+                                for (i = 0; i < list.length; i++) {
+                                    let imgUrl = '/tourhelperUser/images/sample_trip.jpg';
+                                    if (list[i].thumbnailImage != null && list[i].thumbnailImage.url != '') {
+                                        imgUrl = list[i].thumbnailImage.url;
+                                    }
+                                    tag += '<div class="box" seq="' + list[i].secondCourseSeq + '">' +
+                                        '<div class="img-area"><img src="' + imgUrl + '" onerror="this.style.background=\'var(--light-grey2)\'"/></div>' +
+                                        '<span class="title">'+list[i].secondCourseTitle+'</span>' +
+                                        '</div>';
+                                }
+                            }
+                            if(page==1) {
+                                $("#tour-list-div").html(tag);
+                            }else if(page>1) {
+                                $("#tour-list-div").append(tag);
+                            }
+
+                            $('.travel-list-wrap.domestic .list-wrap .box').on('click', function () {
+                                let tourSeq = $(this).attr("seq");
+                                location.href = '/domestic/tour/detail?tourSeq='+tourSeq;
+                            });
+                        }
+                    });
+                }
+
+                // 무한 스크롤
+                window.onscroll = function(e) {
+                    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                        setTimeout(function(){
+                            page++;
+                            if(page<=totalPages) {
+                                getTourList();
+                            }
+                        }, 500)
+                    }
+                }
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

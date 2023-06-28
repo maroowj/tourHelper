@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="abroad-detail-wrap">
+
+                <!-- 페이지별 타이틀 -->
+                <div class="page-title"><span>유학 상세</span></div>
+
+
+                <div class="university-area">
+                    <div>
+                        <div class="university-info-wrap">
+                            <div class="img-area">
+                                <!-- .img-box에 이미지 삽입 예)background-image: url('image.jpg') -->
+                                <div class="img-box"></div>
+                            </div>
+                            <div class="info-area">
+                                <p id="schoolTitle" class="name"></p>
+                                <div>
+                                    <span>교육과정</span>
+                                    <span id="semester"></span>
+                                </div>
+                                <div>
+                                    <span>기간</span>
+                                    <span id="period"></span>
+                                </div>
+                                <div>
+                                    <span>등록금</span>
+                                    <!-- 해당 없을 경우 '없음' 표시 -->
+                                    <span class="scholarship"><span id="tuition" class="amount">3000000</span><!--<span class="unit">원</span>--></span>
+                                </div>
+                                <div>
+                                    <span>필요서류</span>
+                                    <!-- 해당 없을 경우 '없음' 표시 -->
+                                    <span id="document"></span>
+                                </div>
+                                <div>
+                                    <span>추가비용</span>
+                                    <!-- 해당 없을 경우 '없음' 표시 -->
+                                    <span id="optionalCharge"></span>
+                                </div>
+                                <div>
+                                    <span>학위유학</span>
+                                    <!-- 해당 없을 경우 '없음' 표시 -->
+                                    <span id="degree"></span>
+                                </div>
+                                <div>
+                                    <span>특화</span>
+                                    <!-- 해당 없을 경우 '없음' 표시 -->
+                                    <span id="specialization"></span>
+                                </div>
+                                <div>
+                                    <span>주소</span>
+                                    <!-- 해당 없을 경우 '없음' 표시 -->
+                                    <span id="address"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="btn-area">
+                    <button id="btnJoin" class="btn-red">신청하기</button>
+                </div>
+
+
+                <div class="content-wrap">
+                    <div id="description">
+<!--                        <img src="/tourhelperUser/images/sample_country.jpg" onerror="this.style.backgroundColor='var(&#45;&#45;light-grey2)';"/>-->
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script th:inline="javascript">
+                getSchoolDetails();
+                function getSchoolDetails() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/common/school/detail",
+                        data:{
+                            "schoolSeq": [[${param.schoolSeq}]][0]
+                        },
+                        success:function(data){
+                            $("#schoolTitle").text(data.firstCourseTitle);
+                            let details = data.courseDetail.split("|");
+
+                            let semester = '';
+                            details.forEach(function (arg) {
+                                let args = arg.split('/');
+                                semester += args[0] + ' / '
+                            });
+                            semester = semester.substring(0, semester.length-3);
+                            $("#semester").text(semester);
+
+                            let period = '';
+                            details.forEach(function (arg) {
+                                let args = arg.split('/');
+                                period += args[1] + ' / '
+                            });
+                            period = period.substring(0, period.length-3);
+                            $("#period").text(period);
+
+                            let tuition = '';
+                            details.forEach(function (arg) {
+                                let args = arg.split('/');
+                                tuition += fcomma(uncomma(args[2])) + '원 / ';
+                                if(uncomma(args[2])==0) {
+                                    tuition = '없음 / ';
+                                }
+                            });
+                            tuition = tuition.substring(0, tuition.length-3);
+                            $("#tuition").text(tuition);
+                            let document = data.terms1;
+                            if(document==null || document=='' || document==undefined) {
+                                document = "없음";
+                            }
+                            $("#document").text(document);
+
+                            // 추가 비용
+                           let optionalCharge = '';
+                           if(data.courseType.fare!=null) {
+                               optionalCharge += '교통비: ' + fcomma(uncomma(data.courseType.fare)) + '원, ';
+                           }
+                            if(data.courseType.dormitory!=null) {
+                                optionalCharge += '기숙사비: ' + fcomma(uncomma(data.courseType.dormitory)) + '원, ';
+                            }
+                            if(data.courseType.textbook!=null) {
+                                optionalCharge += '교재비: ' + fcomma(uncomma(data.courseType.textbook)) + '원, ';
+                            }
+                            if(data.courseType.insurance!=null) {
+                                optionalCharge += '보혐료: ' + fcomma(uncomma(data.courseType.insurance)) + '원, ';
+
+                            }
+                            optionalCharge = optionalCharge.substring(0, optionalCharge.length-2);
+                            $("#optionalCharge").text(optionalCharge);
+
+                            let degree = data.terms2;
+                            if(degree==null || degree=="") {
+                                degree = "없음";
+                            }
+                            $("#degree").text(degree);
+
+                            let specialization = data.terms3;
+                            if(specialization==null || specialization=='') {
+                                specialization = "없음";
+                            }
+                            $("#specialization").text(specialization);
+
+                            if(data.thumbnailImage!=null) {
+                                $(".img-box").css("background-image", "url("+data.thumbnailImage.url+")");
+                            }
+
+                            $("#address").text(data.address);
+
+                            //console.log(data);
+                            let videoUrl = data.terms4;
+                            let youtubeUrl = "<iframe id='player' type='text/html' width='853' height='480'  style='width: 100%; position: relative; max-width: 853px;' src='"+ videoUrl +"' frameborder='0'></iframe><br/><br/><br/>";
+                            if(data.terms4 != "")
+                                $("#description").html(youtubeUrl+data.description);
+                            else
+                                $("#description").html(data.description);
+
+                        },
+                        error: function (request, status, error) {
+                            alert("로그인이 필요합니다.");
+                            location.href = "/login"
+                        }
+                    });
+                }
+
+                $("#btnJoin").on("click", function(){
+                    location.href='/abroad/apply?schoolSeq='+[[${param.schoolSeq}]][0];
+                });
+
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

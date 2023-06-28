@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<th:block th:fragment="leftMenuFragment">
+
+    <div class="leftMenu-inner">
+        <div class="logo-wrap">
+            <div class="img">
+                <a href="/admin">
+                    <img src="/tourhelperUser/images/logo_white.svg" alt="투어도우미">
+                </a>
+            </div>
+        </div>
+        <ul class="menu-area">
+            <!--<li class="menu1"><a href="/admin/company" title="업체관리">업체관리</a></li>-->
+            <li class="menu1"><a href="/admin/first-course" title="학교 관리">학교 관리</a></li>
+            <li class="menu2"><a href="/admin/second-course" title="여행지 관리">여행지 관리</a></li>
+            <li class="menu3"><a href="/admin/reservation/tour" title="여행지 예약관리">여행지 예약관리</a></li>
+            <li class="menu4"><a href="/admin/reservation" title="유학관리">유학 관리</a></li>
+            <li class="menu5"><a href="/admin/E74" title="E-7-4 자동배점 신청관리">E-7-4 자동배점 신청관리</a></li>
+            <li class="menu6"><a href="/admin/consult" title="상담신청 관리">상담신청 관리</a></li>
+            <li class="menu7"><a href="/admin/member" title="회원 관리">회원 관리</a></li>
+            <!--<li class="menu5"><a href="/admin/banner" title="배너관리">배너관리</a></li>-->
+            <!--<li class="menu6"><a href="/admin/unit/cost" title="부대비용">부대비용</a></li>-->
+        </ul>
+    </div>
+
+</th:block>
+
+</html>

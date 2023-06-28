@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="myPage-wrap">
+
+                <!-- 페이지별 타이틀 -->
+                <div class="page-title"><span>마이페이지</span></div>
+
+                <div class="content-wrap">
+                    <div>
+                        <div class="part profile">
+                            <div>
+                                <div class="profile-wrap">
+                                    <div class="img-area">
+                                        <img id="profileImage" src="/tourhelperUser/images/black_user_profile.svg"/>
+                                    </div>
+                                    <!--                                    <div class="btn-addPhoto"><i class="album"></i></div>
+                                                                        <input class="photo" type="file" accept=".jpeg, .jpg, .png, .gif" hidden/>-->
+                                </div>
+                                <div class="info-wrap">
+                                    <div>
+                                        <!-- sns로그인 계정이 카카오일 경우 .kakao클래스 추가 / 페이스북일 경우 .facebook 추가 -->
+                                        <span id="platform"></span>
+                                        <span id="name" class="name"></span>
+                                        <span class="btn-edit" onclick="location.href='/profile'"></span>
+                                    </div>
+                                    <span id="tel" class="tel"></span>
+                                </div>
+                                <div class="interest-wrap">
+                                    <div class="int1-area">
+                                        <div>관심분야1</div>
+                                        <div id="preference1"></div>
+                                    </div>
+                                    <div class="int2-area">
+                                        <div>관심분야2</div>
+                                        <div id="preference2"></div>
+                                    </div>
+                                </div>
+                                <div class="country-wrap">
+                                    <span>국적</span>
+                                    <span id="country"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-wrap">
+                            <div class="part consult">
+                                <div class="title-area">
+                                    <span>상담 내역</span>
+                                    <span class="go-consult">상담 바로가기</span>
+                                </div>
+                                <div id="category-list" class="message-area">
+                                    <!-- 상담내역은 최대 5개까지 노출 -->
+                                    <!-- 새로운(읽지 않은) 매세지 내역이 없을 경우 span 태그 내 .count-red 클래스 없애기 -->
+                                    <!-- 메세지 내역이 100개 이상일 경우 '100+' 표시 -->
+                                    <!-- 메세지 내역이 없는 경우 .no-list만 나타나기 -->
+                                    <div id="no-category" class="no-list">메세지 내역이 없습니다.</div>
+                                    <div class="message-wrap">
+                                        <div class="top-wrap">
+                                            <div><span>퇴직금</span><span class="count-red">100+</span></div>
+                                            <span>오후 2:10</span>
+                                        </div>
+                                        <div class="bottom-wrap">
+                                            <span>상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                        </div>
+                                    </div>
+                                        <div class="message-wrap">
+                                            <div class="top-wrap">
+                                                <div><span>퇴직금</span><span class="count-red">5</span></div>
+                                                <span>어제</span>
+                                            </div>
+                                            <div class="bottom-wrap">
+                                                <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                            </div>
+                                        </div>
+                                        <div class="message-wrap">
+                                            <div class="top-wrap">
+                                                <div><span>퇴직금</span><span class=""></span></div>
+                                                <span>2022-10-11</span>
+                                            </div>
+                                            <div class="bottom-wrap">
+                                                <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                            </div>
+                                    </div>
+                                    <div class="message-wrap">
+                                        <div class="top-wrap">
+                                            <div><span>퇴직금</span><span class=""></span></div>
+                                            <span>2022-10-11</span>
+                                        </div>
+                                        <div class="bottom-wrap">
+                                            <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                        </div>
+                                    </div>
+                                    <div class="message-wrap">
+                                        <div class="top-wrap">
+                                            <div><span>퇴직금</span><span class=""></span></div>
+                                            <span>2022-10-11</span>
+                                        </div>
+                                        <div class="bottom-wrap">
+                                            <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="part abroad">
+                                <div class="title-area">
+                                    <span>유학 정보</span>
+                                    <span id="study-modal-open">상세보기</span>
+                                </div>
+                                <div id="study-div" class="abroad-info-area">
+                                    <div class="no-list">유학 내역이 없습니다.</div>
+                                    <div class="info-wrap">
+                                        <div class="flex-wrap university">
+                                            <span>경인여자대학교경인여자대학교경인여자대학교</span>
+                                            <span class="state-green">2년제&nbsp;/&nbsp;4학기</span>
+                                        </div>
+                                        <div class="flex-wrap">
+                                            <span>진행단계</span>
+                                            <span class="state-red">신청</span>
+                                        </div>
+                                    </div>
+                                    <div class="img-wrap">
+                                        <!-- 진행단계: step1 ~ step12 까지 단계별 이미지 상이 → 12단계의 경우 .step12로 클래스 기재 -->
+                                        <div class="step1"></div>
+                                    </div>
+                                    <!--<div class="btn-detail d-none"><span>진행단계 자세히 보기</span></div>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="part company">
+                            <div class="title-area">
+                                <span>취직 정보</span>
+                                <div class="btn-add"><span>일자리 추가</span></div>
+                            </div>
+                            <div id="employ-div" class="add-employ-area">
+                                <!--<div class="no-list">취직 내역이 없습니다.</div>
+                                <div class="employ-wrap">
+                                    <div class="info-wrap">
+                                        <div class="pc-layout">
+                                            <div>
+                                                <div class="name-wrap">
+                                                    <span class="name">회사이름회사이름회사이름회사이름회사이름회사이름</span>
+                                                    <span class="state-green-line">재직중</span>
+                                                </div>
+                                                <div class="period-wrap">
+                                                    <p>총 재직기간</p>
+                                                    <div><span class="date">365</span>일&nbsp;(<span class="year">1</span>년)</div>
+                                                </div>
+                                            </div>
+                                            <div class="btn-area">
+                                                <button class="edit">편집하기</button>
+                                            </div>
+                                        </div>
+                                        <div class="date-wrap">
+                                            <span class="state-yellow">입사</span>
+                                            &lt;!&ndash; 정해진 일자가 없는 경우 '-' 표시 &ndash;&gt;
+                                            <span class="content">
+                                            <span class="year">0000</span>년&nbsp;<span class="month">00</span>월&nbsp;<span class="date">00</span>일
+                                            </span>
+                                        </div>
+                                        <div class="date-wrap">
+                                            <span class="state-yellow">퇴사</span>
+                                            &lt;!&ndash; 정해진 일자가 없는 경우 '-' 표시 &ndash;&gt;
+                                            <span class="content">-</span>
+                                        </div>
+                                        <div class="salary-wrap">
+                                            <span class="state-green">연봉</span>
+                                            <span class="content"><span class="amount">0</span>원</span>
+                                        </div>
+                                    </div>
+                                    <div class="btn-area">
+                                        <button class="edit btn-green-sub2">편집하기</button>
+                                    </div>
+                                </div>-->
+                                <!--<div class="employ-wrap">
+                                    <div class="info-wrap">
+                                        <div class="pc-layout">
+                                            <div>
+                                                <div class="name-wrap">
+                                                    <span class="name">회사이름회사이름회사이름회사이름회사이름회사이름</span>
+                                                    <span class="state-green-line">재직중</span>
+                                                </div>
+                                                <div class="period-wrap">
+                                                    <p>총 재직기간</p>
+                                                    <div><span class="date">365</span>일&nbsp;(<span class="year">1</span>년)</div>
+                                                </div>
+                                            </div>
+                                            <div class="btn-area">
+                                                <button class="edit">편집하기</button>
+                                            </div>
+                                        </div>
+                                        <div class="date-wrap">
+                                            <span class="state-yellow">입사</span>
+                                            &lt;!&ndash; 정해진 일자가 없는 경우 '-' 표시 &ndash;&gt;
+                                            <span class="content">
+                                            <span class="year">0000</span>년&nbsp;<span class="month">00</span>월&nbsp;<span class="date">00</span>일
+                                        </span>
+                                        </div>
+                                        <div class="date-wrap">
+                                            <span class="state-yellow">퇴사</span>
+                                            &lt;!&ndash; 정해진 일자가 없는 경우 '-' 표시 &ndash;&gt;
+                                            <span class="content">-</span>
+                                        </div>
+                                        <div class="salary-wrap">
+                                            <span class="state-green">연봉</span>
+                                            <span class="content"><span class="amount">0</span>원</span>
+                                        </div>
+                                    </div>
+                                    <div class="btn-area">
+                                        <button class="edit btn-green-sub2">편집하기</button>
+                                    </div>
+                                </div>-->
+                            </div>
+                            <div class=""><span>과거 취직 정보 모두보기</span></div>
+                        </div>
+
+                        <div class="part apply">
+                            <div class="title-area">
+                                <span>신청 내역</span>
+                            </div>
+                            <div class="apply-area">
+                                <div id="apply-no-list" class="no-list">신청 내역이 없습니다.</div>
+                                <div id="apply-list" class="info-wrap">
+                                    <!--신청내역 리스트-->
+                                    <!--<div class="list">
+                                        &lt;!&ndash;타이틀&ndash;&gt;
+                                        <span class="category state-red">비즈니스</span><span class="state-red f-left ml10">신청</span>
+                                        <div class="flex-wrap mt10">
+                                            <span class="title bold">신청테마: 송도센트럴파크 수상택시</span>
+                                        </div>
+                                        &lt;!&ndash;신청내용&ndash;&gt;
+                                        <div class="content mt05">2022년 12월 1일, 2명</div>
+                                    </div>
+                                    <div class="list">
+                                        &lt;!&ndash;타이틀&ndash;&gt;
+                                        <span class="category state-red">미얀마 여행</span><span class="state-green f-left ml10">참석</span>
+                                        <div class="flex-wrap mt10">
+                                            <span class="title bold">신청테마: 송도센트럴파크 수상택시</span>
+                                        </div>
+                                        &lt;!&ndash;신청내용&ndash;&gt;
+                                        <div class="content mt05">2022년 12월 1일, 2명</div>
+                                    </div>
+                                    <div class="list">
+                                        &lt;!&ndash;타이틀&ndash;&gt;
+                                        <span class="category state-red">국내 여행</span><span class="state-grey f-left ml10">불참석</span>
+                                        <div class="flex-wrap mt10">
+                                            <span class="title bold">신청테마: 송도센트럴파크 수상택시</span>
+                                        </div>
+                                        &lt;!&ndash;신청내용&ndash;&gt;
+                                        <div class="content mt05">2022년 12월 1일, 2명</div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script>
+                let studySeq;
+                let resumeSeq;
+                let saveWorking;
+                let editWorking;
+                let file1;
+                let file2;
+                let file3;
+                let file4;
+                let file5;
+                let file6;
+                let file7;
+                let file8;
+                let file9;
+                let file10
+                let attached1;
+                let attached2;
+                let attached3;
+                let attached4;
+                let attached5;
+                let attached6;
+                let attached7;
+                let attached8;
+                let attached9;
+                let attached10;
+                let arrFileNumber;
+
+                let src;
+
+                getMemberDetails();
+                getStudy();
+                getResumeMain();
+
+                // 과거 취직 정보 모두 보기
+                $('.myPage-wrap .content-wrap .part.company > div:last-child span').on('click', function () {
+                    getResumeModal();
+                });
+                // 일자리 추가
+                $('.myPage-wrap .content-wrap .part.company .title-area > div.btn-add span').on('click', function(){
+                    $("#btnSaveResume").off("click").on("click", function() {
+                        saveResume();
+                        // $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+                $('#companyHistoryModal .modal-wrap > .btn-add').on('click', function(){
+                    $("#btnSaveResume").off("click").on("click", function() {
+                        saveResume();
+                        // $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+                // 일자리 편집
+                $('.myPage-wrap .content-wrap .part.company .btn-area button').on('click', function () {
+                    resumeSeq = $(this).attr("rSeq");
+                    getResumeDetails();
+                    $("#btnEditResume").off("click").on("click", function() {
+                        updateResume();
+                        // $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+
+                // 사용자 정보 불러오기
+                function getMemberDetails() {
+                    $.ajax({
+                        type: "get",
+                        url: "/api/user/member",
+                        success: function (data) {
+                            let profileImage = "/tourhelperUser/images/black_user_profile.svg";
+                            if (data.profileImage != null && data.profileImage != "") {
+                                profileImage = data.profileImage;
+                            }
+                            $("#profileImage").attr("src", profileImage);
+                            $("#platform").addClass(data.platform);
+                            $("#name").text(data.name);
+                            $("#tel").text(data.tel);
+                            let preference1 = "-";
+                            let preference2 = "-";
+                            if (data.preference1 != null && data.preference1 != "") {
+                                preference1 = data.preference1;
+                            }
+                            if (data.preference2 != null && data.preference2 != "") {
+                                preference2 = data.preference2;
+                            }
+                            $("#preference1").text(preference1);
+                            $("#preference2").text(preference2);
+                            let country = "-";
+                            if (data.country != null && data.country != "") {
+                                country = data.country;
+                            }
+                            $("#country").text(country);
+                        },
+                        error: function (request, status, error) {
+                            alert("로그인이 필요합니다.");
+                            location.href = "/login"
+                        }
+                    });
+                }
+
+
+                // 유학 정보 불러오기
+                function getStudy() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/study",
+                        async:false,
+                        success:function (data) {
+                            let sTag = '';
+                            if(data!=null && data.length!=0) {
+                                let idx = (data.length)-1;
+                                studySeq = data[idx].studySeq;
+                                $("#study-modal-open").attr("seq", data[idx].studySeq);
+                                let strStep = '';
+                                let step = data[idx].step;
+                                if(step==0) {
+                                    strStep = '신청';
+                                    step = 1;
+                                }else if(step==1) {
+                                    strStep = '서류제출'
+                                }else if(step==2) {
+                                    strStep = '심사'
+                                }else if(step==3) {
+                                    strStep = '면접'
+                                }else if(step==4) {
+                                    strStep = '입학등록 청구서'
+                                }else if(step==5) {
+                                    strStep = '2차 납부'
+                                }else if(step==6) {
+                                    strStep = '비자'
+                                }else if(step==7) {
+                                    strStep = '표준 입학허가서'
+                                }else if(step==8) {
+                                    strStep = '납부'
+                                }else if(step==9) {
+                                    strStep = '입국'
+                                }else if(step==10) {
+                                    strStep = '입학'
+                                }else if(step==11) {
+                                    strStep = '졸업'
+                                }else if(step==12) {
+                                    strStep = '취직'
+                                }
+
+                                sTag += '<div class="info-wrap">' +
+                                        '<div class="flex-wrap university">' +
+                                        '<span>'+data[idx].school+'</span>' +
+                                        '<span class="state-green">'+data[idx].period+'</span>' +
+                                        '</div>' +
+                                        '<div class="flex-wrap">' +
+                                        '<span>진행단계</span>' +
+                                        '<span class="state-red">'+strStep+'</span>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="img-wrap">' +
+                                        '<div class="step'+step+'"></div>' +
+                                        '</div>';
+                            }else {
+                                sTag += '<div class="no-list">유학 내역이 없습니다.</div>';
+                                $("#study-modal-open").addClass('d-none');
+                            }
+                            $("#study-div").html(sTag);
+
+                            $('.myPage-wrap .part.abroad .title-area > span:nth-child(2)').on('click', function(){
+                                let studySeq = $(this).attr("seq");
+                                getStudyDetails(studySeq);
+                                attachFile();
+                            });
+                        },
+                        error: function (request, status, error) {
+                            toastModal("유학 정보를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                // 유학 상세 불러오기
+                function getStudyDetails(studySeq) {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/study/"+studySeq,
+                        async:false,
+                        success:function(data) {
+                            console.log(data);
+                            if(data.activeFileNumber!=null && data.activeFileNumber.length!=0) {
+                                arrFileNumber = data.activeFileNumber.split("|");
+                            }
+                            let strStep = '';
+                            let step = data.step;
+                            if(step==0) {
+                                strStep = '신청';
+                                step = 1;
+                            }else if(step==1) {
+                                strStep = '서류제출'
+                            }else if(step==2) {
+                                strStep = '심사'
+                            }else if(step==3) {
+                                strStep = '면접'
+                            }else if(step==4) {
+                                strStep = '입학등록 청구서'
+                            }else if(step==5) {
+                                strStep = '2차 납부'
+                            }else if(step==6) {
+                                strStep = '비자'
+                            }else if(step==7) {
+                                strStep = '표준 입학허가서'
+                            }else if(step==8) {
+                                strStep = '납부'
+                            }else if(step==9) {
+                                strStep = '입국'
+                            }else if(step==10) {
+                                strStep = '입학'
+                            }else if(step==11) {
+                                strStep = '졸업'
+                            }else if(step==12) {
+                                strStep = '취직'
+                            }
+                            $("#strStep").text(strStep);
+                            if(data.document!=null && data.document!="") {
+                                $("#document").text(data.document);
+                                $("#document-script").removeClass("d-none");
+                                $(".fileScript").prop("disabled", true);
+                                $(".fileScript").removeClass("complete");
+                                if(arrFileNumber!=null && arrFileNumber.length!=0) {
+                                    for(i=0; i<arrFileNumber.length; i++) {
+                                        let activeFileNumber = Number(arrFileNumber[i]);
+                                        $("#fileName"+activeFileNumber).prop("disabled", false);
+                                        $("#fileName"+activeFileNumber).addClass("complete");
+                                    }
+                                }
+                            }else {
+                                $("#document-script").addClass("d-none");
+                            }
+                            // activeSubmitBtn();
+                            $("#school").text(data.school);
+                            $("#period").text(data.period);
+                            $("#step").removeClass();
+                            $("#step").addClass("step"+step);
+
+                            if(data.file1!=null && data.file1!="") {
+                                $("#fileName1").val(data.file1);
+                                attached1=data.file1;
+                            }
+                            if(data.file2!=null && data.file2!="") {
+                                $("#fileName2").val(data.file2);
+                                attached2=data.file2;
+                            }
+                            if(data.file3!=null && data.file3!="") {
+                                $("#fileName3").val(data.file3);
+                                attached3=data.file3;
+                            }
+                            if(data.file4!=null && data.file4!="") {
+                                $("#fileName4").val(data.file4);
+                                attached4=data.file4;
+                            }
+                            if(data.file5!=null && data.file5!="") {
+                                $("#fileName5").val(data.file5);
+                                attached5=data.file5
+                            }
+                            if(data.file6!=null && data.file6!="") {
+                                $("#fileName6").val(data.file6);
+                                attached6=data.file6;
+                            }
+                            if(data.file7!=null && data.file7!="") {
+                                $("#fileName7").val(data.file7);
+                                attached7.data.file7;
+                            }
+                            if(data.file8!=null && data.file8!="") {
+                                $("#fileName8").val(data.file8);
+                                attached8=data.file8;
+                            }
+                            if(data.file9!=null && data.file9!="") {
+                                $("#fileName9").val(data.file9);
+                                attached9=data.file9;
+                            }
+                            if(data.file10!=null && data.file10!="") {
+                                $("#fileName10").val(data.file10);
+                                attached10=data.file10;
+                            }
+                            if(data.submit) {
+                                $("#btnAfterSubmit").addClass("d-none");
+                                $("#btnBeforeSubmit").addClass("d-none");
+                                $("#btnProgress").removeClass("d-none");
+                            }else {
+                                $("#btnAfterSubmit").addClass("d-none");
+                                $("#btnBeforeSubmit").removeClass("d-none");
+                                $("#btnProgress").addClass("d-none");
+                            }
+                        }
+                    });
+                }
+
+                // 취직 정보 불러오기
+                function getResumeMain() {
+                    $.ajax({
+                        type: "get",
+                        url: "/api/user/resume",
+                        async: false,
+                        success: function (data) {
+                            let rTag = '';
+                            if (data != null && data.length != 0) {
+                                for (i = 0; i < data.length; i++) {
+                                    if (data[i].working == 1 || data[i].working == 2) {
+                                        let working = '';
+                                        if (data[i].working == 1) {
+                                            working = '휴직';
+                                        } else if (data[i].working == 2) {
+                                            working = '재직중';
+                                        }
+                                        let strJoin = '';
+                                        if (data[i].joinDate != null && data[i].joinDate != '') {
+                                            let joinYear = data[i].joinDate.substring(0, 4);
+                                            let joinMonth = data[i].joinDate.substring(5, 7);
+                                            let joinDate = data[i].joinDate.substring(8, 10);
+                                            strJoin = '<span class="year">' + joinYear + '</span>년&nbsp;<span class="month">' + joinMonth + '</span>월&nbsp;<span class="date">' + joinDate + '</span>일';
+                                        } else {
+                                            strJoin = '-';
+                                        }
+                                        rTag += '<div class="employ-wrap">' +
+                                            '<div class="info-wrap">' +
+                                            '<div class="pc-layout">' +
+                                            '<div>' +
+                                            '<div class="name-wrap">' +
+                                            '<span class="name">' + data[i].company + '</span>' +
+                                            '<span class="state-green-line">' + working + '</span>' +
+                                            '</div>' +
+                                            '<div class="period-wrap">' +
+                                            '<p>총 재직기간</p>' +
+                                            '<div><span class="date">' + data[i].workDays + '</span>일&nbsp;(<span class="year">' + data[i].workYears + '</span>년)</div>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<div class="btn-area">' +
+                                            '<button class="edit" rSeq="' + data[i].resumeSeq + '">편집하기</button>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<div class="date-wrap">' +
+                                            '<span class="state-yellow">입사</span>' +
+                                            '<span class="content">' + strJoin + '</span>' +
+                                            '</div>' +
+                                            '<div class="date-wrap">' +
+                                            '<span class="state-yellow">퇴사</span>' +
+                                            '<span class="content">-</span>' +
+                                            '</div>' +
+                                            '<div class="salary-wrap">' +
+                                            '<span class="state-green">연봉</span>' +
+                                            '<span class="content"><span class="amount">' + fcomma(data[i].salary) + '</span>원</span>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '<div class="btn-area">' +
+                                            '<button class="edit btn-green-sub2">편집하기</button>' +
+                                            '</div>' +
+                                            '</div>';
+                                        break;
+                                    }
+                                }
+                            } else {
+                                rTag += '<div class="no-list">취직 내역이 없습니다.</div>';
+                            }
+                            $("#employ-div").html(rTag);
+                        },
+                        error: function (request, status, error) {
+                            toastModal("취직 정보를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                function getResumeModal() {
+                    $.ajax({
+                        type: "get",
+                        url: "/api/user/resume",
+                        success: function (data) {
+                            let rTag = '';
+                            if (data != null && data.length != 0) {
+                                for (i = 0; i < data.length; i++) {
+                                    if (data[i].working == 0) {
+                                        let strJoin = '';
+                                        if (data[i].joinDate != null && data[i].joinDate != '') {
+                                            let joinYear = data[i].joinDate.substring(0, 4);
+                                            let joinMonth = data[i].joinDate.substring(5, 7);
+                                            let joinDate = data[i].joinDate.substring(8, 10);
+                                            strJoin = joinYear + '년 ' + joinMonth + '월 ' + joinDate + '일';
+                                        }
+                                        let strOut = '';
+                                        if (data[i].outDate != null && data[i].outDate != '') {
+                                            let outYear = data[i].outDate.substring(0, 4);
+                                            let outMonth = data[i].outDate.substring(5, 7);
+                                            let outDate = data[i].outDate.substring(8, 10);
+                                            strOut = outYear + '년 ' + outMonth + '월 ' + outDate + '일';
+                                        }
+                                        rTag += '<div class="company-info">' +
+                                            '<div>' + strJoin + ' ~ ' + strOut + '</div>' +
+                                            '<div>' +
+                                            '<div class="top-wrap">' +
+                                            '<span class="name">' + data[i].company + '<span class="state-grey-line">퇴사</span></span>' +
+                                            '</div>' +
+                                            '<div class="bottom-wrap">' +
+                                            '<div>' +
+                                            '<span>연봉</span>' +
+                                            '<span class="amount">' + fcomma(data[i].salary) + '<span class="unit">원</span></span>' +
+                                            '</div>' +
+                                            '<div>' +
+                                            '<span>재직기간</span>' +
+                                            '<span class="date">' + data[i].workDays + '<span class="unit">일</span>&nbsp;(<span class="year">' + data[i].workYears + '</span><span class="unit">년</span>)</span>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>';
+                                    }
+                                }
+                            } else {
+                                rTag += '<div class="no-list">취직 내역이 없습니다.</div>';
+                            }
+                            $("#employ-history-div").html(rTag);
+                        },
+                        error: function (request, status, error) {
+                            toastModal("취직 정보를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                function getResumeDetails() {
+                    $.ajax({
+                        type: 'get',
+                        url: '/api/user/resume/' + resumeSeq,
+                        async: false,
+                        success: function (data) {
+                            editWorking = data.working;
+                            if (data.joinDate != null && data.joinDate != '') {
+                                let joinYear = data.joinDate.substring(0, 4);
+                                let joinMonth = data.joinDate.substring(5, 7);
+                                let joinDate = data.joinDate.substring(8, 10);
+                                $("#editJoinYear").val(joinYear);
+                                $("#editJoinMonth").val(joinMonth);
+                                $("#editJoinDate").val(joinDate);
+                            } else {
+                                $("#editJoinYear").val("");
+                                $("#editJoinMonth").val("");
+                                $("#editJoinDate").val("");
+                            }
+
+                            if (data.outDate != null && data.outDate != '') {
+                                let outYear = data.outDate.substring(0, 4);
+                                let outMonth = data.outDate.substring(5, 7);
+                                let outDate = data.outDate.substring(8, 10);
+                                $("#editOutYear").val(outYear);
+                                $("#editOutMonth").val(outMonth);
+                                $("#editOutDate").val(outDate);
+                            } else {
+                                $("#editOutYear").val("");
+                                $("#editOutMonth").val("");
+                                $("#editOutDate").val("");
+                            }
+
+                            $("#editCompany").val(data.company);
+                            $("#editSalary").val(fcomma(data.salary));
+                            let strWorking = '';
+                            if (data.working == 0) {
+                                strWorking = '퇴사';
+                            } else if (data.working == 1) {
+                                strWorking = '휴직';
+                            } else if (data.working == 2) {
+                                strWorking = '재직중';
+                            }
+                            $("#editWorking").val(strWorking);
+                            $('input[name="selEmp2"]').val([editWorking]);
+                        },
+                        error: function (request, status, error) {
+                            toastModal("취직 정보를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                function updateResume() {
+                    if($("#editCompany").val()==null || $("#editCompany").val()=="") {
+                        toastModal("회사명을 입력해주세요");
+                        return;
+                    };
+                    if($("#editJoinYear").val()==null || $("#editJoinYear").val()=="") {
+                        toastModal("입사년도를 입력해주세요");
+                        return;
+                    };
+                    if($("#editJoinMonth").val()==null || $("#editJoinMonth").val()=="") {
+                        toastModal("입사월을 입력해주세요");
+                        return;
+                    };
+                    if($("#editJoinDate").val()==null || $("#editJoinDate").val()=="") {
+                        toastModal("입사일을 입력해주세요");
+                        return;
+                    };
+                    let joinDate =    $("#editJoinYear").val() + '-' + $("#editJoinMonth").val() + '-' + $("#editJoinDate").val();
+                    let outDate = null;
+                    if($("#editWorking").val()=="퇴사") {
+                        if($("#editOutYear").val()==null || $("#editOutYear").val()=="") {
+                            toastModal("퇴사년도를 입력해주세요");
+                            return;
+                        };
+                        if($("#editOutMonth").val()==null || $("#editOutMonth").val()=="") {
+                            toastModal("퇴사월을 입력해주세요");
+                            return;
+                        };
+                        if($("#editOutDate").val()==null || $("#editOutDate").val()=="") {
+                            toastModal("퇴사일을 입력해주세요");
+                            return;
+                        };
+                        outDate = $("#editOutYear").val() + '-' + $("#editOutMonth").val() + '-' + $("#editOutDate").val();
+                    }else {
+                        $("#editOutYear").val("");
+                        $("#editOutMonth").val("");
+                        $("#editOutDate").val("")
+                        outDate = null;
+                    }
+                    if($("#editSalary").val()==null || $("#editSalary").val()=="") {
+                        toastModal("연봉을 입력해주세요");
+                        return;
+                    };
+
+                    let objUpdateResume = {
+                        "resumeSeq" : resumeSeq,
+                        "company" : $("#editCompany").val(),
+                        "joinDate" : joinDate,
+                        "outDate" : outDate,
+                        "salary" : uncomma($("#editSalary").val()),
+                        "working" : editWorking
+                    }
+
+                    $.ajax({
+                        type:"put",
+                        url:"/api/user/resume",
+                        contentType:"application/json",
+                        data:JSON.stringify(objUpdateResume),
+                        success:function() {
+                            toastModal("일자리 정보가 수정되었습니다.")
+                            setTimeout(() => location.reload(), 1000);
+                        },
+                        error: function (request, status, error) {
+                            toastModal("일자리 정보 수정에 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                function saveResume() {
+                    if($("#saveCompany").val()==null || $("#saveCompany").val()=="") {
+                        toastModal("회사명을 입력해주세요");
+                        return;
+                    };
+                    if($("#saveJoinYear").val()==null || $("#saveJoinYear").val()=="") {
+                        toastModal("입사년도를 입력해주세요");
+                        return;
+                    };
+                    if($("#saveJoinMonth").val()==null || $("#saveJoinMonth").val()=="") {
+                        toastModal("입사월을 입력해주세요");
+                        return;
+                    };
+                    if($("#saveJoinDate").val()==null || $("#saveJoinDate").val()=="") {
+                        toastModal("입사일을 입력해주세요");
+                        return;
+                    };
+                    let joinDate =    $("#saveJoinYear").val() + '-' + $("#saveJoinMonth").val() + '-' + $("#saveJoinDate").val();
+                    let outDate = null;
+                    if($("#saveWorking").val()=="퇴사") {
+                        if($("#saveOutYear").val()==null || $("#saveOutYear").val()=="") {
+                            toastModal("퇴사년도를 입력해주세요");
+                            return;
+                        };
+                        if($("#saveOutMonth").val()==null || $("#saveOutMonth").val()=="") {
+                            toastModal("퇴사월을 입력해주세요");
+                            return;
+                        };
+                        if($("#saveOutDate").val()==null || $("#saveOutDate").val()=="") {
+                            toastModal("퇴사일을 입력해주세요");
+                            return;
+                        };
+                        outDate = $("#saveOutYear").val() + '-' + $("#saveOutMonth").val() + '-' + $("#saveOutDate").val();
+                    }else {
+                        $("#saveOutYear").val("");
+                        $("#saveOutMonth").val("");
+                        $("#saveOutDate").val("")
+                        outDate = null;
+                    }
+                    if($("#saveSalary").val()==null || $("#saveSalary").val()=="") {
+                        toastModal("연봉을 입력해주세요");
+                        return;
+                    };
+                    if($("#saveWorking").val()==null || $("#saveWorking").val()=="") {
+                        toastModal("재직여부를 선택해주세요");
+                        return;
+                    };
+
+                    let objSaveResume = {
+                        "company" : $("#saveCompany").val(),
+                        "joinDate" : joinDate,
+                        "outDate" : outDate,
+                        "salary" : uncomma($("#saveSalary").val()),
+                        "working" : editWorking
+                    }
+
+                    $.ajax({
+                        type:"post",
+                        url:"/api/user/resume",
+                        contentType:"application/json",
+                        data:JSON.stringify(objSaveResume),
+                        success:function() {
+                            toastModal("일자리 정보가 추가되었습니다.")
+                            setTimeout(() => location.reload(), 1000);
+                        },
+                        error: function (request, status, error) {
+                            toastModal("일자리 정보 추가에 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+                
+                // input 숫자 입력시
+                function inputNumberFormat(obj) {
+                    obj.value = fcomma(uncomma(obj.value));
+                }
+
+                // 파일 첨부
+                function attachFile() {
+                    $("#file1").off("change").on("change", function() {
+                        file1 = $("#file1")[0].files[0];
+                        let arrFiles = $(this)[0].files;
+                        if(arrFiles.length<1) {
+                            if(attached1!=null && attached1!="") {
+                                $("#fileName1").val(attached1);
+                            }else {
+                                $("#fileName1").val("");
+                            }
+                        }else {
+                            $("#fileName1").val(file1.name);
+                        }
+                        activeSubmitBtn();
+                    });
+                    $("#file2").off("change").on("change", function() {
+                        file2 = $("#file2")[0].files[0];
+                        let arrFiles = $(this)[0].files;
+                        if(arrFiles.length<1) {
+                            if(attached2!=null && attached2!="") {
+                                $("#fileName2").val(attached2);
+                            }else {
+                                $("#fileName2").val("");
+                            }
+                        }else {
+                            $("#fileName2").val(file2.name);
+                        }
+                        activeSubmitBtn();
+                    });
+                    $("#file3").off("change").on("change", function() {
+                        file3 = $("#file3")[0].files[0];
+                        let arrFiles = $(this)[0].files;
+                        if(arrFiles.length<1) {
+                            if(attached3!=null && attached3!="") {
+                                $("#fileName3").val(attached3);
+                            }else {
+                                $("#fileName3").val("");
+                            }
+                        }else {
+                            $("#fileName3").val(file3.name);
+                        }
+                        activeSubmitBtn();
+                    });
+                    $("#file4").off("change").on("change", function() {
+                        file4 = $("#file4")[0].files[0];
+                        let arrFiles = $(this)[0].files;
+                        if(arrFiles.length<1) {
+                            if(attached4!=null && attached4!="") {
+                                $("#fileName4").val(attached4);
+                            }else {
+                                $("#fileName4").val("");
+                            }
+                        }else {
+                            $("#fileName4").val(file4.name);
+                        }
+                        activeSubmitBtn();
+                    });
+                    $("#file5").off("change").on("change", function() {
+                        file5 = $("#file5")[0].files[0];
+                        let arrFiles = $(this)[0].files;
+                        if(arrFiles.length<1) {
+                            if(attached5!=null && attached5!="") {
+                                $("#fileName5").val(attached5);
+                            }else {
+                                $("#fileName5").val("");
+                            }
+                        }else {
+                            $("#fileName5").val(file5.name);
+                        }
+                        activeSubmitBtn();
+                    });
+                    $("#file6").off("change").on("change", function() {
+                        file6 = $("#file6")[0].files[0];
+                        let arrFiles = $(this)[0].files;
+                        if(arrFiles.length<1) {
+                            if(attached6!=null && attached6!="") {
+                                $("#fileName6").val(attached6);
+                            }else {
+                                $("#fileName6").val("");
+                            }
+                        }else {
+                            $("#fileName6").val(file6.name);
+                        }
+                        activeSubmitBtn();
+                    });
+                    $("#file7").off("change").on("change", function() {
+                        file7 = $("#file7")[0].files[0];
+                        let arrFiles = $(this)[0].files;
+                        if(arrFiles.length<1) {
+                            if(attached7!=null && attached7!="") {
+                                $("#fileName7").val(attached7);
+                            }else {
+                                $("#fileName7").val("");
+                            }
+                        }else {
+                            $("#fileName7").val(file7.name);
+                        }
+                    });
+                    $("#file8").off("change").on("change", function() {
+                        file8 = $("#file8")[0].files[0];
+                        let arrFiles = $(this)[0].files;
+                        if(arrFiles.length<1) {
+                            if(attached8!=null && attached8!="") {
+                                $("#fileName8").val(attached8);
+                            }else {
+                                $("#fileName8").val("");
+                            }
+                        }else {
+                            $("#fileName8").val(file8.name);
+                        }
+                        activeSubmitBtn();
+                    });
+                    $("#file9").off("change").on("change", function() {
+                        file9 = $("#file9")[0].files[0];
+                        let arrFiles = $(this)[0].files;
+                        if(arrFiles.length<1) {
+                            if(attached9!=null && attached9!="") {
+                                $("#fileName9").val(attached9);
+                            }else {
+                                $("#fileName9").val("");
+                            }
+                        }else {
+                            $("#fileName9").val(file9.name);
+                        }
+                        activeSubmitBtn();
+                    });
+                    $("#file10").off("change").on("change", function() {
+                        file10 = $("#file10")[0].files[0];
+                        let arrFiles = $(this)[0].files;
+                        if(arrFiles.length<1) {
+                            if(attached10!=null && attached10!="") {
+                                $("#fileName10").val(attached10);
+                            }else {
+                                $("#fileName10").val("");
+                            }
+                        }else {
+                            $("#fileName10").val(file10.name);
+                        }
+                        activeSubmitBtn();
+                    });
+
+                    // 배경클릭 시 사라지기
+                    $('.modal-back').on('click', function(){
+                        $(".fileScript").val("");
+                        file1=undefined;
+                        file2=undefined;
+                        file3=undefined;
+                        file4=undefined;
+                        file5=undefined;
+                        file6=undefined;
+                        file7=undefined;
+                        file8=undefined;
+                        file9=undefined;
+                        file10=undefined;
+                    });
+                    //닫기버튼 선택 시 사라지기
+                    $('.close').on('click', function(){
+                        $(".fileScript").val("");
+                        file1=undefined;
+                        file2=undefined;
+                        file3=undefined;
+                        file4=undefined;
+                        file5=undefined;
+                        file6=undefined;
+                        file7=undefined;
+                        file8=undefined;
+                        file9=undefined;
+                        file10=undefined;
+                    });
+                }
+
+                function activeSubmitBtn() {
+                    if(arrFileNumber!=null && arrFileNumber.length!=0) {
+                        for(i=0; i<arrFileNumber.length; i++) {
+                            if($("#fileName"+arrFileNumber[i]).val()!=null && $("#fileName"+arrFileNumber[i]).val()!="") {
+                                $("#btnAfterSubmit").removeClass("d-none");
+                                $("#btnBeforeSubmit").addClass("d-none");
+                                $("#btnProgress").addClass("d-none");
+                            }else {
+                                $("#btnAfterSubmit").addClass("d-none");
+                                $("#btnBeforeSubmit").removeClass("d-none");
+                                $("#btnProgress").addClass("d-none");
+                                break;
+                            }
+                        }
+                    }else {
+                        $("#btnAfterSubmit").addClass("d-none");
+                        $("#btnBeforeSubmit").addClass("d-none");
+                        $("#btnProgress").removeClass("d-none");
+                    }
+
+                    $("#btnAfterSubmit").off("click").on("click", function() {
+                        let formData = new FormData();
+
+                        formData.append("studySeq", studySeq);
+                        if(file1!=null && file1!=undefined) {
+                            formData.append("file1", file1);
+                        }
+                        if(file2!=null && file2!=undefined) {
+                            formData.append("file2", file2);
+                        }
+                        if(file3!=null && file3!=undefined) {
+                            formData.append("file3", file3);
+                        }
+                        if(file4!=null && file4!=undefined) {
+                            formData.append("file4", file4);
+                        }
+                        if(file5!=null && file5!=undefined) {
+                            formData.append("file5", file5);
+                        }
+                        if(file6!=null && file6!=undefined) {
+                            formData.append("file6", file6);
+                        }
+                        if(file7!=null && file7!=undefined) {
+                            formData.append("file7", file7);
+                        }
+                        if(file8!=null && file8!=undefined) {
+                            formData.append("file8", file8);
+                        }
+                        if(file9!=null && file9!=undefined) {
+                            formData.append("file9", file9);
+                        }
+                        if(file10!=null && file10!=undefined) {
+                            formData.append("file10", file10);
+                        }
+
+                        $.ajax({
+                            type:"put",
+                            url:"/api/user/study",
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success:function() {
+                                toastModal("서류가 제출 되었습니다.");
+                                setTimeout(() => location.reload(), 500);
+                            },
+                            error: function (request, status, error) {
+                                toastModal("서류 제출에 실패했습니다.");
+                                console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                            }
+                        });
+                    });
+                }
+
+
+                /** 상담 **/
+                getCategoriesMobile();
+                function getCategoriesMobile() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/board/category",
+                        async:false,
+                        success:function(data){
+                            // console.log(data);
+                            let tag = '';
+                            if(data!=null && data.length!=0) {
+                                let length = data.length;
+                                if(length <= 5) {
+                                    for(i=0; i<length; i++) {
+                                        let categoryTag = '';
+                                        if(data[i].newPostCount!=0) {
+                                            categoryTag = '<div><span>'+data[i].category+'</span><span class="count-red">'+data[i].newPostCount+'</span></div>';
+                                        }else {
+                                            categoryTag = '<div><span>'+data[i].category+'</span></div>';
+                                        }
+                                        tag += '<div class="message-wrap category mobile-category" category="'+data[i].category+'">' +
+                                            '<div class="top-wrap">' +
+                                            categoryTag +
+                                            '<span>'+data[i].createDate.substring(0,10)+'</span>' +
+                                            '</div>' +
+                                            '<div class="bottom-wrap">' +
+                                            '<span>'+data[i].content+'</span>' +
+                                            '</div>' +
+                                            '</div>';
+                                    }
+                                }else {
+                                    for(i=0; i<=4; i++) {
+                                        let categoryTag = '';
+                                        if(data[i].newPostCount!=0) {
+                                            categoryTag = '<div><span>'+data[i].category+'</span><span class="count-red">'+data[i].newPostCount+'</span></div>';
+                                        }else {
+                                            categoryTag = '<div><span>'+data[i].category+'</span></div>';
+                                        }
+                                        tag += '<div class="message-wrap category mobile-category" category="'+data[i].category+'">' +
+                                            '<div class="top-wrap">' +
+                                            categoryTag +
+                                            '<span>'+data[i].createDate.substring(0,10)+'</span>' +
+                                            '</div>' +
+                                            '<div class="bottom-wrap">' +
+                                            '<span>'+data[i].content+'</span>' +
+                                            '</div>' +
+                                            '</div>';
+                                    }
+                                }
+                                $("#category-list").html(tag);
+                                $("#no-category").addClass("d-none");
+                                $("#category-list").removeClass("d-none");
+                            }else {
+                                $("#no-category").removeClass("d-none");
+                                $("#category-list").addClass("d-none");
+                            }
+
+                            $('.consultPage-wrap .content .part.list .message-area .message-wrap').off("click").on('click', function(){
+                                $('.consultPage-wrap .content .part.list .message-area .message-wrap').removeClass('active');
+                                $(this).addClass('active');
+                            });
+
+                            $(".mobile-category").off("click").on("click", function(){
+                                chatOn = true;
+                                page=1;
+                                category = $(this).attr("category");
+                                $("#category-title").text(category);
+                                getMessagesMobile(category);
+                                $('#messageModal').css('display', 'flex');
+                            });
+                        },
+                        error: function (request, status, error) {
+                            toastModal("상담 카테고리를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                function getMessagesMobile(category) {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/board",
+                        async:false,
+                        data:{
+                            "category":category,
+                            "page":page-1,
+                            "size":10
+                        },
+                        success:function(data) {
+                            // console.log(data);
+                            let list = data.content;
+                            let tag = '';
+                            if(list.length!=0) {
+
+                                let lastIdx = (list.length)-1;
+                                let lastDate = "";
+                                for(i=lastIdx; i>=0; i--) {
+                                    let createDate = list[i].createDate.substring(0, 16);
+                                    createDate=createDate.replaceAll("Mon", "월");
+                                    createDate=createDate.replaceAll("Tue", "화");
+                                    createDate=createDate.replaceAll("Wed", "수");
+                                    createDate=createDate.replaceAll("Thu", "목");
+                                    createDate=createDate.replaceAll("Fri", "금");
+                                    createDate=createDate.replaceAll("Sat", "토");
+                                    createDate=createDate.replaceAll("Sun", "일");
+
+                                    if(lastDate!=createDate) {
+                                        lastDate=createDate;
+                                        tag += '<span class="date-area">'+lastDate+'</span>';
+                                    }
+
+                                    let content = list[i].content;
+                                    if(content!=null) {
+                                        content = content.replaceAll(/(?:\r\n|\r|\n)/g, '<br/>')
+                                    }
+
+                                    if(list[i].answer) {
+                                        tag += '<div class="message-wrap-helper">';
+
+                                        if(list[i].image!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="img">' +
+                                                '<img src="'+list[i].image.fileUrl+'" onerror="this.style.background=\'var(--light-grey2)\';">' +
+                                                '</div>' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].file!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="file"><a href="'+list[i].file.fileUrl+'" download="'+list[i].file.fileName+'" class="file">'+list[i].file.fileName+'</a></div>' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].image==null && list[i].file==null) {
+                                            tag +='<div class="message">' +
+                                                '<div class="txt">'+content+'</div>' +
+                                                ' <div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '</div>';
+                                        }
+                                        tag += '</div>';
+                                    }else {
+                                        tag += '<div class="message-wrap-user">';
+
+                                        if(list[i].image!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '<div class="img">' +
+                                                '<img src="'+list[i].image.fileUrl+'" onerror="this.style.background=\'var(--light-grey2)\';">' +
+                                                '</div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].file!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '<div class="file"><a href="'+list[i].file.fileUrl+'" download="'+list[i].file.fileName+'" class="file">'+list[i].file.fileName+'</a></div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].image==null && list[i].file==null) {
+                                            tag +='<div class="message">' +
+                                                ' <div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '<div class="txt">'+content+'</div>' +
+                                                '</div>';
+                                        }
+                                        tag += '</div>';
+                                    }
+                                }
+                                if(page==1) {
+                                    $("#modal-message-list").html(tag);
+                                }else {
+                                    $("#modal-message-list").prepend(tag);
+                                }
+                            }else {
+                                if(page==1) {
+                                    $("#modal-message-list").html(tag);
+                                    $(".view-prev-area").addClass("d-none");
+                                }else {
+                                    toastModal("이전 메시지가 없습니다.");
+                                    return;
+                                }
+                            }
+
+                            getCategoriesMobile();
+
+                            $("#messageModal").off("click").on("click", ".view-prev", function(){
+                                page++;
+                                getMessagesMobile(category);
+                            });
+
+                            //이미지 미리보기
+                            $('#messageModal .message-area .message .img').on('click', function(){
+                                let src = $(this).children().attr("src");
+                                $("#imgDetailModal .preview-img").attr("src",src);
+                                $('#imgDetailModal').css('display', 'flex');
+                            });
+                        },
+                        error: function (request, status, error) {
+                            toastModal("상담 메시지를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                getTrips();
+                function getTrips() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/trip",
+                        success:function(data) {
+                            console.log(data);
+                            let tag = '';
+                            if(data!=null && data.length!=0) {
+                                data.forEach(function(arg){
+                                    let stateTag = '';
+                                    if(arg.state=='신청') {
+                                        stateTag = '<span class="state-red f-left ml10">신청</span>';
+                                    }else if(arg.state=='참석') {
+                                        stateTag = '<span class="state-green f-left ml10">참석</span>';
+                                    }else if(arg.state=='불참석') {
+                                        stateTag = '<span class="state-grey f-left ml10">불참석</span>';
+                                    }
+                                    tag += '<div class="list">' +
+                                            '<span class="category state-red">'+arg.country+'</span>' + stateTag +
+                                            '<div class="flex-wrap mt10">' +
+                                            '<span class="title bold">신청테마: '+arg.title+'</span>' +
+                                            '</div>' +
+                                            '<div class="content mt05">'+arg.content+'</div>' +
+                                            '</div>';
+                                });
+                                $("#apply-no-list").addClass("d-none");
+                                $("#apply-list").removeClass("d-none");
+                                $("#apply-list").html(tag);
+                            }else {
+                                $("#apply-no-list").removeClass("d-none");
+                                $("#apply-list").addClass("d-none");
+                            }
+                        },
+                        error: function (request, status, error) {
+                            toastModal("여행 신청 내역을 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                function mobileSendMsg(content, image, file) {
+                    let formData = new FormData();
+
+                    if(content!=null && content!=undefined) {
+                        formData.append("content", content);
+                    }
+
+                    if(image!=null && image!=undefined) {
+                        formData.append("image", image);
+                    }
+
+                    if(file!=null && file!=undefined) {
+                        formData.append("file", file);
+                    }
+
+                    formData.append("category", category);
+
+                    $.ajax({
+                        type:"post",
+                        url:"/api/user/board",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function() {
+                            page=1;
+                            getCategoriesMobile();
+                            getMessagesMobile(category)
+                        },
+                        error: function (request, status, error) {
+                            toastModal("메시지를 전송하는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="abroad-list-wrap">
+
+                <!-- 페이지별 타이틀 -->
+                <div class="page-title"><span>추천 대학 목록</span></div>
+
+                <div class="content-wrap">
+                    <div>
+                        <div class="search-wrap">
+                            <input id="keyword" class="search nostyle" type="text" placeholder="검색어 입력"/>
+                            <div id="btnSearch" class="btn-search"><i></i></div>
+                        </div>
+                        <div id="schoolListDiv" class="list-wrap">
+                            <!--<div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">경인여자대학교 경인여자대학교 경인여자대학교 경인여자대학교(2년제&nbsp;/4학기)</span>
+                                <div>
+                                    <button class="btn-red-sub" onclick="location.href='/abroad/detail'">상세정보</button>
+                                    <button class="btn-red" onclick="location.href='/abroad/apply'">신청하기</button>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">경인여자대학교(2년제&nbsp;/4학기)</span>
+                                <div>
+                                    <button class="btn-red-sub" onclick="location.href='/abroad/detail'">상세정보</button>
+                                    <button class="btn-red" onclick="location.href='/abroad/apply'">신청하기</button>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">경인여자대학교(2년제&nbsp;/4학기)</span>
+                                <div>
+                                    <button class="btn-red-sub" onclick="location.href='/abroad/detail'">상세정보</button>
+                                    <button class="btn-red" onclick="location.href='/abroad/apply'">신청하기</button>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">경인여자대학교(2년제&nbsp;/4학기)</span>
+                                <div>
+                                    <button class="btn-red-sub" onclick="location.href='/abroad/detail'">상세정보</button>
+                                    <button class="btn-red" onclick="location.href='/abroad/apply'">신청하기</button>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">경인여자대학교(2년제&nbsp;/4학기)</span>
+                                <div>
+                                    <button class="btn-red-sub" onclick="location.href='/abroad/detail'">상세정보</button>
+                                    <button class="btn-red" onclick="location.href='/abroad/apply'">신청하기</button>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">경인여자대학교(2년제&nbsp;/4학기)</span>
+                                <div>
+                                    <button class="btn-red-sub" onclick="location.href='/abroad/detail'">상세정보</button>
+                                    <button class="btn-red" onclick="location.href='/abroad/apply'">신청하기</button>
+                                </div>
+                            </div>
+                            <div class="box">
+                                <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                <span class="title">경인여자대학교(2년제&nbsp;/4학기)</span>
+                                <div>
+                                    <button class="btn-red-sub" onclick="location.href='/abroad/detail'">상세정보</button>
+                                    <button class="btn-red" onclick="location.href='/abroad/apply'">신청하기</button>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script>
+                let size = 8;
+                let page = 1;
+                let totalPages;
+                getSchoolList();
+
+                $("#keyword").on("keydown", function (e) {
+                    if (e.keyCode == 13) {
+                        $("#btnSearch").click();
+                    }
+                });
+
+                $("#btnSearch").on("click", function () {
+                    page=1;
+                    getSchoolList();
+                });
+
+                function getSchoolList() {
+                    let keyword = $("#keyword").val();
+
+                    $.ajax({
+                        type: "get",
+                        url: "/api/common/school",
+                        data: {
+                            "page": page - 1,
+                            "size": size,
+                            "keyword": keyword
+                        },
+                        success: function (data) {
+                            totalPages = data.totalPages;
+                            let schoolList = data.content;
+                            let tag = '';
+                            if (schoolList != null && schoolList.length != 0) {
+                                for (i = 0; i < schoolList.length; i++) {
+                                    let imgUrl = '/tourhelperUser/images/sample_school.jpg';
+                                    if (schoolList[i].thumbnailImage != null) {
+                                        imgUrl = schoolList[i].thumbnailImage.url;
+                                    }
+                                    let details = schoolList[i].courseDetail.split('|');
+                                    let terms = '';
+                                    details.forEach(function (arg) {
+                                        let args = arg.split('/');
+                                        terms += args[0] + '/'
+                                    });
+                                    terms = terms.substring(0, terms.length - 1);
+                                    tag += '<div class="box">' +
+                                        '<div class="img-area"><img src="' + imgUrl + '" onerror="this.style.background=\'var(--light-grey2)\'"/></div>' +
+                                        '<span class="title">' + schoolList[i].firstCourseTitle + ' (' + terms + ')</span>' +
+                                        '<div>' +
+                                        '<button class="btn-red-sub" onclick="location.href=\'/abroad/detail?schoolSeq=' + schoolList[i].firstCourseSeq + '\'">상세정보</button>' +
+                                        '<button class="btn-red" onclick="location.href=\'/abroad/apply?schoolSeq=' + schoolList[i].firstCourseSeq + '\'">신청하기</button>' +
+                                        '</div>' +
+                                        '</div>';
+                                }
+                            }
+                            if (page == 1) {
+                                $("#schoolListDiv").html(tag);
+                            } else {
+                                $("#schoolListDiv").append(tag);
+                            }
+                        }
+                    });
+                }
+
+                // 무한 스크롤
+                window.onscroll = function(e) {
+                    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                        setTimeout(function(){
+                            page++;
+                            if(page<=totalPages) {
+                                getSchoolList();
+                            }
+                        }, 500)
+                    }
+                }
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

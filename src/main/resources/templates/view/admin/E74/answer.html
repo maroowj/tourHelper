@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+    .address{ width: calc(100%) !important; margin: 0px !important; }
+    .courseAdd-text-wrap input[type='text']{
+        width: 100% !important;
+    }
+    .sub-title{
+        font-weight: 500;
+        color: var(--dark-red);
+    }
+    .sub-title{
+        font-size: 18px;
+    }
+    p.title {
+        color: #333;
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+    .courseAdd-button a.none-btn{
+        background: var(--dark-grey) !important;
+    }
+    .courseAdd-button a.save-btn{
+        background: var(--red) !important;
+    }
+</style>
+
+<div layout:fragment="content">
+
+    <main role="main" class="main-content">
+        <script>
+            const main_menu = 5;
+        </script>
+
+        <!--컨텐츠 영역-->
+        <div class="contents admin">
+            <div class="admin-contents-title">
+                <h3 class="admin-title">E-7-4 자동배점 답변 내역</h3>
+            </div><!--admin-contents-title-->
+
+            <div id="courseAdd-wrap" class="courseAdd-wrap pa-l-0">
+                <div class="courseAdd-inner">
+                    <div class="courseAdd-text-wrap w100pro">
+                        <div class="user-info-wrap w100pro">
+                            <p class="title">사용자 정보</p>
+                            <table class="date-table modal-table">
+                                <colgroup>
+<!--                                    <col style="width:140px">-->
+                                    <col style="width:calc(50% - 70px)">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th>이름</th>
+                                    <td colspan="2">
+                                        <div id="name" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                    <th class="b-left">이메일</th>
+                                    <td colspan="2">
+                                        <div id="email" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="b-left">국가</th>
+                                    <td colspan="2">
+                                        <div id="country" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                    <th class="b-left">연락처</th>
+                                    <td>
+                                        <div id="phone" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>주소</th>
+                                    <td colspan="5">
+                                        <div id="address" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>회사</th>
+                                    <td colspan="2">
+                                        <div id="company" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                    <th class="b-left">입사일</th>
+                                    <td colspan="2">
+                                        <div id="joinDate" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>E-7-4 점수</th>
+                                    <td colspan="2">
+                                        <div id="point" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                    <th class="b-left">승인상태</th>
+                                    <td colspan="2">
+                                        <div id="accept" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!--사용자 정보 table END-->
+                        </div>
+
+                        <div class="courseText-list courseText-list1">
+                            <p class="sub-title ma-t-40px">필수 평가 항목 / 가. 외국인고용 사업장 신청요건</p>
+                            <p class="title ma-t-20px">1-1. 어떤 산업군에 종사하나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q1_1" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">1-2. 신청 외국인이 산재보험 가입 및 신청일 이전 6개월 간 내국인 고용조정으로 이직이 없나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q1_2" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">1-3. E-7-4 전환일로부터 1년 이상의 근로계약을 체결하였나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q1_3" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+
+                            <p class="sub-title ma-t-40px">필수 평가 항목 / 나. 신청 가능한 외국인노동자 요건</p>
+                            <p class="title ma-t-20px">2-1. 취업기간이 1년 이내 만료되는 재입국특례자(E-9) 중 재입국 후 사업장 변경 이력이 없나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q2_1" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">2-2. 5년 이상 E-9, H-2 등의 자격으로 국내 취업활동 중 인가요?</p>
+                            <div class="add-d-flex">
+                                <input id="q2_2" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+
+                            <p class="sub-title ma-t-40px">기본 평가 항목</p>
+                            <p class="title ma-t-20px">3-1. 연간소득이 얼마인가요?</p>
+                            <div class="add-d-flex">
+                                <input id="q3_1" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">3-2. 가지고 있는 자격증이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q3_2" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">3-3. 자격증이 있다면 자격증명을 입력하세요.</p>
+                            <div class="add-d-flex">
+                                <input id="q3_3" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">3-4. 본인의 학력은 어떻게 되나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q3_4" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">3-5. 본인의 연령(나이)는 어떻게 되나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q3_5" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">3-6. 한국어능력시험 등급이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q3_6" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+
+                            <p class="sub-title ma-t-40px">선택 평가 항목</p>
+                            <p class="title ma-t-20px">4-1. 동일업체에서 근속 기간이 얼마나 되는지 입력하세요(만 근로시간).</p>
+                            <div class="add-d-flex">
+                                <input id="q4_1" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-2. 보유한 국내 정기적금이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_2" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-3. 국내에 보유한 자산이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_3" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-4. 최근 10년 이내 국내 관련분야 근무경력이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_4" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-5. 관련직종 국내 교육 또는 연수경험이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_5" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-6. 국내 유학경험이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_6" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-7. 관련 중앙부처의 추천을 받았나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_7" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-8. 사회통합 프로그램을 이수하였나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_8" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-9. 읍, 면지역 근무경력이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_9" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-10. 사회 공헌으로 국가나 지방자치단체에로부터 수여받은 것이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_10" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-11. 최근 1년 연간 소득세 납세실적이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_11" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">4-12. 고용노동부 추천을 받아 코로나19 관련 계절근로에 참여한 적이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q4_12" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+
+                            <p class="sub-title ma-t-40px">추가 평가 항목</p>
+                            <p class="title ma-t-20px">5-1. 10년이내에 처벌여부와 상관없이 법위반이 인정된 출입국관리법을 위반한 적이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q5_1" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                            <p class="title ma-t-20px">5-2. 10년이내에 기타 국내 법령 위반한 적이 있나요?</p>
+                            <div class="add-d-flex">
+                                <input id="q5_2" type="text" name="check" data-name="" class="ma-l-0" placeholder="-" disabled>
+                            </div>
+                        </div><!--courseText-list-->
+                    </div><!--courseAdd-text-wrap-->
+                </div>
+
+                <div class="courseAdd-button">
+                    <a class="none-btn cupoint" onclick="location.href='/admin/E74'">목록으로</a>
+                    <!--<a class="save-btn cupoint" onclick="updateCourse();">완료처리</a>-->
+                </div>
+            </div><!--courseAdd-wrap-->
+
+
+        </div><!--contents-->
+
+    </main>
+
+<script>
+    let pathNames = window.location.pathname.split("/");
+    let visaSeq = pathNames[4];
+
+    getVisaDetails();
+
+    function getVisaDetails() {
+        $.ajax({
+            type: "GET",
+            url: "/api/admin/visa/" + visaSeq,
+            async:false,
+            success: function (data) {
+                console.log(data);
+                $("#name").text(data.name);
+                $("#email").text(data.email);
+                $("#country").text(data.country);
+                $("#phone").text(data.phone);
+                $("#address").text(data.address1+" "+data.address2);
+                $("#company").text(data.company);
+                $("#joinDate").text(data.joinDate.substring(0, 10));
+                $("#point").text(data.point + "점");
+                let accept = '승인 대기';
+                if (data.accept == 0) {
+                    accept = '승인 대기';
+                } else if (data.accept == 1) {
+                    accept = '승인';
+                } else if (data.accept == 2) {
+                    accept = '응답 완료';
+                }
+                $("#accept").text(accept);
+                let answers = data.content;
+
+                for(let key in answers) {
+                    $("#"+key).val(answers[key]);
+                }
+            }
+        });
+    }
+</script>
+
+</div>
+</html>

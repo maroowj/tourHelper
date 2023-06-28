@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="calculator-wrap">
+
+                <!-- 페이지별 타이틀 -->
+                <div class="page-title"><span>퇴직금 계산기</span></div>
+
+                <div class="content-wrap">
+                    <div>
+                        <div class="part">
+                            <div>
+                                <div class="input-wrap">
+                                    <div class="title">입사일</div>
+                                    <div>
+                                        <input type="text" id="joinYear" placeholder="0000" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                        <span class="text">년</span>
+                                        <input type="text" id="joinMonth" placeholder="00" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                        <span class="text">월</span>
+                                        <input type="text" id="joinDate" placeholder="00" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                        <span class="text">일</span>
+                                    </div>
+                                </div>
+                                <i></i>
+                                <div class="input-wrap">
+                                    <div class="title">퇴사일</div>
+                                    <div>
+                                        <input type="text" id="outYear" placeholder="0000" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                        <span class="text">년</span>
+                                        <input type="text" id="outMonth" placeholder="00" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                        <span class="text">월</span>
+                                        <input type="text" id="outDate" placeholder="00" maxlength="2" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                        <span class="text">일</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-wrap">
+                                <div class="title">3개월 급여 총액</div>
+                                <div><input id="salary" class="comma" type="text" placeholder="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                    <span class="text">원</span>
+                                </div>
+                            </div>
+                            <div class="input-wrap">
+                                <div class="title">연간 상여금 총액</div>
+                                <div><input id="bonus" class="comma" type="text" placeholder="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                    <span class="text">원</span>
+                                </div>
+                            </div>
+                            <div class="input-wrap">
+                                <div class="title">연차 수당</div>
+                                <div><input id="rest" class="comma" type="text" placeholder="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                    <span class="text">원</span>
+                                </div>
+                            </div>
+                            <!--<div class="check-wrap">
+                                <input id="calAverage" class="chkbox1" type="checkbox"/><label for="calAverage">평균임금 계산하기</label>
+                            </div>-->
+                            <div class="btn-area">
+                                <button id="reset" class="initial btn-red-sub">초기화</button>
+                                <button id="doCalculate" class="cal btn-red" onclick="fnCalculate()">계산하기</button>
+                            </div>
+                        </div>
+
+                        <div class="part">
+                            <div>
+                                <span>재직일수</span>
+                                <div><span id="workDate" class="num comma">0</span>일</div>
+                            </div>
+                            <div>
+                                <span>평균임금</span>
+                                <div><span id="average" class="num comma">0</span>원</div>
+                            </div>
+                            <div>
+                                <span>예상 퇴직금(세전)</span>
+                                <div><span id="severancePay" class="num comma">0</span>원</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script>
+
+                $("#reset").on("click", function(){
+                    $(".content-wrap input").val("");
+                    $(".num").text(0);
+                });
+                
+                function fnCalculate() {
+                    if($("#joinYear").val()=="") {
+                        toastModal("입사년도를 입력해주세요");
+                        return;
+                    }
+                    if($("#joinMonth").val()=="") {
+                        toastModal("입사월 입력해주세요");
+                        return;
+                    }
+                    if($("#joinDate").val()=="") {
+                        toastModal("입사일을 입력해주세요");
+                        return;
+                    }
+                    if($("#outYear").val()=="") {
+                        toastModal("퇸사년도를 입력해주세요");
+                        return;
+                    }
+                    if($("#outYear").val()=="") {
+                        toastModal("퇴사월을 입력해주세요");
+                        return;
+                    }
+                    if($("#outYear").val()=="") {
+                        toastModal("퇴사일을 입력해주세요");
+                        return;
+                    }
+
+                    let joinDate = new Date($("#joinYear").val() + "-" + $("#joinMonth").val() + "-" + $("#joinDate").val());
+                    let outDate = new Date($("#outYear").val() + "-" + $("#outMonth").val() + "-" + $("#outDate").val());
+
+                    let workDate = (outDate - joinDate) / 1000 / 60 / 60 / 24;
+                    if(workDate<365) {
+                        toastModal("최소 근속 연수는 1년 입니다.");
+                        return;
+                    }
+
+                    let beforeThreeMonthDate = new Date($("#outYear").val() + "-" + $("#outMonth").val() + "-" + $("#outDate").val());
+                    beforeThreeMonthDate = new Date(beforeThreeMonthDate.setMonth(beforeThreeMonthDate.getMonth() - 3));
+
+                    let threeMonthWorkDate = (outDate - beforeThreeMonthDate) / 1000 / 60 / 60 / 24;
+
+                    let salary = Number(uncomma($("#salary").val()));
+                    let bonus = Number(uncomma($("#bonus").val())) / 4;
+                    let rest = Number(uncomma($("#rest").val())) / 4;
+
+                    let averagePerDay = Math.floor((salary + bonus + rest) / threeMonthWorkDate);
+                    let averagePerMonth = averagePerDay * 30;
+
+
+                    let severancePay = Math.floor(averagePerMonth * (workDate / 365));
+
+                    $("#workDate").text(workDate);
+                    $("#average").text(fcomma(averagePerMonth));
+                    $("#severancePay").text(fcomma(severancePay));
+                }
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

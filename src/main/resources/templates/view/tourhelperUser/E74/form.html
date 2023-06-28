@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="E74-form-wrap">
+
+                <!-- 페이지별 타이틀 -->
+                <div class="page-title"><span>E-7-4 자동배점 응답지 입력</span></div>
+
+                <div class="content-wrap">
+                    <div>
+                        <div class="part answer">
+                            <div class="check1">
+                                <p class="title">-필수 평가 항목</p>
+                                <p class="title-sub">가. 외국인고용 사업장 신청요건</p>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>1-1</span>
+                                        <span>어떤 산업군에 종사하나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as11-chk1" class="radio2" type="radio" name="as1-1" score="10"/><label for="as11-chk1">뿌리산업</label>
+                                        <input id="as11-chk2" class="radio2" type="radio" name="as1-1" score="0"/><label for="as11-chk2">기타기계 및 장비 제조업(29)</label>
+                                        <input id="as11-chk3" class="radio2" type="radio" name="as1-1" score="0"/><label for="as11-chk3">금속가공 제품 제조업(25)</label>
+                                        <input id="as11-chk4" class="radio2" type="radio" name="as1-1" score="0"/><label for="as11-chk4">식료품 제조업(10)</label>
+                                        <input id="as11-chk5" class="radio2" type="radio" name="as1-1" score="0"/><label for="as11-chk5">고무 및 플라스틱 제품 제조업(22)</label>
+                                        <input id="as11-chk6" class="radio2" type="radio" name="as1-1" score="0"/><label for="as11-chk6">전자부품,컴퓨터,통신장비 제조업(26)</label>
+                                        <input id="as11-chk7" class="radio2" type="radio" name="as1-1" score="0"/><label for="as11-chk7">섬유제품 제조업(13)</label>
+                                        <input id="as11-chk8" class="radio2" type="radio" name="as1-1" score="0"/><label for="as11-chk8">선박 및 보트 건조업(311)</label>
+                                        <input id="as11-chk9" class="radio2" type="radio" name="as1-1" score="0"/><label for="as11-chk9">기타 제조업</label>
+                                        <input id="as11-none" class="radio2" type="radio" name="as1-1" score="1"/><label for="as11-none">해당사항 없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>1-2</span>
+                                        <span>신청 외국인이 산재보험 가입 및 신청일 이전 6개월 간 내국인 고용조정으로 이직이 없나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as12-yes" class="radio2" type="radio" name="as1-2" score="0"/><label for="as12-yes">예</label>
+                                        <input id="as12-no" class="radio2" type="radio" name="as1-2" score="0"/><label for="as12-no">아니오</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>1-3</span>
+                                        <span>E-7-4 전환일로부터 1년 이상의 근로계약을 체결하였나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as13-yes" class="radio2" type="radio" name="as1-3" score="0"/><label for="as13-yes">예</label>
+                                        <input id="as13-no" class="radio2" type="radio" name="as1-3" score="0"/><label for="as13-no">아니오</label>
+                                    </div>
+                                </div>
+
+                                <p class="title-sub">나. 신청 가능한 외국인노동자 요건</p>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>2-1</span>
+                                        <span>취업기간이 1년 이내 만료되는 재입국특례자(E-9) 중 재입국 후 사업장 변경 이력이 없나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as21-yes" class="radio2" type="radio" name="as2-1" score="0"/><label for="as21-yes">예</label>
+                                        <input id="as21-no" class="radio2" type="radio" name="as2-1" score="0"/><label for="as21-no">아니오</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>2-2</span>
+                                        <span>5년 이상 E-9, H-2, E-10 등의 자격으로 국내 취업활동 중 인가요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as22-yes" class="radio2" type="radio" name="as2-2" score="0"/><label for="as22-yes">예</label>
+                                        <input id="as22-no" class="radio2" type="radio" name="as2-2" score="0"/><label for="as22-no">아니오</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="check2">
+                                <p class="title">-기본 평가 항목</p>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>3-1</span>
+                                        <span>연간소득이 얼마인가요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as31-chk1" class="radio2" type="radio" name="as3-1" score="20"/><label for="as31-chk1">3,300만원 이상</label>
+                                        <input id="as31-chk2" class="radio2" type="radio" name="as3-1" score="15"/><label for="as31-chk2">3,000만원 이상</label>
+                                        <input id="as31-chk3" class="radio2" type="radio" name="as3-1" score="10"/><label for="as31-chk3">2,600만원 이상</label>
+                                        <input id="as31-chk4" class="radio2" type="radio" name="as3-1" score="0"/><label for="as31-chk4">2,600만원 미만</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>3-2</span>
+                                        <span>가지고 있는 자격증이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as32-chk1" class="radio2" type="radio" name="as3-2" score="20"/><label for="as32-chk1">기사</label>
+                                        <input id="as32-chk2" class="radio2" type="radio" name="as3-2" score="15"/><label for="as32-chk2">산업기사</label>
+                                        <input id="as32-chk3" class="radio2" type="radio" name="as3-2" score="10"/><label for="as32-chk3">기능사</label>
+                                        <input id="as32-chk4" class="radio2" type="radio" name="as3-2" score="10"/><label for="as32-chk4">기량검증통과(뿌리산업만 가능)</label>
+                                        <input id="as32-none" class="radio2" type="radio" name="as3-2" score="0"/><label for="as32-none">없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>3-3</span>
+                                        <span>자격증이 있다면 자격증명을 입력하세요.</span>
+                                    </div>
+                                    <div class="check">
+                                        <input class="survey-text" type="text" placeholder="자격증 입력" name="as3-3"/>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>3-4</span>
+                                        <span>본인의 학력은 어떻게 되나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as34-chk1" class="radio2" type="radio" name="as3-4" score="10"/><label for="as34-chk1">학사</label>
+                                        <input id="as34-chk2" class="radio2" type="radio" name="as3-4" score="10"/><label for="as34-chk2">전문학사</label>
+                                        <input id="as34-chk3" class="radio2" type="radio" name="as3-4" score="5"/><label for="as34-chk3">고졸</label>
+                                        <input id="as34-chk4" class="radio2" type="radio" name="as3-4" score="0"/><label for="as34-chk4">고졸미만</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>3-5</span>
+                                        <span>본인의 연령(나이)는 어떻게 되나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as35-chk1" class="radio2" type="radio" name="as3-5" score="20"/><label for="as35-chk1">~24세</label>
+                                        <input id="as35-chk2" class="radio2" type="radio" name="as3-5" score="17"/><label for="as35-chk2">~27세</label>
+                                        <input id="as35-chk3" class="radio2" type="radio" name="as3-5" score="14"/><label for="as35-chk3">~29세</label>
+                                        <input id="as35-chk4" class="radio2" type="radio" name="as3-5" score="11"/><label for="as35-chk4">~32세</label>
+                                        <input id="as35-chk5" class="radio2" type="radio" name="as3-5" score="8"/><label for="as35-chk5">~34세</label>
+                                        <input id="as35-chk6" class="radio2" type="radio" name="as3-5" score="5"/><label  for="as35-chk6">~39세</label>
+                                        <input id="as35-chk7" class="radio2" type="radio" name="as3-5" score="0"/><label for="as35-chk7">40세 이상</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>3-6</span>
+                                        <span>한국어능력시험 등급이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as36-chk1" class="radio2" type="radio" name="as3-6" score="20"/><label for="as36-chk1">5급/5단계 이상</label>
+                                        <input id="as36-chk2" class="radio2" type="radio" name="as3-6" score="15"/><label for="as36-chk2">4급/4단계 이상</label>
+                                        <input id="as36-chk3" class="radio2" type="radio" name="as3-6" score="10"/><label for="as36-chk3">3급/3단계 이상</label>
+                                        <input id="as36-chk4" class="radio2" type="radio" name="as3-6" score="5"/><label for="as36-chk4">2급/2단계 이상</label>
+                                        <input id="as36-none" class="radio2" type="radio" name="as3-6" score="0"/><label for="as36-none">없음</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="check3">
+                                <p class="title">-선택 평가 항목</p>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-1</span>
+                                        <span>동일업체에서 근속 기간이 얼마나 되는지 입력하세요(만 근로기간 / 최대 10년).</span>
+                                    </div>
+                                    <div class="check">
+                                        <input class="survey-text" type="text" placeholder="0" name="as4-1" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/><span class="unit">년</span>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-2</span>
+                                        <span>보유한 국내 정기적금이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as42-chk1" class="radio2" type="radio" name="as4-2" score="15"/><label for="as42-chk1">2년 이상 1억원 이상</label>
+                                        <input id="as42-chk2" class="radio2" type="radio" name="as4-2" score="10"/><label for="as42-chk2">2년 이상 6천만원 이상</label>
+                                        <input id="as42-chk3" class="radio2" type="radio" name="as4-2" score="5"/><label for="as42-chk3">2년 이상 3천만원 이상</label>
+                                        <input id="as42-chk4" class="radio2" type="radio" name="as4-2" score="0"/><label for="as42-chk4">1년 미만</label>
+                                        <input id="as42-none" class="radio2" type="radio" name="as4-2" score="0"/><label for="as42-none">없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-3</span>
+                                        <span>국내에 보유한 자산이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as43-chk1" class="radio2" type="radio" name="as4-3" score="20"/><label for="as43-chk1">1억원 이상</label>
+                                        <input id="as43-chk2" class="radio2" type="radio" name="as4-3" score="15"/><label for="as43-chk2">8천만원 이상</label>
+                                        <input id="as43-chk3" class="radio2" type="radio" name="as4-3" score="10"/><label for="as43-chk3">5천만원 이상</label>
+                                        <input id="as43-chk4" class="radio2" type="radio" name="as4-3" score="0"/><label for="as43-chk4">4천만원 이상</label>
+                                        <input id="as43-chk5" class="radio2" type="radio" name="as4-3" score="0"/><label for="as43-chk5">3천만원 이상</label>
+                                        <input id="as43-chk6" class="radio2" type="radio" name="as4-3" score="0"/><label for="as43-chk6">2천만원 이상</label>
+                                        <input id="as43-chk7" class="radio2" type="radio" name="as4-3" score="0"/><label for="as43-chk7">1천만원 이상</label>
+                                        <input id="as43-chk8" class="radio2" type="radio" name="as4-3" score="0"/><label for="as43-chk8">1천만원 이하</label>
+                                        <input id="as43-none" class="radio2" type="radio" name="as4-3" score="0"/><label for="as43-none">없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-4</span>
+                                        <span>최근 10년 이내 국내 관련분야 근무경력이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as44-chk1" class="radio2" type="radio" name="as4-4" score="15"/><label for="as44-chk1">뿌리산업 분야 및 농.축산.어업 분야 6년 이상</label>
+                                        <input id="as44-chk2" class="radio2" type="radio" name="as4-4" score="10"/><label for="as44-chk2">뿌리산업 분야 및 농.축산.어업 분야 4년 이상</label>
+                                        <input id="as44-chk3" class="radio2" type="radio" name="as4-4" score="0"/><label for="as44-chk3">뿌리산업 분야 및 농.축산.어업 분야 4년 미만</label>
+                                        <input id="as44-chk4" class="radio2" type="radio" name="as4-4" score="10"/><label for="as44-chk4">일반 제조업, 건설업 분야 등 6년 이상</label>
+                                        <input id="as44-chk5" class="radio2" type="radio" name="as4-4" score="5"/><label for="as44-chk5">일반 제조업, 건설업 분야 등 4년 이상</label>
+                                        <input id="as44-chk6" class="radio2" type="radio" name="as4-4" score="0"/><label for="as44-chk6">일반 제조업, 건설업 분야 등 4년 미만</label>
+                                        <input id="as44-none" class="radio2" type="radio" name="as4-4" score="0"/><label for="as44-none">없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-5</span>
+                                        <span>관련직종 국내 교육 또는 연수경험이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as45-chk1" class="radio2" type="radio" name="as4-5" score="10"/><label for="as45-chk1">국내 교육경험 학사이상 취득</label>
+                                        <input id="as45-chk2" class="radio2" type="radio" name="as4-5" score="8"/><label for="as45-chk2">국내 교육경험 전문학사 취득</label>
+                                        <input id="as45-chk3" class="radio2" type="radio" name="as4-5" score="5"/><label for="as45-chk3">국내 연수경험 1년 이상</label>
+                                        <input id="as45-chk4" class="radio2" type="radio" name="as4-5" score="3"/><label for="as45-chk4">국내 연수경험 6~1년 미만</label>
+                                        <input id="as45-none" class="radio2" type="radio" name="as4-5" score="0"/><label for="as45-none">없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-6</span>
+                                        <span>(가점)국내 유학경험이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as46-chk1" class="radio2" type="radio" name="as4-6" score="10"/><label for="as46-chk1">석사 이상</label>
+                                        <input id="as46-chk2" class="radio2" type="radio" name="as4-6" score="5"/><label for="as46-chk2">학사 이하</label>
+                                        <input id="as46-chk3" class="radio2" type="radio" name="as4-6" score="3"/><label for="as46-chk3">전문 학사</label>
+                                        <input id="as46-none" class="radio2" type="radio" name="as4-6" score="0"/><label for="as46-none">없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-7</span>
+                                        <span>(가점)관련 중앙부처의 추천을 받았나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as47-yes" class="radio2" type="radio" name="as4-7" score="10"/><label for="as47-yes">예</label>
+                                        <input id="as47-no" class="radio2" type="radio" name="as4-7" score="0"/><label for="as47-no">아니오</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-8</span>
+                                        <span>(가점)사회통합 프로그램을 이수하였나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as48-yes" class="radio2" type="radio" name="as4-8" score="5"/><label for="as48-yes">예</label>
+                                        <input id="as48-no" class="radio2" type="radio" name="as4-8" score="0"/><label for="as48-no">아니오</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-9</span>
+                                        <span>(가점)읍, 면지역 근무경력이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as49-chk1" class="radio2" type="radio" name="as4-9" score="10"/><label for="as49-chk1">4년 이상</label>
+                                        <input id="as49-chk2" class="radio2" type="radio" name="as4-9" score="7"/><label for="as49-chk2">3년 이상</label>
+                                        <input id="as49-chk3" class="radio2" type="radio" name="as4-9" score="5"/><label for="as49-chk3">2년 이상</label>
+                                        <input id="as49-none" class="radio2" type="radio" name="as4-9" score="0"/><label for="as49-none">없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-10</span>
+                                        <span>(가점)사회 공헌으로 국가나 지방자치단체에로부터 수여받은 것이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as410-chk1" class="radio2" type="radio" name="as4-10" score="5"/><label for="as410-chk1">표창장</label>
+                                        <input id="as410-chk2" class="radio2" type="radio" name="as4-10" score="3"/><label for="as410-chk2">사회봉사</label>
+                                        <input id="as410-none" class="radio2" type="radio" name="as4-10" score="0"/><label for="as410-none">없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-11</span>
+                                        <span>(가점)최근 1년 연간 소득세 납세실적이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as411-chk1" class="radio2" type="radio" name="as4-11" score="5"/><label for="as411-chk1">300만원 이상</label>
+                                        <input id="as411-chk2" class="radio2" type="radio" name="as4-11" score="0"/><label for="as411-chk2">200만원 이상</label>
+                                        <input id="as411-chk3" class="radio2" type="radio" name="as4-11" score="0"/><label for="as411-chk3">100만원 이상</label>
+                                        <input id="as411-chk4" class="radio2" type="radio" name="as4-11" score="0"/><label for="as411-chk4">100만원 이하</label>
+                                        <input id="as411-none" class="radio2" type="radio" name="as4-11" score="0"/><label for="as411-none">없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>4-12</span>
+                                        <span>(가점)고용노동부 추천을 받아 코로나19 관련 계절근로에 참여한 적이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as412-chk1" class="radio2" type="radio" name="as4-12" score="4"/><label for="as412-chk1">3개월 이상</label>
+                                        <input id="as412-chk2" class="radio2" type="radio" name="as4-12" score="3"/><label for="as412-chk2">2개월 이상</label>
+                                        <input id="as412-chk3" class="radio2" type="radio" name="as4-12" score="2"/><label for="as412-chk3">1개월 이상</label>
+                                        <input id="as412-chk4" class="radio2" type="radio" name="as4-12" score="0"/><label for="as412-chk4">1개월 미만</label>
+                                        <input id="as412-none" class="radio2" type="radio" name="as4-12" score="0"/><label for="as412-none">없음</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="check4">
+                                <p class="title">-추가 평가 항목</p>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>5-1</span>
+                                        <span>(감점)10년이내에 처벌여부와 상관없이 법위반이 인정된 출입국관리법을 위반한 적이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as51-chk1" class="radio2" type="radio" name="as5-1" score="-50"/><label for="as51-chk1">4회이상</label>
+                                        <input id="as51-chk2" class="radio2" type="radio" name="as5-1" score="-50"/><label for="as51-chk2">3회</label>
+                                        <input id="as51-chk3" class="radio2" type="radio" name="as5-1" score="-10"/><label for="as51-chk3">2회</label>
+                                        <input id="as51-chk4" class="radio2" type="radio" name="as5-1" score="-5"/><label for="as51-chk4">1회</label>
+                                        <input id="as51-none" class="radio2" type="radio" name="as5-1" score="0"/><label for="as51-none">없음</label>
+                                    </div>
+                                </div>
+                                <div class="check-area">
+                                    <div class="question">
+                                        <span>5-2</span>
+                                        <span>(감점)10년이내에 기타 국내 법령 위반한 적이 있나요?</span>
+                                    </div>
+                                    <div class="check">
+                                        <input id="as52-chk1" class="radio2" type="radio" name="as5-2" score="-50"/><label for="as52-chk1">4회이상</label>
+                                        <input id="as52-chk2" class="radio2" type="radio" name="as5-2" score="-50"/><label for="as52-chk2">3회</label>
+                                        <input id="as52-chk3" class="radio2" type="radio" name="as5-2" score="-10"/><label for="as52-chk3">2회</label>
+                                        <input id="as52-chk4" class="radio2" type="radio" name="as5-2" score="-5"/><label for="as52-chk4">1회</label>
+                                        <input id="as52-none" class="radio2" type="radio" name="as5-2" score="0"/><label for="as52-none">없음</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--mobile 화면에서 사용하는 응답제출 버튼-->
+                            <button class="btn-grey btn-submit" screen="mobile" style="cursor: default;">응답 제출</button>
+
+                            <p class="end">수고하셨습니다. 응답에 감사드립니다.</p>
+                        </div>
+
+                        <div class="part total">
+                            <div>
+                                <span>총 점수</span>
+                                <!--사용자가 체크 할 때 마다 점수 자동으로 계산되기-->
+                                <span class="total"><span class="score">0</span><span class="unit">점</span></span>
+                            </div>
+                            <!--pc 화면에서 사용하는 응답제출 버튼-->
+                            <button class="btn-grey btn-submit" screen="pc" style="cursor: default;">응답 제출</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script>
+                let visaSeq;
+                let objAnswer = {};
+                let objScore = {};
+                acceptChk();
+
+                $(".radio2").on("click", function () {
+                    answerChecking();
+                    $(".score").text(answerScoring());
+                })
+
+                $(".survey-text").on("keyup", function() {
+                    answerChecking();
+                })
+
+                function answerChecking() {
+                    objAnswer.q1_1 = $('input[name="as1-1"]:checked').next().html();
+                    objAnswer.q1_2 = $('input[name="as1-2"]:checked').next().html();
+                    objAnswer.q1_3 = $('input[name="as1-3"]:checked').next().html();
+                    objAnswer.q2_1 = $('input[name="as2-1"]:checked').next().html();
+                    objAnswer.q2_2 = $('input[name="as2-2"]:checked').next().html();
+                    objAnswer.q3_1 = $('input[name="as3-1"]:checked').next().html();
+                    objAnswer.q3_2 = $('input[name="as3-2"]:checked').next().html();
+                    objAnswer.q3_3 = $('input[name="as3-3"]').val(); // 주관식
+                    objAnswer.q3_4 = $('input[name="as3-4"]:checked').next().html();
+                    objAnswer.q3_5 = $('input[name="as3-5"]:checked').next().html();
+                    objAnswer.q3_6 = $('input[name="as3-6"]:checked').next().html();
+                    objAnswer.q4_1 = $('input[name="as4-1"]').val(); // 객관식
+                    objAnswer.q4_2 = $('input[name="as4-2"]:checked').next().html();
+                    objAnswer.q4_3 = $('input[name="as4-3"]:checked').next().html();
+                    objAnswer.q4_4 = $('input[name="as4-4"]:checked').next().html();
+                    objAnswer.q4_5 = $('input[name="as4-5"]:checked').next().html();
+                    objAnswer.q4_6 = $('input[name="as4-6"]:checked').next().html();
+                    objAnswer.q4_7 = $('input[name="as4-7"]:checked').next().html();
+                    objAnswer.q4_8 = $('input[name="as4-8"]:checked').next().html();
+                    objAnswer.q4_9 = $('input[name="as4-9"]:checked').next().html();
+                    objAnswer.q4_10 = $('input[name="as4-10"]:checked').next().html();
+                    objAnswer.q4_11 = $('input[name="as4-11"]:checked').next().html();
+                    objAnswer.q4_12 = $('input[name="as4-12"]:checked').next().html();
+                    objAnswer.q5_1 = $('input[name="as5-1"]:checked').next().html();
+                    objAnswer.q5_2 = $('input[name="as5-2"]:checked').next().html();
+
+                    for(let key in objAnswer) {
+                        let value = objAnswer[key];
+                        if(value==undefined || value==null) {
+                            $(".btn-submit").removeClass("btn-red");
+                            $(".btn-submit").addClass("btn-grey");
+                            $(".btn-submit").css("cursor", "default");
+                            break;
+                        }else {
+                            $(".btn-submit").addClass("btn-red");
+                            $(".btn-submit").removeClass("btn-grey");
+                            $(".btn-submit").css("cursor", "pointer");
+                        }
+                    }
+                }
+
+                function answerScoring() {
+                    objScore.q1_1 = Number($('input[name="as1-1"]:checked').attr("score"));
+                    objScore.q1_2 = Number($('input[name="as1-2"]:checked').attr("score"));
+                    objScore.q1_3 = Number($('input[name="as1-3"]:checked').attr("score"));
+                    objScore.q2_1 = Number($('input[name="as2-1"]:checked').attr("score"));
+                    objScore.q2_2 = Number($('input[name="as2-2"]:checked').attr("score"));
+                    objScore.q3_1 = Number($('input[name="as3-1"]:checked').attr("score"));
+                    objScore.q3_2 = Number($('input[name="as3-2"]:checked').attr("score"));
+                    // objScore.q3_3 = $('input[name="as3-3"]').val(); // 주관식
+                    objScore.q3_4 = Number($('input[name="as3-4"]:checked').attr("score"));
+                    objScore.q3_5 = Number($('input[name="as3-5"]:checked').attr("score"));
+                    objScore.q3_6 = Number($('input[name="as3-6"]:checked').attr("score"));
+                    // objScore.q4_1 = $('input[name="as4-1"]').val(); // 객관식
+                    objScore.q4_2 = Number($('input[name="as4-2"]:checked').attr("score"));
+                    objScore.q4_3 = Number($('input[name="as4-3"]:checked').attr("score"));
+                    objScore.q4_4 = Number($('input[name="as4-4"]:checked').attr("score"));
+                    objScore.q4_5 = Number($('input[name="as4-5"]:checked').attr("score"));
+                    objScore.q4_6 = Number($('input[name="as4-6"]:checked').attr("score"));
+                    objScore.q4_7 = Number($('input[name="as4-7"]:checked').attr("score"));
+                    objScore.q4_8 = Number($('input[name="as4-8"]:checked').attr("score"));
+                    objScore.q4_9 = Number($('input[name="as4-9"]:checked').attr("score"));
+                    objScore.q4_10 = Number($('input[name="a4-10"]:checked').attr("score"));
+                    objScore.q4_11 = Number($('input[name="a4-11"]:checked').attr("score"));
+                    objScore.q4_12 = Number($('input[name="a4-12"]:checked').attr("score"));
+                    objScore.q5_1 = Number($('input[name="as5-1"]:checked').attr("score"));
+                    objScore.q5_2 = Number($('input[name="as5-2"]:checked').attr("score"));
+
+                    let score = 0;
+                    for(let key in objScore) {
+                        if(!isNaN(objScore[key])) {
+                            score += objScore[key];
+                        }
+                    }
+
+                    return score;
+                }
+
+
+                $(".btn-submit").on("click", function(){
+                    if($(this).hasClass("btn-grey")) {
+                        return;
+                    }else {
+                        if($(this).attr("screen")=="mobile") {
+                            submitSurvey();
+                        }else if($(this).attr("screen")=="pc"){
+                            submitSurvey();
+                        }
+                    }
+                });
+
+                function submitSurvey() {
+                    if(!confirm("응답을 제출하면 이 페이지는 더 이상 접근할 수 없습니다.\n계속 하시겠습니까?")) {
+                        return;
+                    }
+
+                    let point = Number($(".score").html());
+
+                    $.ajax({
+                        type:"put",
+                        url:"/api/user/visa",
+                        async:false,
+                        contentType:"application/json",
+                        data:JSON.stringify({
+                            "visaSeq":visaSeq,
+                            "content":objAnswer,
+                            "point":point
+                        }),
+                        success:function(data) {
+                            toastModal("응답이 제출되었습니다. 수고하셨습니다.");
+                            setTimeout(() => location.href="/", 1000);
+                        },
+                        error: function (request, status, error) {
+                            toastModal("응답 제출에 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                };
+
+                function acceptChk() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/visa",
+                        async:false,
+                        success:function(data){
+                            console.log(data);
+                            visaSeq=data.visaSeq;
+                        },
+                        error: function (request, status, error) {
+                            alert("로그인이 필요합니다.");
+                            location.href = "/login"
+                        }
+                    });
+                }
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

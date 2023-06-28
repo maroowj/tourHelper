@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="login-wrap">
+                <div>
+                    <!-- 페이지별 타이틀 -->
+                    <div class="page-title"><span>로그인</span></div>
+
+                    <div class="content-wrap">
+                        <div>
+                            <p>간편하게 SNS로 로그인 하세요.</p>
+                            <div class="btn-area">
+                                <div class="btn-facebook" onclick="facebookLogin();">
+                                    <span>페이스북으로 로그인</span>
+                                </div>
+                                <div class="btn-kakao" onclick="kakaoLogin()">
+                                    <span>카카오톡으로 로그인</span>
+                                </div>
+                            </div>
+                            <span>가입한 내역이 없으신가요?&nbsp;&nbsp;<span class="btn-join" onclick="location.href='/join'">회원가입</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--script START-->
+            <script>
+                Kakao.init('992677eab5da113d6b48908dcedb41cd');
+
+
+                function kakaoLogin() {
+                    Kakao.Auth.login({
+                        scope: 'profile_nickname,profile_image,account_email,gender,birthday,age_range',
+                        success: function () {
+                            Kakao.API.request({
+                                url: '/v2/user/me',
+                                success: function (response) {
+                                    let kakaoData = {
+                                        age: response.kakao_account.age_range,
+                                        birth: response.kakao_account.birthday,
+                                        email: response.kakao_account.email,
+                                        gender: response.kakao_account.gender,
+                                    };
+                                    location.href = '/login/kakao?provider=kakao' +
+                                        '&sid=' + response.id +
+                                        '&nickname=' + response.properties.nickname +
+                                        '&thumbnailImageUrl=' + response.properties.thumbnail_image +
+                                        '&gender=' + kakaoData.gender +
+                                        '&age=' + kakaoData.age +
+                                        '&email=' + kakaoData.email +
+                                        '&birth=' + kakaoData.birth;
+                                },
+                                fail: function (error) {
+                                    console.log(error);
+                                }
+                            })
+                        },
+                        fail: function (error) {
+                            console.log(error);
+                        }
+                    })
+                }
+
+
+
+
+
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

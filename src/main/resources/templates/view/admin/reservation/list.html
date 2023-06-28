@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+    #abroadList td.stat {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #abroadList td.stat span.stat-progress {
+        display: flex;
+        align-items: center;
+        /*width: fit-content;*/
+        text-align: center;
+        max-width: calc(100% - 10px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
+
+    #abroadList td.stat span.stat-progress::before {
+        content: '';
+        display: inline-block;
+        min-width: 7px;
+        height: 7px;
+        background-color: var(--red);
+        border-radius: 100%;
+        margin-right: 4px;
+    }
+
+    #reservation-modal .modal-text-wrap {
+        border-bottom: unset;
+    }
+
+    #reservation-modal tr.documents div.d-flex-wrap table tr th,
+    #reservation-modal tr.documents div.d-flex-wrap table tr td {
+        height: 56px !important;
+    }
+
+    #reservation-modal tr.documents div.d-flex-wrap {
+        padding: unset;
+    }
+
+    #reservation-modal tr.documents > td {
+        padding: unset;
+    }
+
+    #reservation-modal tr.documents tbody.fileList tr td span {
+        font-size: 1rem;
+        cursor: pointer;
+        color: var(--blue);
+    }
+
+    #reservation-modal tr.documents tbody.fileList tr td span:hover {
+        text-decoration: underline;
+    }
+
+    input[type='checkbox'].chkbox1 {
+        display: none;
+    }
+
+    input[type='checkbox'].chkbox1 + label {
+        font-size: 15px;
+        padding-left: 18px;
+        background: url('/tourhelperUser/images/checkbox_grey.svg') no-repeat;
+        display: inline-block;
+        align-items: center;
+        background-size: 15px;
+        background-position: 0px center;
+        width: fit-content;
+    }
+
+    input[type='checkbox'].chkbox1:checked + label {
+        background: url('/tourhelperUser/images/checkbox_red.svg') no-repeat;
+        background-size: 15px;
+        background-position: 0px center;
+    }
+
+    .applicant-detail.chk-area {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        column-gap: 30px;
+    }
+</style>
+
+<div layout:fragment="content">
+
+    <main role="main" class="main-content">
+        <script>
+            const main_menu = 4;
+        </script>
+
+        <!--컨텐츠 영역-->
+        <div class="contents">
+            <div class="admin-contents-title">
+                <h3 class="admin-title">유학 관리</h3>
+
+                <!--<div class="date-search-wrap">
+                    <input type="date" class="select-date" id="startDate">
+                    <span class="text">~</span>
+                    <input type="date" class="select-date" id="endDate">
+                    <a href="#" class="search-btn">검색</a>
+                </div>-->
+            </div><!--admin-contents-title-->
+
+            <div class="company-wrap admin-reserve-wrap">
+                <div id="company-list-wrap" class="company-list-wrap">
+                    <div class="search-wrap">
+                        <input type="text" placeholder="학교 검색" class="keyword" onkeyup="getSchoolList($(this).val())">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    </div>
+
+                    <ul class="companyList-wrap"></ul>
+                </div>
+
+                <div class="company-table modal-open-table">
+                    <div class="admin-table-title-wrap">
+                        <div class="admin-table-title">
+                            <p class="title">전체</p>
+                            <p class="detail-text">전체 유학관리</p>
+                        </div>
+                        <div class="reserve-check-btn">
+                            <!--<a class="blue-btn company-update-btn cupoint">신청 승인처리</a>-->
+                            <a class="blue-btn company-update-btn cupoint">신청단계 승인</a>
+                            <!--신청 취소처리 시 해당 리스트 내역에서 삭제됨-->
+                            <!--<a class="gray-btn company-delete-btn cupoint">신청 취소처리</a>-->
+                        </div>
+                    </div>
+
+                    <!--table START-->
+                    <table class="admin-table admin-reserve-table">
+                        <colgroup>
+                            <col style="width:4%">
+                            <col style="width:6%">
+                            <col style="width:10%">
+                            <col style="width:6%">
+                            <col style="">
+                            <col style="width:10%">
+                            <col style="">
+                            <col style="">
+                            <col style="">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="after-none"><input type="checkbox" class="all-check"></th>
+                            <th>번호</th>
+                            <th>이름</th>
+                            <th>성별</th>
+                            <th>학교</th>
+                            <th>기간</th>
+                            <th>한국어능력시험</th>
+                            <th>제출서류</th>
+                            <th>진행단계</th>
+                        </tr>
+                        </thead>
+                        <!--<tbody id="reservationList"></tbody>-->
+                        <tbody id="abroadList">
+                        <!--<tr>
+                            <td><input type='checkbox' class='checked'></td>
+                            <td class="info">1</td>
+                            <td class="info">김미</td>
+                            <td class="info">여</td>
+                            <td class="info">경인여자대학교</td>
+                            <td class="info">2년</td>
+                            <td class="info">2급</td>
+                            <td class="info">제출서류명</td>
+                            <td class="info stat"><span class="stat-progress">4단계(입학등록청구서)</span></td>
+                        </tr>
+                        <tr>
+                            <td><input type='checkbox' class='checked'></td>
+                            <td class="info">1</td>
+                            <td class="info">김미</td>
+                            <td class="info">여</td>
+                            <td class="info">경인여자대학교</td>
+                            <td class="info">2년</td>
+                            <td class="info">2급</td>
+                            <td class="info">제출서류명</td>
+                            <td class="info stat"><span class="stat-progress">6단계(표준입학허가서)</span></td>
+                        </tr>
+                        <tr>
+                            <td><input type='checkbox' class='checked'></td>
+                            <td class="info">1</td>
+                            <td class="info">김미</td>
+                            <td class="info">여</td>
+                            <td class="info">경인여자대학교</td>
+                            <td class="info">2년</td>
+                            <td class="info">2급</td>
+                            <td class="info">제출서류명</td>
+                            <td class="info stat"><span class="stat-progress">1단계(서류제출)</span></td>
+                        </tr>
+                        <tr>
+                            <td><input type='checkbox' class='checked'></td>
+                            <td class="info">1</td>
+                            <td class="info">김미</td>
+                            <td class="info">여</td>
+                            <td class="info">경인여자대학교</td>
+                            <td class="info">2년</td>
+                            <td class="info">2급</td>
+                            <td class="info">-</td>
+                            <td class="info stat"><span class="stat-progress">2단계(심사)</span></td>
+                        </tr>-->
+                        </tbody>
+
+                    </table>
+
+                    <div id="pagination"></div>
+                </div><!--company-table-->
+
+            </div><!--company-wrap-->
+        </div><!--contents-->
+
+        <!--예약신청 정보 MODAL START-->
+        <div id="reservation-modal" class="modal admin-modal info-modal admin-info-modal">
+            <div class="modal-wrap">
+                <div class="modal-title-wrap">
+                    <p class="title">유학신청 정보</p>
+                    <i class="fa-solid fa-xmark close"></i>
+                </div>
+                <div class="modal-text-wrap">
+                    <table class="date-table modal-table">
+                        <colgroup>
+                            <col style="width:140px">
+                            <col style="width:calc(50% - 70px)">
+                            <col style="width:140px">
+                            <col style="width:calc(50% - 140px)">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th>신청자</th>
+                            <td>
+                                <div id="name" class="d-flex-wrap reservation-date txt-detail"></div>
+                            </td>
+                            <th class="b-left">성별</th>
+                            <td>
+                                <div id="gender" class="d-flex-wrap booking-status txt-detail"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>국가</th>
+                            <td>
+                                <div id="country" class="d-flex-wrap reservation-date txt-detail"></div>
+                            </td>
+                            <th class="b-left">연락처</th>
+                            <td>
+                                <div id="phone" class="d-flex-wrap booking-status txt-detail"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>생년월일</th>
+                            <td>
+                                <div id="birth" class="d-flex-wrap reservation-date txt-detail"></div>
+                            </td>
+                            <th class="b-left">여권정보</th>
+                            <td style="display: flex; align-items: center;">
+                                <div class="d-flex-wrap booking-status txt-detail"><input type="text" id="passport" placeholder="여권번호" size="10"/></div>
+                                <div class="select-box w47pro ma-l-10px">
+                                    <select id="state" class="w100pro" style="width: 100%">
+                                        <option value="접수">접수</option>
+                                        <option value="허가">허가</option>
+                                        <option value="불허가">불허가</option>
+                                        <option value="환불">환불</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--일시 table END-->
+
+                    <table class="reserve-table modal-table">
+                        <colgroup>
+                            <col style="width:140px">
+                            <col style="width:calc(20% - 70px)">
+                            <col style="width:calc(30% - 70px)">
+                            <col style="width:140px">
+                            <col style="width:calc(50% - 140px)">
+                        </colgroup>
+                        <tbody>
+
+                        <tr>
+                            <th>학교</th>
+                            <td colspan="2">
+                                <div id="school" class="d-flex-wrap applicant txt-detail"></div>
+                            </td>
+                            <th class="b-left">기간</th>
+                            <td colspan="2">
+                                <div id="period" class="d-flex-wrap guest-type txt-detail"></div>
+                            </td>
+                        </tr>
+                        <tr class="progress">
+                            <th>한국어능력시험</th>
+                            <td colspan="2">
+                                <div id="topik" class="d-flex-wrap applicant txt-detail"></div>
+                            </td>
+                            <th class="b-left">진행단계</th>
+                            <td colspan="2">
+                                <div class="select-box w100pro">
+                                    <select id="step" class="w100pro" style="width: 100%">
+                                        <option value=0>신청(승인대기)</option>
+                                        <option value=1>1단계(서류제출)</option>
+                                        <option value=2>2단계(심사)</option>
+                                        <option value=3>3단계(면접)</option>
+                                        <option value=4>4단계(입학등록청구서)</option>
+                                        <option value=5>5단계(납부)</option>
+                                        <option value=6>6단계(표준입학허가서)</option>
+                                        <option value=7>7단계(비자)</option>
+                                        <option value=8>8단계(2차 납부)</option>
+                                        <option value=9>9단계(입국)</option>
+                                        <option value=10>10단계(입학)</option>
+                                        <option value=11>11단계(졸업)</option>
+                                        <option value=12>12단계(취직)</option>
+                                    </select>
+                                </div>
+                                <!--<div class="d-flex-wrap guest-type">2단계(심사)</div>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>필요 제출서류</th>
+                            <td colspan="5">
+                                <div class="d-flex-wrap applicant-detail chk-area">
+                                    <!--<input type="text" class="firstCourseTitle w100pro" placeholder="필요 제출서류를 입력해주세요.">-->
+                                    <input type="checkbox" class="chkbox1" id="chk-1" value=1 txt="파일01"/><label for="chk-1">파일
+                                    01</label>
+                                    <input type="checkbox" class="chkbox1" id="chk-2" value=2 txt="파일02"/><label for="chk-2">파일
+                                    02</label>
+                                    <input type="checkbox" class="chkbox1" id="chk-3" value=3 txt="파일03"/><label for="chk-3">파일
+                                    03</label>
+                                    <input type="checkbox" class="chkbox1" id="chk-4" value=4 txt="파일04"/><label for="chk-4">파일
+                                    04</label>
+                                    <input type="checkbox" class="chkbox1" id="chk-5" value=5 txt="파일05"/><label for="chk-5">파일
+                                    05</label>
+                                    <input type="checkbox" class="chkbox1" id="chk-6" value=6 txt="파일06"/><label for="chk-6">파일
+                                    06</label>
+                                    <input type="checkbox" class="chkbox1" id="chk-7" value=7 txt="파일07"/><label for="chk-7">파일
+                                    07</label>
+                                    <input type="checkbox" class="chkbox1" id="chk-8" value=8 txt="파일08"/><label for="chk-8">파일
+                                    08</label>
+                                    <input type="checkbox" class="chkbox1" id="chk-9" value=9 txt="파일09"/><label for="chk-9">파일
+                                    09</label>
+                                    <input type="checkbox" class="chkbox1" id="chk-10" value=10 txt="파일10"/><label for="chk-10">파일
+                                    10</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="documents">
+                            <th>제출된 서류</th>
+                            <td colspan="5">
+                                <!--<div class="d-flex-wrap quest-number">
+                                    파일명.pdf
+                                </div>-->
+                                <div class="d-flex-wrap quest-number">
+                                    <table>
+                                        <colgroup>
+                                            <col style="width:140px">
+                                            <col style="width:559.5px">
+                                        </colgroup>
+
+                                        <tbody id="fileList" class="fileList">
+                                        <!--사용자가 단계별로 제출한 서류가 생성됨-->
+                                        <tr class="step">
+                                            <th>파일01</th>
+                                            <!--마우스오버 시 파일 다운로드-->
+                                            <td id="file1" class="file"><span>파일명.pdf</span></td>
+                                        </tr>
+                                        <tr class="step">
+                                            <th>파일02</th>
+                                            <!--마우스오버 시 파일 다운로드-->
+                                            <td id="file2" class="file">-</td>
+                                        </tr>
+                                        <tr class="step">
+                                            <th>파일03</th>
+                                            <!--마우스오버 시 파일 다운로드-->
+                                            <td id="file3" class="file"></td>
+                                        </tr>
+                                        <tr class="step">
+                                            <th>파일04</th>
+                                            <!--마우스오버 시 파일 다운로드-->
+                                            <td id="file4" class="file"></td>
+                                        </tr>
+                                        <tr class="step">
+                                            <th>파일05</th>
+                                            <!--마우스오버 시 파일 다운로드-->
+                                            <td id="file5" class="file"></td>
+                                        </tr>
+                                        <tr class="step">
+                                            <th>파일06</th>
+                                            <!--마우스오버 시 파일 다운로드-->
+                                            <td id="file6" class="file"></td>
+                                        </tr>
+                                        <tr class="step">
+                                            <th>파일07</th>
+                                            <!--마우스오버 시 파일 다운로드-->
+                                            <td id="file7" class="file"></td>
+                                        </tr>
+                                        <tr class="step">
+                                            <th>파일08</th>
+                                            <!--마우스오버 시 파일 다운로드-->
+                                            <td id="file8" class="file"></td>
+                                        </tr>
+                                        <tr class="step">
+                                            <th>파일09</th>
+                                            <!--마우스오버 시 파일 다운로드-->
+                                            <td id="file9" class="file"></td>
+                                        </tr>
+                                        <tr class="step">
+                                            <th>파일10</th>
+                                            <!--마우스오버 시 파일 다운로드-->
+                                            <td id="file10" class="file"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>기타</th>
+                            <td colspan="5">
+                                <div id="etc" class="d-flex-wrap etc"></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--신청내용 table END-->
+                </div><!--modal-text-wrap-->
+                <div class="modal-bottom">
+                    <a class="modal-btn close-btn cupoint" style="margin-right:0;">닫기</a>
+                    <a id="btn-edit" class="modal-btn reserve-btn ma-l-20px cupoint">신청단계 수정</a>
+                </div>
+            </div><!--modal-wrap-->
+            <div class="modal-bg-cover"></div>
+        </div>
+
+
+    </main>
+
+    <script>
+        let updateStudySeq;
+        let page = 1;
+        let companySeq;
+
+        $(function () {
+            getSchoolList();
+            getReservationList();
+        });
+
+        // left_menu 학교 클릭 시
+        $("#company-list-wrap").on("click", ".companyList-wrap li", function () {
+            $(".all-check, .checked").prop("checked", false);
+            if (!$(this).hasClass("on")) $(this).addClass("on");
+            $(".companyList-wrap li").not(this).removeClass("on");
+
+            companySeq = $(this).find(".comSeq").attr("companySeq");
+            getReservationList(companySeq);
+        });
+
+        // 업체리스트 불러오기
+        function getSchoolList(keyword) {
+
+            $.ajax({
+                type: "GET",
+                url: "/api/admin/course/first/list",
+                data: {
+                    "size": 30,
+                    "sort": "firstCourseSeq,desc",
+                    "keyword": keyword
+                },
+                success: function (result) {
+                    // console.log(data);
+                    let data = result.content;
+                    let companyTag = "<li class='on'><a class='cupoint'><span class='company-name'>전체</span></a></li>";
+
+                    if (data.length != 0) {
+                        data.forEach(function (data) {
+                            if (data.withdrawal != 1) {
+                                companyTag +=
+                                    "<li><a class='cupoint comSeq' companySeq='" + data.firstCourseSeq + "'><span class='company-name'>" + data.firstCourseTitle + "</span></a></li>";
+                            }
+                        });
+                        $(".companyList-wrap").html(companyTag);
+                    } else {
+                        $(".companyList-wrap").html(companyTag);
+                    }
+                }
+            });
+        }
+
+        // 전체 유학 신청 목록 불러오기
+        function getReservationList(schoolSeq) {
+            $.ajax({
+                type: "GET",
+                url: "/api/admin/study",
+                data: {
+                    "schoolSeq": schoolSeq,
+                    "page": page - 1,
+                    "size": 10,
+                    "sort": "studySeq,desc"
+                },
+                success: function (data) {
+                    console.log(data);
+                    let studyTag = "";
+
+                    if (data.content.length != 0) {
+
+                        data.content.forEach(function (data, index) {
+                            let gender = data.gender;
+                            if (data.gender == 'male') {
+                                gender = '남성';
+                            } else if(data.gender =='female') {
+                                gender = '여성';
+                            }
+                            let topik = data.topik;
+                            if (topik == "") {
+                                topik = '-';
+                            }
+
+                            let strStep = '';
+                            let step = data.step;
+                            if (step == 0) {
+                                strStep = '신청(승인대기)';
+                                step = 1;
+                            } else if (step == 1) {
+                                strStep = '서류제출'
+                            } else if (step == 2) {
+                                strStep = '심사'
+                            } else if (step == 3) {
+                                strStep = '면접'
+                            } else if (step == 4) {
+                                strStep = '입학등록 청구서'
+                            } else if (step == 5) {
+                                strStep = '2차 납부'
+                            } else if (step == 6) {
+                                strStep = '비자'
+                            } else if (step == 7) {
+                                strStep = '표준 입학허가서'
+                            } else if (step == 8) {
+                                strStep = '납부'
+                            } else if (step == 9) {
+                                strStep = '입국'
+                            } else if (step == 10) {
+                                strStep = '입학'
+                            } else if (step == 11) {
+                                strStep = '졸업'
+                            } else if (step == 12) {
+                                strStep = '취직'
+                            }
+
+                            let document = '';
+                            if (data.document == null || data.document == '') {
+                                document = '-';
+                            }
+
+                            studyTag += '<tr seq="' + data.studySeq + '" step="'+data.step+'">' +
+                                '<td><input type="checkbox" class="checked"></td>' +
+                                '<td class="info">' + data.rowNum + '</td>' +
+                                '<td class="info">' + data.name + '</td>' +
+                                '<td class="info">' + gender + '</td>' +
+                                '<td class="info">' + data.school + '</td>' +
+                                '<td class="info">' + data.period + '</td>' +
+                                '<td class="info">' + topik + '</td>' +
+                                '<td class="info">' + document + '</td>' +
+                                '<td class="info">' + strStep + '</td>';
+                        });
+                        $("#abroadList").html(studyTag);
+                    } else {
+                        $("#abroadList").html(studyTag);
+                    }
+                    fPagination(data, page);
+                }
+            });
+        }
+
+        $("#pagination").on("click", "ul li a", function () {
+            page = parseInt($(this).attr("gopage"));
+
+            getReservationList();
+        });
+
+        // 전체 예약 리스트 행 클릭 시, 상세정보
+        $("#abroadList").on("click", ".info", function () {
+            $("#reservation-modal").css("display", "block");
+            updateStudySeq = $(this).parent().attr("seq");
+
+            $.ajax({
+                type: "get",
+                url: "/api/admin/study/" + updateStudySeq,
+                async:false,
+                success: function (data) {
+                    console.log(data);
+                    $("#name").text(data.name);
+                    if (data.gender == 'male') {
+                        $("#gender").text("남성");
+                    } else if(data.gender =='female') {
+                        $("#gender").text("여성");
+                    }
+                    $("#country").text(data.country);
+                    $("#phone").text(data.phone);
+                    $("#school").text(data.school);
+                    $("#period").text(data.period);
+                    if (data.topik == null || data.topik == '') {
+                        $("#topik").text("-");
+                    } else {
+                        $("#topik").text(data.topik);
+                    }
+                    $("#step").val(data.step);
+
+                    if (data.activeFileNumber != null && data.activeFileNumber != "") {
+                        let arrChk = data.activeFileNumber.split("|");
+                        arrChk.forEach(function (arg) {
+                            $("#chk-" + arg).prop("checked", true);
+                        });
+                    } else {
+                        $(".chkbox1").prop("checked", false);
+                    }
+
+                    $(".file").html('-');
+
+                    let arrFiles = new Array();
+                    arrFiles.push(data.file1);
+                    arrFiles.push(data.file2);
+                    arrFiles.push(data.file3);
+                    arrFiles.push(data.file4);
+                    arrFiles.push(data.file5);
+                    arrFiles.push(data.file6);
+                    arrFiles.push(data.file7);
+                    arrFiles.push(data.file8);
+                    arrFiles.push(data.file9);
+                    arrFiles.push(data.file10);
+
+                    let arrFileUrls = new Array();
+                    arrFileUrls.push(data.file1Url);
+                    arrFileUrls.push(data.file2Url);
+                    arrFileUrls.push(data.file3Url);
+                    arrFileUrls.push(data.file4Url);
+                    arrFileUrls.push(data.file5Url);
+                    arrFileUrls.push(data.file6Url);
+                    arrFileUrls.push(data.file7Url);
+                    arrFileUrls.push(data.file8Url);
+                    arrFileUrls.push(data.file9Url);
+                    arrFileUrls.push(data.file10Url);
+
+                    for(i=0; i<arrFiles.length; i++) {
+                        if(arrFiles[i]!=null && arrFiles[i]!="") {
+                            $("#file"+(i+1)).html("<a href='"+arrFileUrls[i]+"' download='"+arrFiles[i]+"'><span class='download'>"+arrFiles[i]+"</span></a>");
+                        }else {
+                            $("#file"+(i+1)).html("-");
+                        }
+                    }
+                    if (data.etc == null || data.etc == '') {
+                        $("#etc").text("-");
+                    } else {
+                        $("#etc").text(data.etc);
+                    }
+
+                    $("#birth").text(data.birth);
+                    $("#passport").val(data.passport);
+                    $("#state").val(data.state);
+                }
+            });
+        });
+
+        // 유학 신청 승인 버튼
+        $(".blue-btn").click(function () {
+            if ($("#abroadList .checked:checked").length == 0) {
+                toastModal("유학 신청을 승인하려는 내역을 선택하세요.");
+                return;
+            } else {
+                $("#abroadList .checked:checked").each(function () {
+                    let studySeq = $(this).parent().parent().attr("seq");
+                    let step = Number($(this).parent().parent().attr("step"));
+
+                    if(step!=0) {
+                        toastModal("이미 승인된 내역은 다시 승인할 수 없습니다.");
+                        return false;
+                    }
+
+                    $.ajax({
+                        type: "put",
+                        url: "/api/admin/study/step",
+                        contentType:"application/json",
+                        data: JSON.stringify({"studySeq": studySeq, "step": 1}),
+                        success: function () {
+                        }
+                    });
+                    toastModal("신청 단계가 승인 상태로 변경되었습니다.");
+                    setTimeout(() => location.reload(), 1000);
+                });
+            }
+        });
+
+        // 신청 취소처리
+        /*$(".gray-btn").click(function () {
+            if ($("#abroadList .checked:checked").length == 0) {
+                toastModal("유학 신청을 취소하려는 내역을 선택하세요.");
+                return;
+            } else {
+                $("#abroadList .checked:checked").each(function () {
+                    let studySeq = $(this).parent().parent().attr("seq");
+                    let step = Number($(this).parent().parent().attr("step"));
+
+                    if(step!=0) {
+                        toastModal("이미 승인된 내역은 다시 승인할 수 없습니다.");
+                        return false;
+                    }
+
+                    $.ajax({
+                        type: "put",
+                        url: "/api/admin/study/step",
+                        contentType:"application/json",
+                        data: JSON.stringify({"studySeq": studySeq, "step": 1}),
+                        success: function () {
+                        }
+                    });
+                    toastModal("신청 단계가 승인 상태로 변경되었습니다.");
+                    setTimeout(() => location.reload(), 1000);
+                });
+            }
+        });*/
+
+        $("#btn-edit").on("click", function(){
+            updateStudy();
+        });
+
+        function updateStudy() {
+            let step = $("#step").val();
+            let document = '';
+            $(".chkbox1").each(function(){
+                if($(this).prop("checked")) {
+                    document += $(this).attr("txt")+', ';
+                }
+            });
+            document = document.substring(0, document.length-2);
+
+            let activeFileNumber = '';
+            $(".chkbox1").each(function(){
+                if($(this).prop("checked")) {
+                    activeFileNumber += $(this).val()+'|';
+                }
+            });
+            activeFileNumber = activeFileNumber.substring(0, activeFileNumber.length-1);
+
+            // console.log(step);
+            // console.log(activeFileNumber)
+
+            $.ajax({
+                type: "put",
+                url: "/api/admin/study/step",
+                async:false,
+                contentType:"application/json",
+                data: JSON.stringify({
+                        "studySeq": updateStudySeq,
+                        "step": step,
+                        "document": document,
+                        "activeFileNumber":activeFileNumber,
+                        "passport":$("#passport").val(),
+                        "state":$("#state").val()
+                }),
+                success: function () {
+                    toastModal("유학 상태가 변경되었습니다.");
+                    setTimeout(() => location.reload(), 1000);
+                }
+            });
+
+        }
+    </script>
+
+</div>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="inputProfile-wrap">
+
+                <!-- 페이지별 타이틀 -->
+                <div class="page-title"><span>추가정보 입력</span></div>
+
+                <div class="content-wrap">
+                    <div>
+                        <div class="input-area">
+                            <p>추가정보를 입력해주세요.(필수)</p>
+                            <div class="input-wrap name">
+                                <div class="title">이름</div>
+                                <input id="name" type="text" placeholder="이름 입력"/>
+                            </div>
+                            <div class="input-wrap tel">
+                                <div class="title">연락처</div>
+                                <input id="tel" type="text" placeholder="‘-’ 없이 입력"/>
+                            </div>
+                            <div class="input-wrap select interest1">
+                                <div class="title">관심분야 1</div>
+                                <input id="preference1" class="select" type="text" placeholder="관심분야 선택" readonly/>
+                            </div>
+                            <div class="input-wrap select interest2">
+                                <div class="title">관심분야 2</div>
+                                <input id="preference2" class="select" type="text" placeholder="관심분야 선택" readonly/>
+                            </div>
+                            <div class="input-wrap select country">
+                                <div class="title">국가</div>
+                                <input id="country" class="select" type="text" placeholder="국가 선택" readonly/>
+                            </div>
+                            <div class="btn-area">
+                                <button class="btn-red" onclick="completeInfo()">회원가입</button>
+                                <!--<button class="skip" onclick="skipInfo()">건너뛰기</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script th:inline="javascript">
+                $('.inputProfile-wrap .content-wrap .input-wrap.interest1 input').on('click', function(){
+                    $("#btnSelPreference1").off("click").on("click", function () {
+                        preference1 = $('input[name="selInterests1"]:checked').val();
+                        $("#preference1").val(preference1);
+                        $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+                $('.inputProfile-wrap .content-wrap .input-wrap.interest2 input').on('click', function(){
+                    $("#btnSelPreference2").off("click").on("click", function () {
+                        preference2 = $('input[name="selInterests2"]:checked').val();
+                        $("#preference2").val(preference2);
+                        $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+                $('.inputProfile-wrap .content-wrap .input-wrap.country input').on('click', function(){
+                    $("#btnSelCountry").off("click").on("click", function () {
+                        country = $('input[name="selCountry"]:checked').val();
+                        $("#country").val(country);
+                        $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+
+                function completeInfo(){
+                    if($("#name").val()==null || $("#name").val()=="") {
+                        toastModal("이름을 입력해주세요");
+                        return;
+                    }
+                    if($("#tel").val()==null || $("#tel").val()=="") {
+                        toastModal("연락처를 입력해주세요");
+                        return;
+                    }
+                    if($("#preference1").val()==null || $("#preference1").val()=="") {
+                        toastModal("관심분야1을 입력해주세요");
+                        return;
+                    }
+                    if($("#preference2").val()==null || $("#preference2").val()=="") {
+                        toastModal("관심분야2를 입력해주세요");
+                        return;
+                    }
+                    if($("#country").val()==null || $("#country").val()=="") {
+                        toastModal("국가를 입력해주세요");
+                        return;
+                    }
+
+                    let memberSeq = [[${param.memberSeq}]][0];
+                    let snsId = [[${param.snsId}]][0];
+
+                    let objInfo = {
+                        "memberSeq":memberSeq,
+                        "snsId":snsId,
+                        "name": $("#name").val(),
+                        "tel": $("#tel").val(),
+                        "preference1": $("#preference1").val(),
+                        "preference2": $("#preference2").val(),
+                        "country": $("#country").val()
+                    };
+
+                    $.ajax({
+                        type:"PUT",
+                        url:"/api/common/join",
+                        async:false,
+                        contentType:"application/json",
+                        data:JSON.stringify(objInfo),
+                        success:function(){
+                            toastModal("회원 가입이 완료 되었습니다.");
+                            setTimeout(() => location.href="/", 1000);
+                        },
+                        error: function (request, status, error) {
+                            toastModal("정보 수정을 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+
+/*
+                    $.ajax({
+                        type:"put",
+                        url:"/api/common/join",
+                        async:false,
+                        contentType:"application/json",
+                        data:JSON.stringify(objInfo),
+                        success:function () {
+                        },
+                        error: function (request, status, error) {
+                            toastModal("정보 수정을 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });*/
+                }
+
+                function skipInfo() {
+                    let memberSeq = [[${param.memberSeq}]][0];
+                    let snsId = [[${param.snsId}]][0];
+
+                    let objInfo = {
+                        "memberSeq":memberSeq,
+                        "snsId":snsId,
+                    };
+
+                    $.ajax({
+                        type:"PUT",
+                        url:"/api/common/join",
+                        async:false,
+                        contentType:"application/json",
+                        data:JSON.stringify(objInfo),
+                        success:function(){
+                            toastModal("회원 가입이 완료 되었습니다.");
+                            setTimeout(() => location.href="/", 1000);
+                        },
+                        error: function (request, status, error) {
+                            toastModal("정보 수정을 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                };
+
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

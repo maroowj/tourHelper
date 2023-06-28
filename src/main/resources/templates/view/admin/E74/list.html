@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+    #memberList td.stat {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #memberList td span.stat-grey {
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        text-align: center;
+    }
+
+    #memberList td span.stat-grey::before {
+        content: '';
+        display: inline-block;
+        min-width: 7px;
+        height: 7px;
+        background-color: var(--dark-grey);
+        border-radius: 100%;
+        margin-right: 4px;
+    }
+
+    #memberList td span.stat-blue {
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        text-align: center;
+    }
+
+    #memberList td span.stat-blue::before {
+        content: '';
+        display: inline-block;
+        min-width: 7px;
+        height: 7px;
+        background-color: var(--red);
+        border-radius: 100%;
+        margin-right: 4px;
+    }
+
+    #memberList td span.stat-s-blue {
+        display: flex;
+        align-items: center;
+        width: fit-content;
+        text-align: center;
+    }
+
+    #memberList td span.stat-s-blue::before {
+        content: '';
+        display: inline-block;
+        min-width: 7px;
+        height: 7px;
+        background-color: var(--yellow);
+        border-radius: 100%;
+        margin-right: 4px;
+    }
+
+    .search-wrap {
+        position: relative;
+        /*padding: 15px 47px 15px 30px;*/
+        padding: unset;
+        margin-bottom: 15px;
+        /*border-bottom: 1px solid var(--light-grey2);*/
+    }
+
+    .search-wrap > input {
+        width: 100%;
+        height: 50px;
+        border: 1px solid var(--light-grey2);
+        background: var(--light-grey1);
+        border-radius: 5px;
+        padding: 0 50px 0 20px;
+        font-size: 15px;
+    }
+
+    .search-wrap .search-icon {
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        text-align: center;
+        font-size: 20px;
+    }
+</style>
+
+<div layout:fragment="content">
+
+    <main role="main" class="main-content">
+        <script>
+            const main_menu = 5;
+        </script>
+
+        <!--컨텐츠 영역-->
+        <div class="contents">
+            <div class="admin-contents-title">
+                <h3 class="admin-title">E-7-4 자동배점 신청관리</h3>
+                <!--<div class="top-btn">
+                    <a href="/admin/second-course/insert" class="blue-btn company-add-btn">코스 추가</a>
+                    <a class="s-blue-btn company-update-btn cupoint">선택한 코스 수정</a>
+                    <a href="#" class="gray-btn company-add-btn cupoint" id="courseCopy">코스 복사</a>
+                    <a class="gray-btn company-delete-btn cupoint">선택한 코스 삭제</a>
+                </div>-->
+            </div><!--admin-contents-title-->
+
+            <div class="course2-list-wrap">
+                <!--검색-->
+                <div class="search-wrap">
+                    <input type="text" placeholder="이름으로 검색" id="keyword" class="keyword"
+                           onkeyup="getVisaList($(this).val())">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                </div>
+
+                <div class="company-table course2-table">
+                    <div class="admin-table-title-wrap">
+                        <div class="admin-table-title">
+                            <p class="title">전체</p>
+                            <p class="detail-text">E-7-4 자동배점 신청 리스트</p>
+                        </div>
+
+                        <div class="reserve-check-btn">
+                            <a class="blue-btn company-update-btn cupoint">신청 승인처리</a>
+                            <!--<a class="s-blue-btn company-update-btn cupoint">완료 처리</a>-->
+                            <!--신청 취소처리 시 해당 리스트 내역에서 삭제됨-->
+                            <!--<a class="gray-btn company-delete-btn cupoint">신청 취소처리</a>-->
+                        </div>
+                    </div>
+
+                    <!--table START-->
+                    <table class="admin-table">
+                        <colgroup>
+                            <col style="width:4%">
+                            <col style="width:6%">
+                            <col style="">
+                            <col style="width:15%">
+                            <col style="width:10%">
+                            <col style="">
+                            <col style="">
+                            <col style="width:10%">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="after-none"><input type="checkbox" class="all-check"></th>
+                            <th>번호</th>
+                            <th>이름</th>
+                            <th>연락처</th>
+                            <th>국가</th>
+                            <th>회사</th>
+                            <th>입사일</th>
+                            <th>승인상태</th>
+                        </tr>
+                        </thead>
+                        <!--<tbody id="companyCourseList"></tbody>-->
+                        <tbody id="visaList">
+                        <!--<tr>
+                            <td><input type='checkbox' class='checked'></td>
+                            <td class="info">1</td>
+                            <td class="info">김미</td>
+                            <td class="info">010-0000-0000</td>
+                            <td class="info">미얀마</td>
+                            <td class="info">무지소프트</td>
+                            <td class="info">21-00-00</td>
+                            <td class="info stat"><span class="stat-blue">승인</span></td>
+                        </tr>-->
+                        <!--<tr>
+                            <td><input type='checkbox' class='checked'></td>
+                            <td class="info">1</td>
+                            <td class="info">김미</td>
+                            <td class="info">여</td>
+                            <td class="info">010-0000-0000</td>
+                            <td class="info">미얀마</td>
+                            <td class="info">무지소프트</td>
+                            <td class="info">21-00-00</td>
+                            <td class="info stat"><span class="stat-grey">대기</span></td>
+                        </tr>
+                        <tr>
+                            <td><input type='checkbox' class='checked'></td>
+                            <td class="info">1</td>
+                            <td class="info">김미</td>
+                            <td class="info">여</td>
+                            <td class="info">010-0000-0000</td>
+                            <td class="info">미얀마</td>
+                            <td class="info">무지소프트</td>
+                            <td class="info">21-00-00</td>
+                            <td class="info stat"><span class="stat-s-blue">완료</span></td>
+                        </tr>-->
+                        </tbody>
+                    </table>
+
+                    <div id="pagination"></div>
+                </div><!--company-table-->
+            </div>
+
+        </div><!--contents-->
+
+        <!--코스 상세보기 MODAL START-->
+        <div id="course-modal" class="modal admin-modal course-modal">
+            <div class="modal-wrap">
+                <div class="modal-title-wrap">
+                    <p class="title">E-7-4 자동배점 신청 내역</p>
+                    <i class="fa-solid fa-xmark close"></i>
+                </div>
+
+                <div class="modal-text-wrap">
+                    <div class="course-detail-wrap">
+                        <div class="course-detail w100pro">
+                            <table class="date-table modal-table">
+                                <colgroup>
+                                    <col style="width:140px">
+                                    <col style="width:calc(50% - 70px)">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th>이름</th>
+                                    <td colspan="2">
+                                        <div id="name" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                    <th class="b-left">이메일</th>
+                                    <td colspan="2">
+                                        <div id="email" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="b-left">국가</th>
+                                    <td colspan="2">
+                                        <div id="country" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                    <th class="b-left">연락처</th>
+                                    <td>
+                                        <div id="phone" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>주소</th>
+                                    <td colspan="5">
+                                        <div id="address" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>회사</th>
+                                    <td colspan="2">
+                                        <div id="company" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                    <th class="b-left">입사일</th>
+                                    <td colspan="2">
+                                        <div id="joinDate" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>E-7-4 점수</th>
+                                    <td colspan="2">
+                                        <div id="point" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                    <th class="b-left">승인상태</th>
+                                    <td colspan="2">
+                                        <div id="accept" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>메모</th>
+                                    <td colspan="5">
+                                        <textarea id="comment" class="d-flex-wrap reservation-date" style="padding: 10px;"></textarea>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!--사용자 정보 table END-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-bottom">
+                    <a class="modal-btn close-btn cupoint">닫기</a>
+                    <a class="modal-btn memo-btn cupoint">메모 남기기</a>
+                    <a class="modal-btn reserve-btn cupoint">답변내용 확인하기</a>
+                </div>
+            </div><!--modal-wrap-->
+            <div class="modal-bg-cover"></div>
+        </div>
+
+    </main>
+
+    <script th:inline="javascript">
+        let page = 1;
+        let visaSeq;
+
+        getVisaList();
+
+        // 2차 코스 리스트 불러오기
+        function getVisaList(keyword) {
+            keyword = $("#keyword").val();
+            $.ajax({
+                type: "GET",
+                url: "/api/admin/visa",
+                data: {
+                    "page": page - 1,
+                    "size": 10,
+                    "sort": "visaSeq,desc",
+                    "keyword": keyword
+                },
+                success: function (data) {
+                    let tag = "";
+
+                    if (data.content.length != 0) {
+
+                        data.content.forEach(function (data, index) {
+                            let joinDate = data.joinDate.substring(0, 10);
+                            let accept = '승인 대기';
+                            if (data.accept == 0) {
+                                accept = '승인 대기';
+                            } else if (data.accept == 1) {
+                                accept = '승인';
+                            } else if (data.accept == 2) {
+                                accept = '응답 완료';
+                            }
+
+
+                            tag +=
+                                "<tr seq='" + data.visaSeq + "' accept='"+data.accept+"'>" +
+                                "<td><input type='checkbox' class='checked'></td>" +
+                                "<td class='info'>" + data.rowNum + "</td>" +
+                                "<td class='info'>" + data.name + "</td>" +
+                                "<td class='info'>" + data.phone + "</td>" +
+                                "<td class='info'>" + data.country + "</td>" +
+                                "<td class='info'>" + data.company + "</td>" +
+                                "<td class='info'>" + joinDate + "</td>" +
+                                "<td class='info'>" + accept + "</td>";
+
+                        });
+                        $("#visaList").html(tag);
+                    } else {
+                        $("#visaList").html(tag);
+                    }
+                    fPagination(data, page);
+                }
+            });
+        }
+
+        $("#pagination").on("click", "ul li a", function () {
+            page = parseInt($(this).attr("gopage"));
+            getVisaList();
+        });
+
+        // 전체 업체 코스 리스트 행 클릭 시, 코스상세정보
+        $("#visaList").on("click", ".info", function () {
+            $("#course-modal").css("display", "block");
+            visaSeq = $(this).parent().attr("seq");
+
+            $.ajax({
+                type: "GET",
+                url: "/api/admin/visa/" + visaSeq,
+                success: function (data) {
+                    console.log(data);
+                    $("#name").text(data.name);
+                    $("#email").text(data.email);
+                    if(data.email == 'undefined') {
+                        $("#email").text("없음");
+                    }
+                    $("#country").text(data.country);
+                    $("#phone").text(data.phone);
+                    $("#address").text(data.address1+" "+data.address2);
+                    $("#company").text(data.company);
+                    $("#joinDate").text(data.joinDate.substring(0, 10));
+                    $("#point").text(data.point + "점");
+                    let accept = '승인 대기';
+                    if (data.accept == 0) {
+                        accept = '승인 대기';
+                    } else if (data.accept == 1) {
+                        accept = '승인';
+                    } else if (data.accept == 2) {
+                        accept = '응답 완료';
+                    }
+                    $("#accept").text(accept);
+                    $(".reserve-btn").attr("accept", data.accept);
+
+                    let comment = data.comment;
+                    /*if(comment!=null && comment!="") {
+                        comment=comment.replace("<", "&lt;");
+                        comment=comment.replace(">", "&gt;");
+                        comment=comment.replace(/(?:\r\n|\r|\n)/g,'<br/>');
+                    }*/
+                    $("#comment").text(comment);
+                }
+            });
+        });
+
+        $(".reserve-btn").on("click", function () {
+            let accept = Number($(this).attr("accept"));
+            if(accept!=2) {
+                toastModal("아직 응답을 제출하지 않았습니다.");
+                return;
+            }else{
+                location.href='/admin/E74/answer/'+visaSeq;
+            }
+        });
+
+        // 신청 승인처리 클릭
+        $(".company-update-btn").click(function () {
+            if ($("#visaList .checked:checked").length == 0) {
+                toastModal("승인하려는 신청 건을 선택해주세요.");
+            } else {
+                $("#visaList .checked:checked").each(function() {
+                    let acceptVisaSeq = $(this).parent().parent().attr("seq");
+                    let accept = Number($(this).parent().parent().attr("accept"));
+
+                    if(accept!=0) {
+                        toastModal("이미 승인된 신청은 다시 승인할 수 없습니다.");
+                        return false;
+                    }
+
+                    $.ajax({
+                        type: "put",
+                        url: "/api/admin/visa/" + acceptVisaSeq,
+                        success: function () {
+                        }
+                    });
+                    toastModal("신청 단계가 승인 상태로 변경되었습니다.");
+                    setTimeout(() => location.reload(), 1000);
+                });
+            }
+        });
+
+        // 신청 취소처리 클릭
+        $(".company-delete-btn").click(function () {
+            if ($("#companyCourseList .checked:checked").length == 0) {
+                toastModal("삭제할 코스를 선택해주세요.");
+            } else {
+                if (!confirm("선택된 2차 코스를 삭제합니다.")) {
+                    $("#companyCourseList .checked:checked").prop("checked", false);
+                    return;
+                } else {
+                    $("#companyCourseList .checked:checked").each(function () {
+                        let secondCourseSeq = $(this).parent().parent().attr("secondCourseSeq");
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/api/admin/course/second/delete",
+                            data: {"secondCourseSeq": secondCourseSeq},
+                            success: function () {
+                            }
+                        });
+                    });
+                    toastModal("코스 삭제가 완료되었습니다.");
+                    setTimeout(() => location.reload(), 1000);
+                }
+            }
+        });
+
+        $(".memo-btn").on("click", function() {
+            let comment = $("#comment").val();
+
+            $.ajax({
+                type:"put",
+                url:"/api/admin/visa/memo/"+visaSeq,
+                contentType:"application/json",
+                data:JSON.stringify({
+                    "comment": comment
+                }),
+                success:function(){
+                    toastModal("메모가 저장되었습니다.");
+                    setTimeout(() => location.reload(), 1000);
+                }
+            });
+        });
+    </script>
+
+</div>
+</html>

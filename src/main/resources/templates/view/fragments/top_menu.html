@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<th:block th:fragment="topMenuFragment">
+
+    <div class="topHead-wrap">
+        <div class="topHead-inner">
+            <!--<div class="search-box">
+                <div class="select-box">
+                    <select name="" id="topMenuSearchType">
+                        <option value="companyTitle" selected>업체명</option>
+                        <option value="firstCourseTitle">1차코스명</option>
+                        <option value="secondCourseTitle">2차코스명</option>
+                    </select>
+                </div>
+                <input type="text" class="search" id="topMenuKeyword" placeholder="검색어를 입력하세요.">
+                <i class="fa-solid fa-magnifying-glass search-icon" id="topMenuSearchIcon"></i>
+            </div>-->
+            <div><span class="mhide" onclick="menuHide();"> << 메뉴 숨기기</span><span class="mshow" onclick="menuShow()"> >> 메뉴 보이기</span></div>
+            <div class="logout-wrap">
+                <p id="admin-name" class="admin-name"></p>
+                <div class="btn-logout">
+                    <a href="/admin/logout" class="logout-btn">로그아웃</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        menuShow();
+
+        function menuHide() {
+            $(".leftMenu-inner").hide();
+            $(".mhide").hide();
+            $(".mshow").show();
+            $("body").removeClass("vertical");
+        }
+
+        function menuShow() {
+            $(".leftMenu-inner").show();
+            $(".mhide").show();
+            $(".mshow").hide();
+            $("body").addClass("vertical");
+        }
+
+        getMemberDetails();
+        function getMemberDetails() {
+            $.ajax({
+                type: "get",
+                url: "/api/user/member",
+                async:false,
+                success: function (data) {
+                    console.log(data);
+                    $("#admin-name").text(data.name);
+                    $("#admin-name").append('<span>님</span>');
+                },
+                error: function (request, status, error) {
+                    alert("로그인이 필요합니다.");
+                    location.href = "/login"
+                }
+            });
+        }
+    </script>
+
+</th:block>
+</html>

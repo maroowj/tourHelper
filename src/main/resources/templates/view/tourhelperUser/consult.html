@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+    .no-content{
+        background-color: transparent;
+    }
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="consultPage-wrap">
+
+                <!--페이지 준비중-->
+                <div class="no-content d-none">
+                    <img src="/tourhelperUser/images/preparation.svg" onerror="this.style.background='var(--light-grey2)';"/>
+                </div>
+
+                <div class="content-wrap">
+                    <div>
+                        <div class="title-area">
+                            <div class="mobile-layout">
+                                <i></i><span>상담하기</span>
+                                <div class="guide">
+                                    <span>상담원이 순차적으로 답변을 드리고 있습니다.</span>
+                                    <span>답변이 지연될 수 있습니다.</span>
+                                </div>
+                            </div>
+                            <div class="pc-layout">
+                                <i></i><span>상담원이 순차적으로 답변을 도와드리고 있습니다.(답변이 지연될 수 있습니다.)</span>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <div class="part list">
+                                <span>상담목록</span>
+
+                                <!-- 진행중인 상담내역이 없을 경우 -->
+                                <span id="no-category" class="no-list" onclick="alert('밑에 상담 카테고리를 선택하세요.');">진행중인 상담내역이 없습니다.</span>
+
+                                <div id="category-list" class="message-area">
+                                    <!-- 진행중인 상담내역이 있을 경우 -->
+                                    <!--<div class="message-wrap">
+                                        <div class="top-wrap">
+                                            <div><span>퇴직금</span><span class="count-red">100+</span></div>
+                                            <span>오후 2:10</span>
+                                        </div>
+                                        <div class="bottom-wrap">
+                                            <span>상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                        </div>
+                                    </div>
+                                    <div class="message-wrap">
+                                        <div class="top-wrap">
+                                            <div><span>유학/어학원</span><span class="count-red">5</span></div>
+                                            <span>어제</span>
+                                        </div>
+                                        <div class="bottom-wrap">
+                                            <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                        </div>
+                                    </div>
+                                    <div class="message-wrap">
+                                        <div class="top-wrap">
+                                            <div><span>비자</span><span class=""></span></div>
+                                            <span>2022-10-11</span>
+                                        </div>
+                                        <div class="bottom-wrap">
+                                            <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                        </div>
+                                    </div>
+                                    <div class="message-wrap">
+                                        <div class="top-wrap">
+                                            <div><span>산재</span><span class=""></span></div>
+                                            <span>2022-10-11</span>
+                                        </div>
+                                        <div class="bottom-wrap">
+                                            <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                        </div>
+                                    </div>
+                                    <div class="message-wrap">
+                                        <div class="top-wrap">
+                                            <div><span>부모님 초청</span><span class=""></span></div>
+                                            <span>2022-10-11</span>
+                                        </div>
+                                        <div class="bottom-wrap">
+                                            <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                        </div>
+                                    </div>
+                                    <div class="message-wrap">
+                                        <div class="top-wrap">
+                                            <div><span>미얀마 여행</span><span class=""></span></div>
+                                            <span>2022-10-11</span>
+                                        </div>
+                                        <div class="bottom-wrap">
+                                            <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                        </div>
+                                    </div>-->
+                                </div>
+                                <div id="view-more" class="view-more" style="cursor: pointer;"><span>상담목록 더보기</span></div>
+                            </div>
+
+                            <div class="part chat">
+                                <div class="sel-category-area">
+                                    <span>상담 카테고리 선택</span>
+                                    <div class="category-list">
+                                        <input id="c-chk1" class="yellow pc-category" type="radio" name="selCategory" value="비자"/><label for="c-chk1">비자</label>
+                                        <input id="c-chk2" class="yellow pc-category" type="radio" name="selCategory" value="퇴직금"/><label for="c-chk2">퇴직금</label>
+                                        <input id="c-chk3" class="yellow pc-category" type="radio" name="selCategory" value="산재"/><label for="c-chk3">산재</label>
+                                        <input id="c-chk4" class="yellow pc-category" type="radio" name="selCategory" value="비즈니스"/><label for="c-chk4">비즈니스</label>
+                                        <input id="c-chk5" class="yellow pc-category" type="radio" name="selCategory" value="항공권"/><label for="c-chk5">항공권</label>
+                                        <input id="c-chk6" class="yellow pc-category" type="radio" name="selCategory" value="부모님초청"/><label for="c-chk6">부모님초청</label>
+                                        <input id="c-chk7" class="yellow pc-category" type="radio" name="selCategory" value="유학"/><label for="c-chk7">유학</label>
+                                        <input id="c-chk8" class="yellow pc-category" type="radio" name="selCategory" value="한국여행"/><label for="c-chk8">한국여행</label>
+                                        <input id="c-chk9" class="yellow pc-category" type="radio" name="selCategory" value="미얀마여행"/><label for="c-chk9">미얀마 여행</label>
+                                    </div>
+                                    <!-- 카테고리선택 모바일 -->
+                                    <div class="category-list-mobile">
+                                        <div>
+                                            <input id="m-chk1" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk1">비자</label>
+                                            <input id="m-chk2" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk2">퇴직금</label>
+                                            <input id="m-chk3" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk3">산재</label>
+                                        </div>
+                                        <div>
+                                            <input id="m-chk4" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk4">비즈니스</label>
+                                            <input id="m-chk5" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk5">항공권</label>
+                                            <input id="m-chk6" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk6">부모님초청</label>
+                                        </div>
+                                        <div>
+                                            <input id="m-chk7" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk7">유학</label>
+                                            <input id="m-chk8" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk8">한국여행</label>
+                                            <input id="m-chk9" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk9">미얀마여행</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 선택한 카테고리에 따라 보이는 메세지 내용 상이 -->
+                                <div class="chat-area pc-layout">
+                                    <!-- 상담내역을 선택하지 않거나 존재하지 않는 경우 -->
+                                    <span id="no-list" class="no-list">상담 카테고리 혹은 진행중인 상담목록을 선택해주세요.</span>
+
+                                    <!-- 상담내역이 존재하는 경우 -->
+                                    <!-- 이전 상담내역이 있는 경우 -->
+                                    <div class="view-prev-area d-none">
+                                        <div id="view-prev" class="view-prev">이전 상담이력 보기</div>
+<!--                                        <div class="cancel-view-prev d-none">이전 상담이력 닫기</div>-->
+                                    </div>
+
+                                    <!-- 상담내역이 존재하는 경우 -->
+                                    <div id="message-list" class="message-area d-none">
+
+                                        <!-- 날짜 -->
+<!--                                        <span class="date-area">2022-09-05&nbsp;(월)</span>-->
+                                        <!-- 상담사 메시지 영역 -->
+<!--                                        <div class="message-wrap-helper">-->
+<!--                                            <div class="message">-->
+<!--                                                <div class="txt">메세지 내용<br>메세지 내용메세지 내용메세지 내용메세지 내용메세지 내용메세지 내용</div>-->
+<!--                                                <div class="time">오후 5:00</div>-->
+<!--                                            </div>-->
+<!--                                            <div class="message">-->
+<!--                                                <div class="img">-->
+<!--                                                    <img src="/tourhelperUser/images/3D_check.png" onerror="this.style.background='var(&#45;&#45;light-grey2)';">-->
+<!--                                                </div>-->
+<!--                                                <div class="time">오후 5:30</div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                        <!-- 사용자 메시지 영역 -->
+<!--                                        <div class="message-wrap-user">-->
+<!--                                            <div class="message">-->
+<!--                                                <div class="time">오후 5:01</div>-->
+<!--                                                <div class="txt">메세지 내용<br>메세지 내용</div>-->
+<!--                                            </div>-->
+
+                                            <!-- 날짜 -->
+<!--                                            <span class="date-area">2022-09-06&nbsp;(화)</span>-->
+
+<!--                                            <div class="message">-->
+<!--                                                <div class="time">오후 5:01</div>-->
+<!--                                                <div class="txt">메세지 내용<br>메세지 내용</div>-->
+<!--                                            </div>-->
+<!--                                            <div class="message">-->
+<!--                                                <div class="time">오후 5:30</div>-->
+<!--                                                <div class="file">파일이름.pdf</div>-->
+<!--                                            </div>-->
+<!--                                            <div class="message">-->
+<!--                                                <div class="time">오후 5:30</div>-->
+<!--                                                <div class="img">-->
+<!--                                                    <img src="/tourhelperUser/images/3D_check.png" onerror="this.style.background='var(&#45;&#45;light-grey2)';">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                    </div>
+
+                                    <!-- 채팅입력 및 보내기 영역 -->
+                                    <div id="send-area" class="send-area d-none">
+                                        <div class="input-area">
+                                            <!-- <input type="text" placeholder="메세지 입력"/> -->
+                                            <textarea id="msg-content-pc" placeholder="메세지 입력"></textarea>
+                                        </div>
+                                        <div class="send-wrap">
+                                            <div class="add-file-area">
+                                                <div class="add-album"><span>사진</span><input id="pc-image" class="photo d-none" type="file" accept=".jpeg, .jpg, .png, .gif"/></div>
+                                                <div class="add-file"><span>파일</span><input id="pc-file" class="file d-none" type="file"/></div>
+                                            </div>
+                                            <span id="btn-send-pc" class="btn-send">전송</span>
+                                        </div>
+
+                                        <!-- bottom 버튼 -->
+<!--                                        <div class="btn-bottom">-->
+<!--                                            <i></i>-->
+<!--                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script>
+                let category;
+                let page=1;
+                let chatOn=false;
+
+                if (matchMedia("screen and (max-width: 1199px)").matches) { // mobile
+                    getCategoriesMobile();
+                }else if(matchMedia("screen and (min-width: 1200px)").matches) { // pc
+                    getCategoriesPc();
+                }
+
+                function getCategoriesPc() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/board/category",
+                        async:false,
+                        success:function(data){
+                            // console.log(data);
+                            let tag = '';
+                            if(data!=null && data.length!=0) {
+                                data.forEach(function(arg){
+                                    let categoryTag = '';
+                                    if(arg.newPostCount!=0) {
+                                        categoryTag = '<div><span>'+arg.category+'</span><span class="count-red">'+arg.newPostCount+'</span></div>';
+                                    }else {
+                                        categoryTag = '<div><span>'+arg.category+'</span></div>';
+                                    }
+                                    tag += '<div class="message-wrap category pc-category-item" category="'+arg.category+'">' +
+                                            '<div class="top-wrap">' +
+                                            categoryTag +
+                                            '<span>'+arg.createDate.substring(0,10)+'</span>' +
+                                            '</div>' +
+                                            '<div class="bottom-wrap">' +
+                                            '<span>'+arg.content+'</span>' +
+                                            '</div>' +
+                                            '</div>';
+                                });
+                                $("#category-list").html(tag);
+                                $("#no-category").addClass("d-none");
+                                $("#category-list").removeClass("d-none");
+                            }else {
+                                $("#no-category").removeClass("d-none");
+                                $("#category-list").addClass("d-none");
+                            }
+
+                            $('.consultPage-wrap .content .part.list .message-area .message-wrap').off("click").on('click', function(){
+                                $('.consultPage-wrap .content .part.list .message-area .message-wrap').removeClass('active');
+                                $(this).addClass('active');
+                            });
+
+                            if(chatOn) {
+                                $(".pc-category-item").removeClass("active");
+                                $(".pc-category-item").each(function(){
+                                    let cate = $(this).attr("category");
+                                    if(cate==category) {
+                                        $(this).addClass("active");
+                                        return false;
+                                    }
+                                });
+                            }else {
+                                $(".pc-category-item").removeClass("active");
+                            }
+                        },
+                        error: function (request, status, error) {
+                            toastModal("상담 카테고리를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                function getCategoriesMobile() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/board/category",
+                        async:false,
+                        success:function(data){
+                            // console.log(data);
+                            let tag = '';
+                            if(data!=null && data.length!=0) {
+                                let length = data.length;
+                                if(length <= 3) {
+                                    $("#view-more").addClass("d-none");
+                                    for(i=0; i<length; i++) {
+                                        let categoryTag = '';
+                                        if(data[i].newPostCount!=0) {
+                                            categoryTag = '<div><span>'+data[i].category+'</span><span class="count-red">'+data[i].newPostCount+'</span></div>';
+                                        }else {
+                                            categoryTag = '<div><span>'+data[i].category+'</span></div>';
+                                        }
+                                        tag += '<div class="message-wrap category mobile-category" category="'+data[i].category+'">' +
+                                            '<div class="top-wrap">' +
+                                            categoryTag +
+                                            '<span>'+data[i].createDate.substring(0,10)+'</span>' +
+                                            '</div>' +
+                                            '<div class="bottom-wrap">' +
+                                            '<span>'+data[i].content+'</span>' +
+                                            '</div>' +
+                                            '</div>';
+                                    }
+                                }else {
+                                    $("#view-more").removeClass("d-none");
+                                    for(i=0; i<=2; i++) {
+                                        let categoryTag = '';
+                                        if(data[i].newPostCount!=0) {
+                                            categoryTag = '<div><span>'+data[i].category+'</span><span class="count-red">'+data[i].newPostCount+'</span></div>';
+                                        }else {
+                                            categoryTag = '<div><span>'+data[i].category+'</span></div>';
+                                        }
+                                        tag += '<div class="message-wrap category mobile-category" category="'+data[i].category+'">' +
+                                            '<div class="top-wrap">' +
+                                            categoryTag +
+                                            '<span>'+data[i].createDate.substring(0,10)+'</span>' +
+                                            '</div>' +
+                                            '<div class="bottom-wrap">' +
+                                            '<span>'+data[i].content+'</span>' +
+                                            '</div>' +
+                                            '</div>';
+                                    }
+                                }
+                                $("#category-list").html(tag);
+                                $("#no-category").addClass("d-none");
+                                $("#category-list").removeClass("d-none");
+                            }else {
+                                $("#no-category").removeClass("d-none");
+                                $("#category-list").addClass("d-none");
+                            }
+
+                            $('.consultPage-wrap .content .part.list .message-area .message-wrap').off("click").on('click', function(){
+                                $('.consultPage-wrap .content .part.list .message-area .message-wrap').removeClass('active');
+                                $(this).addClass('active');
+                            });
+
+                            $(".mobile-category").off("click").on("click", function(){
+                                chatOn = true;
+                                page=1;
+                                category = $(this).attr("category");
+                                $("#category-title").text(category);
+                                getMessagesMobile(category);
+                                $('#messageModal').css('display', 'flex');
+                            });
+                        },
+                        error: function (request, status, error) {
+                            toastModal("상담 카테고리를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                $("#view-more").on("click", function() {
+                    getMoreCategoriesMobile();
+                });
+
+                function getMoreCategoriesMobile() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/board/category",
+                        async:false,
+                        success:function(data){
+                            // console.log(data);
+                            let tag = '';
+                            if(data!=null && data.length!=0) {
+                                $("#view-more").addClass("d-none");
+                                for(i=0; i<data.length; i++) {
+                                    let categoryTag = '';
+                                    if(data[i].newPostCount!=0) {
+                                        categoryTag = '<div><span>'+data[i].category+'</span><span class="count-red">'+data[i].newPostCount+'</span></div>';
+                                    }else {
+                                        categoryTag = '<div><span>'+data[i].category+'</span></div>';
+                                    }
+                                    tag += '<div class="message-wrap category mobile-category" category="'+data[i].category+'">' +
+                                        '<div class="top-wrap">' +
+                                        categoryTag +
+                                        '<span>'+data[i].createDate.substring(0,10)+'</span>' +
+                                        '</div>' +
+                                        '<div class="bottom-wrap">' +
+                                        '<span>'+data[i].content+'</span>' +
+                                        '</div>' +
+                                        '</div>';
+                                }
+                                $("#category-list").html(tag);
+                                $("#no-category").addClass("d-none");
+                                $("#category-list").removeClass("d-none");
+                            }else {
+                                $("#no-category").removeClass("d-none");
+                                $("#category-list").addClass("d-none");
+                            }
+                            $('.consultPage-wrap .content .part.list .message-area .message-wrap').off("click").on('click', function(){
+                                $('.consultPage-wrap .content .part.list .message-area .message-wrap').removeClass('active');
+                                $(this).addClass('active');
+                            });
+
+                            $(".mobile-category").off("click").on("click", function(){
+                                chatOn = true;
+                                page=1;
+                                category = $(this).attr("category");
+                                $("#category-title").text(category);
+                                getMessagesMobile(category);
+                                $('#messageModal').css('display', 'flex');
+                            });
+                        },
+                        error: function (request, status, error) {
+                            toastModal("상담 카테고리를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                $("#category-list").off("click").on("click", ".pc-category-item", function(){
+                    chatOn=true;
+                    category=$(this).attr("category");
+                    $("input[name='selCategory'][value="+category+"]").prop("checked", "true");
+                    page=1;
+                    getCategoriesPc();
+                    getMessages(category);
+                    $("#no-list").addClass('d-none');
+                    $("#message-list").removeClass('d-none');
+                    $("#send-area").removeClass("d-none");
+                });
+
+                $(".pc-category").off("click").on("click", function() {
+                    chatOn=true;
+                    category=$(this).val();
+                    $("input[name='selCategory'][value="+category+"]").prop("checked", "true");
+                    page=1;
+                    getCategoriesPc();
+                    getMessages(category);
+                    $("#no-list").addClass('d-none');
+                    $("#message-list").removeClass('d-none');
+                    $("#send-area").removeClass("d-none");
+                });
+
+                $(".m-category").off("click").on("click", function() {
+                    chatOn=true;
+                    category=$(this).next().text();
+                    $("#category-title").text(category);
+                    $("input[name='selCategory'][value="+category+"]").prop("checked", "true");
+                    page=1;
+                    getMessagesMobile(category);
+                });
+
+                function getMessages(category) {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/board",
+                        async:false,
+                        data:{
+                            "category":category,
+                            "page":page-1,
+                            "size":10
+                        },
+                        success:function(data) {
+                            console.log(data);
+                            let list = data.content;
+                            let tag = '';
+                            if(list.length!=0) {
+
+                                let lastIdx = (list.length)-1;
+                                let lastDate = "";
+                                for(i=lastIdx; i>=0; i--) {
+                                    let createDate = list[i].createDate.substring(0, 16);
+                                    createDate=createDate.replaceAll("Mon", "월");
+                                    createDate=createDate.replaceAll("Tue", "화");
+                                    createDate=createDate.replaceAll("Wed", "수");
+                                    createDate=createDate.replaceAll("Thu", "목");
+                                    createDate=createDate.replaceAll("Fri", "금");
+                                    createDate=createDate.replaceAll("Sat", "토");
+                                    createDate=createDate.replaceAll("Sun", "일");
+
+                                    if(lastDate!=createDate) {
+                                        lastDate=createDate;
+                                        tag += '<span class="date-area">'+lastDate+'</span>';
+                                    }
+
+                                    let content = list[i].content;
+                                    if(content!=null) {
+                                        content = content.replaceAll(/(?:\r\n|\r|\n)/g, '<br/>')
+                                    }
+
+                                    if(list[i].answer) {
+                                        tag += '<div class="message-wrap-helper">';
+
+                                        if(list[i].image!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="img">' +
+                                                '<img src="'+list[i].image.fileUrl+'" onerror="this.style.background=\'var(--light-grey2)\';">' +
+                                                '</div>' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].file!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="file"><a href="'+list[i].file.fileUrl+'" download="'+list[i].file.fileName+'" class="file">'+list[i].file.fileName+'</a></div>' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].image==null && list[i].file==null) {
+                                            tag +='<div class="message">' +
+                                                '<div class="txt">'+content+'</div>' +
+                                                ' <div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '</div>';
+                                        }
+                                        tag += '</div>';
+                                    }else {
+                                        tag += '<div class="message-wrap-user">';
+
+                                        if(list[i].image!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '<div class="img">' +
+                                                '<img src="'+list[i].image.fileUrl+'" onerror="this.style.background=\'var(--light-grey2)\';">' +
+                                                '</div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].file!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '<div class="file"><a href="'+list[i].file.fileUrl+'" download="'+list[i].file.fileName+'" class="file">'+list[i].file.fileName+'</a></div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].image==null && list[i].file==null) {
+                                            tag +='<div class="message">' +
+                                                ' <div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '<div class="txt">'+content+'</div>' +
+                                                '</div>';
+                                        }
+                                        tag += '</div>';
+                                    }
+                                }
+                                if(page==1) {
+                                    $("#message-list").html(tag);
+                                }else {
+                                    $("#message-list").prepend(tag);
+                                }
+                            }else {
+                                if(page==1) {
+                                    $("#message-list").html(tag);
+                                    $(".view-prev-area").addClass("d-none");
+                                }else {
+                                    toastModal("이전 메시지가 없습니다.");
+                                    return;
+                                }
+                            }
+                            //이미지 미리보기
+                            $('.consultPage-wrap .content .part.chat .chat-area .message-area .message .img').on('click', function(){
+                                let src = $(this).children().attr("src");
+                                $("#imgDetailModal .preview-img").attr("src",src);
+                                $('#imgDetailModal').css('display', 'flex');
+                            });
+                        },
+                        error: function (request, status, error) {
+                            toastModal("상담 메시지를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                function getMessagesMobile(category) {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/board",
+                        async:false,
+                        data:{
+                            "category":category,
+                            "page":page-1,
+                            "size":10
+                        },
+                        success:function(data) {
+                            // console.log(data);
+                            let list = data.content;
+                            let tag = '';
+                            if(list.length!=0) {
+
+                                let lastIdx = (list.length)-1;
+                                let lastDate = "";
+                                for(i=lastIdx; i>=0; i--) {
+                                    let createDate = list[i].createDate.substring(0, 16);
+                                    createDate=createDate.replaceAll("Mon", "월");
+                                    createDate=createDate.replaceAll("Tue", "화");
+                                    createDate=createDate.replaceAll("Wed", "수");
+                                    createDate=createDate.replaceAll("Thu", "목");
+                                    createDate=createDate.replaceAll("Fri", "금");
+                                    createDate=createDate.replaceAll("Sat", "토");
+                                    createDate=createDate.replaceAll("Sun", "일");
+
+                                    if(lastDate!=createDate) {
+                                        lastDate=createDate;
+                                        tag += '<span class="date-area">'+lastDate+'</span>';
+                                    }
+
+                                    let content = list[i].content;
+                                    if(content!=null) {
+                                        content = content.replaceAll(/(?:\r\n|\r|\n)/g, '<br/>')
+                                    }
+
+                                    if(list[i].answer) {
+                                        tag += '<div class="message-wrap-helper">';
+
+                                        if(list[i].image!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="img">' +
+                                                '<img src="'+list[i].image.fileUrl+'" onerror="this.style.background=\'var(--light-grey2)\';">' +
+                                                '</div>' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].file!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="file"><a href="'+list[i].file.fileUrl+'" download="'+list[i].file.fileName+'" class="file">'+list[i].file.fileName+'</a></div>' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].image==null && list[i].file==null) {
+                                            tag +='<div class="message">' +
+                                                '<div class="txt">'+content+'</div>' +
+                                                ' <div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '</div>';
+                                        }
+                                        tag += '</div>';
+                                    }else {
+                                        tag += '<div class="message-wrap-user">';
+
+                                        if(list[i].image!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '<div class="img">' +
+                                                '<img src="'+list[i].image.fileUrl+'" onerror="this.style.background=\'var(--light-grey2)\';">' +
+                                                '</div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].file!=null) {
+                                            tag+= '<div class="message">' +
+                                                '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '<div class="file"><a href="'+list[i].file.fileUrl+'" download="'+list[i].file.fileName+'" class="file">'+list[i].file.fileName+'</a></div>' +
+                                                '</div>';
+                                        }
+                                        if(list[i].image==null && list[i].file==null) {
+                                            tag +='<div class="message">' +
+                                                ' <div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                                '<div class="txt">'+content+'</div>' +
+                                                '</div>';
+                                        }
+                                        tag += '</div>';
+                                    }
+                                }
+                                if(page==1) {
+                                    $("#modal-message-list").html(tag);
+                                }else {
+                                    $("#modal-message-list").prepend(tag);
+                                }
+                            }else {
+                                if(page==1) {
+                                    $("#modal-message-list").html(tag);
+                                    $(".view-prev-area").addClass("d-none");
+                                }else {
+                                    toastModal("이전 메시지가 없습니다.");
+                                    return;
+                                }
+                            }
+
+                            getCategoriesMobile();
+
+                            $("#messageModal").off("click").on("click", ".view-prev", function(){
+                                page++;
+                                getMessagesMobile(category);
+                            });
+
+                            //이미지 미리보기
+                            $('#messageModal .message-area .message .img').on('click', function(){
+                                let src = $(this).children().attr("src");
+                                $("#imgDetailModal .preview-img").attr("src",src);
+                                $('#imgDetailModal').css('display', 'flex');
+                            });
+                        },
+                        error: function (request, status, error) {
+                            toastModal("상담 메시지를 불러오는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                $("#view-prev").off("click").on("click", function(){
+                    page++;
+                    getMessages(category);
+                });
+
+                window.onresize = function(event){
+                    if (matchMedia("screen and (max-width: 1199px)").matches) {
+                        getCategoriesMobile();
+                        if(chatOn) {
+                            page=1;
+                            getMessagesMobile(category);
+                            $("#category-title").text(category);
+                            $("#messageModal").css("display", "flex");
+                        }else {
+                            $("input[name='selCategory'][value="+category+"]").prop("checked", "true");
+                        }
+                    }else if(matchMedia("screen and (min-width: 1200px)").matches) {
+                        getCategoriesPc();
+                        if(chatOn) {
+                            page=1;
+                            getMessages(category);
+                            $("#no-list").addClass('d-none');
+                            $("#message-list").removeClass('d-none');
+                            $("#send-area").removeClass("d-none");
+                            $("input[name='selCategory'][value="+category+"]").prop("checked", "true");
+                        }else {
+                            $("#no-list").removeClass('d-none');
+                            $("#message-list").addClass('d-none');
+                            $("#send-area").addClass("d-none");
+                            $("input[name='selCategory']").prop("checked", "false");
+                        }
+                    }
+                };
+
+                /** pc **/
+                $("#btn-send-pc").on("click", function() {
+                    let content = $("#msg-content-pc").val();
+                    if(content==null || content=="") {
+                        toastModal("메시지를 입력하세요");
+                        return;
+                    }
+
+                    pcSendMsg(content, null, null);
+                    $("#msg-content-pc").val("");
+                    $("#msg-content-pc").focus();
+                });
+
+                $("#pc-image").on("change", function() {
+                    let image = $("#pc-image")[0].files[0];
+                    pcSendMsg(null, image, null);
+                    $("#msg-content-pc").focus();
+                });
+
+                $("#pc-file").on("change", function() {
+                    let file = $("#pc-file")[0].files[0];
+                    pcSendMsg(null, null, file);
+                    $("#msg-content-pc").focus();
+                });
+                /** pc **/
+
+
+                function pcSendMsg(content, image, file) {
+                    let formData = new FormData();
+
+                    if(content!=null && content!=undefined) {
+                        formData.append("content", content);
+                    }
+
+                    if(image!=null && image!=undefined) {
+                        formData.append("image", image);
+                    }
+
+                    if(file!=null && file!=undefined) {
+                        formData.append("file", file);
+                    }
+
+                    formData.append("category", category);
+
+                    $.ajax({
+                        type:"post",
+                        url:"/api/user/board",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function() {
+                            page=1;
+                            getCategoriesPc();
+                            getMessages(category)
+                        },
+                        error: function (request, status, error) {
+                            toastModal("메시지를 전송하는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                function mobileSendMsg(content, image, file) {
+                    let formData = new FormData();
+
+                    if(content!=null && content!=undefined) {
+                        formData.append("content", content);
+                    }
+
+                    if(image!=null && image!=undefined) {
+                        formData.append("image", image);
+                    }
+
+                    if(file!=null && file!=undefined) {
+                        formData.append("file", file);
+                    }
+
+                    formData.append("category", category);
+
+                    $.ajax({
+                        type:"post",
+                        url:"/api/user/board",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success:function() {
+                            page=1;
+                            getCategoriesMobile();
+                            getMessagesMobile(category)
+                        },
+                        error: function (request, status, error) {
+                            toastModal("메시지를 전송하는데 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

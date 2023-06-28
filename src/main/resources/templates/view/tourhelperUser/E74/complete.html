@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="E74-complete-wrap">
+                <div>
+                    <!-- 페이지별 타이틀 -->
+                    <div class="page-title"><span>E-7-4 자동배점 신청</span></div>
+
+                    <div class="content-wrap">
+                        <div>
+                            <div>
+                                <img src="/tourhelperUser/images/3D_check.png"/>
+                                <p>E-7-4 자동배점 신청완료</p>
+                            </div>
+                            <div id="accept-chk-div" class="btn-area">
+                                <!--신청시 관리자가 승인하여야 '대기중' 처리 해제(대기중 처리 해제시 not-yet에 .d-none 클래스 추가)-->
+ <!--                               <div class="not-yet d-none">
+                                    <button class="">대기중</button>
+                                    <span>관리자 승인 후 응답지 입력가능</span>
+                                </div>
+                                &lt;!&ndash;'대기중' 처리 해제할 경우 해당 버튼의 .d-none 속성 해제&ndash;&gt;
+                                <button class="input btn-red" onclick="location.href='/E74/apply/form'">응답지 입력하기</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--script START-->
+            <script>
+                acceptChk();
+
+                function acceptChk() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/visa",
+                        success:function(data){
+                            console.log(data);
+                            if(data.accept==1) {
+                                $('#accept-chk-div').html(
+                                    '<button id="request" class="input btn-red" onclick=acceptChk2()>응답지 입력하기</button>'
+                                );
+                            }else if(data.accept=0) {
+                                $('#accept-chk-div').html(
+                                    '<div class="not-yet">' +
+                                    '<button class="" style="cursor: default;">대기중</button>' +
+                                    '<span>관리자 승인 후 응답지 입력가능</span>' +
+                                    '</div>'
+                                );
+                            }else if(data.accept=2) {
+                                $('#accept-chk-div').html(
+                                    '<div class="not-yet">' +
+                                    '<button class="" style="cursor: default;">응답 완료</button>' +
+                                    '<span>모든 질문에 응답이 완료되었습니다.</span>' +
+                                    '</div>'
+                                );
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert("로그인이 필요합니다.");
+                            location.href = "/login"
+                        }
+                    });
+                }
+
+                function acceptChk2() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/user/visa",
+                        success:function(data){
+                            console.log(data);
+                            if(data.accept==1) {
+                                location.href='/E74/apply/form';
+                            }else {
+                                toastModal("응답을 완료했거나, 관리자의 승인이 필요합니다.");
+                                return;
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert("로그인이 필요합니다.");
+                            location.href = "/login"
+                        }
+                    });
+                }
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

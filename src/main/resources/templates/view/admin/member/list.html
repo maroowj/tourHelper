@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+    #memberList td.add-d-flex{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #memberList span.user{
+        max-width: calc(100% - 70px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
+    #memberList span.kakao{
+        background-color: var(--kakao);
+        border-radius: 4px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-left: 8px;
+    }
+    #memberList span.kakao i{
+        display: inline-block;
+        width: 10.71px;
+        height: 10px;
+        background: url('/tourhelperUser/images/logo_kakao.svg') no-repeat;
+        background-size: 10.71px 10px;
+    }
+    #memberList span.facebook{
+        background-color: var(--facebook);
+        border-radius: 4px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-left: 8px;
+    }
+    #memberList span.facebook i{
+        display: inline-block;
+        width: 5.56px;
+        height: 10px;
+        background: url('/tourhelperUser/images/logo_facebook.svg') no-repeat;
+        background-size: 5.56px 10px;
+    }
+    .search-wrap {
+        position: relative;
+        /*padding: 15px 47px 15px 30px;*/
+        padding: unset;
+        margin-bottom: 15px;
+        /*border-bottom: 1px solid var(--light-grey2);*/
+    }
+    .search-wrap > input{
+        width: 100%;
+        height: 50px;
+        border: 1px solid var(--light-grey2);
+        background: var(--light-grey1);
+        border-radius: 5px;
+        padding: 0 50px 0 20px;
+        font-size: 15px;
+    }
+    .search-wrap .search-icon {
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        text-align: center;
+        font-size: 20px;
+    }
+</style>
+
+<div layout:fragment="content">
+
+    <main role="main" class="main-content">
+        <script>
+            const main_menu = 7;
+        </script>
+
+        <!--컨텐츠 영역-->
+        <div class="contents">
+            <div class="admin-contents-title">
+                <h3 class="admin-title">회원 관리</h3>
+            </div><!--admin-contents-title-->
+
+            <div class="course2-list-wrap">
+                <!--검색-->
+                <div class="search-wrap">
+                    <input type="text" placeholder="이메일 또는 이름으로 검색" id="keyword" class="keyword" onkeyup="getMemberList($(this).val())">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                </div>
+
+                <div class="company-table course2-table">
+                    <div class="admin-table-title-wrap">
+                        <div class="admin-table-title">
+                            <p class="title">전체</p>
+                            <p class="detail-text">회원 리스트</p>
+                        </div>
+                        <div class="reserve-check-btn">
+                            <!--<a class="blue-btn cupoint">선택한 회원 수정</a>-->
+                            <!--<a class="s-blue-btn cupoint">예약확정</a>-->
+                            <a class="gray-btn cupoint">선택한 회원 탈퇴</a>
+                        </div>
+                    </div>
+
+                    <!--table START-->
+                    <table class="admin-table">
+                        <colgroup>
+                            <col style="width:4%">
+                            <col style="width:6%">
+                            <col style="width:20%">
+                            <col style="width:10%">
+                            <col style="width:10%">
+                            <col style="">
+                            <col style="">
+                            <col style="width:10%">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th class="after-none"><input type="checkbox" class="all-check"></th>
+                            <th>번호</th>
+                            <th>이메일(계정정보)</th>
+                            <th>이름</th>
+                            <th>연락처</th>
+                            <th>관심분야1</th>
+                            <th>관심분야2</th>
+                            <th>국가</th>
+                        </tr>
+                        </thead>
+                        <!--<tbody id="companyCourseList"></tbody>-->
+                        <tbody id="memberList">
+                        <tr>
+                            <td><input type='checkbox' class='checked'></td>
+                            <td class="info">1</td>
+                            <td class="info add-d-flex"><span class="user">kimee</span><span class="kakao"><i></i></span></td>
+                            <td class="info">김미</td>
+                            <td class="info">010-0000-0000</td>
+                            <td class="info">항공권</td>
+                            <td class="info">비자</td>
+                            <td class="info">미얀마</td>
+                        </tr>
+                        <!--<tr>
+                            <td><input type='checkbox' class='checked'></td>
+                            <td class="info">1</td>
+                            <td class="info add-d-flex"><span class="user">kimeekimeekimeekimeekimeekimeekimeekimeekimeekimee</span><span class="facebook"><i></i></span></td>
+                            <td class="info">김미</td>
+                            <td class="info">010-0000-0000</td>
+                            <td class="info">항공권</td>
+                            <td class="info">비자</td>
+                            <td class="info">미얀마</td>
+                        </tr>-->
+                        </tbody>
+                    </table>
+
+                    <div id="pagination"></div>
+                </div><!--company-table-->
+            </div>
+
+        </div><!--contents-->
+
+        <!--코스 상세보기 MODAL START-->
+        <div id="course-modal" class="modal admin-modal course-modal">
+            <div class="modal-wrap">
+                <div class="modal-title-wrap">
+                    <p class="title">회원정보</p>
+                    <i class="fa-solid fa-xmark close"></i>
+                </div>
+
+                <div class="modal-text-wrap">
+                    <div class="course-detail-wrap">
+                        <div class="course-detail w100pro">
+                            <table class="date-table modal-table">
+                                <colgroup>
+                                    <col style="width:140px">
+                                    <col style="width:calc(50% - 70px)">
+                                    <col style="width:140px">
+                                    <col style="width:calc(50% - 140px)">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th>가입 이메일</th>
+                                    <td>
+                                        <div id="email" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                    <th class="b-left">가입 SNS</th>
+                                    <td>
+                                        <div id="provider" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>이름</th>
+                                    <td>
+                                        <div id="name" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                    <th class="b-left">성별</th>
+                                    <td>
+                                        <div id="gender" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>국가</th>
+                                    <td>
+                                        <div id="country" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                    <th class="b-left">연락처</th>
+                                    <td>
+                                        <div id="phone" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>관심분야 1</th>
+                                    <td>
+                                        <div id="preference1" class="d-flex-wrap reservation-date"></div>
+                                    </td>
+                                    <th class="b-left">관심분야 2</th>
+                                    <td>
+                                        <div id="preference2" class="d-flex-wrap booking-status"></div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!--사용자 정보 table END-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-bottom">
+                    <a class="modal-btn close-btn cupoint">닫기</a>
+                    <!--<a class="modal-btn reserve-btn cupoint" onclick="updateCompany($(this))">수정하기</a>-->
+                </div>
+            </div><!--modal-wrap-->
+            <div class="modal-bg-cover"></div>
+        </div>
+
+    </main>
+
+    <script th:inline="javascript">
+        let page=1;
+
+        getMemberList();
+
+        // 2차 코스 리스트 불러오기
+        function getMemberList(keyword){
+            keyword = $("#keyword").val();
+            $.ajax({
+                type: "GET",
+                url: "/api/admin/member",
+                async:false,
+                data: {
+                    "page": page-1,
+                    "size": 10,
+                    "sort": "memberSeq,desc",
+                    "keyword": keyword
+                },
+                success: function(data){
+                    // console.log(data);
+                    let tag = "";
+
+                    if( data.content.length != 0 ) {
+                        data.content.forEach(function (data) {
+                            let name = data.name;
+                            let phone = data.phone;
+                            let preference1 = data.preference1;
+                            let preference2 = data.preference2;
+                            let country = data.country;
+                            let arrData = [name, phone, preference1, preference2, country];
+                            for(i=0; i<arrData.length; i++) {
+                                if(arrData[i]==null) {
+                                    arrData[i] = "-";
+                                }
+                            }
+
+                            tag +=
+                                "<tr seq='"+data.memberSeq+"'>" +
+                                "<td><input type='checkbox' class='checked'></td>" +
+                                "<td class='info'>"+data.rowNum+"</td>" +
+                                "<td class='info add-d-flex'><span>"+data.email+"</span><span class='"+data.provider+"'><i></i></span></td>" +
+                                "<td class='info'>"+arrData[0]+"</td>" +
+                                "<td class='info'>"+arrData[1]+"</td>" +
+                                "<td class='info'>"+arrData[2]+"</td>" +
+                                "<td class='info'>"+arrData[3]+"</td>" +
+                                "<td class='info'>"+arrData[4]+"</td>";
+                        });
+                        $("#memberList").html(tag);
+                    }else{
+                        $("#memberList").html(tag);
+                    }
+                    fPagination(data, page);
+                }
+            });
+        }
+
+        $("#pagination").on("click", "ul li a", function() {
+            page = parseInt($(this).attr("gopage"));
+            getMemberList();
+        });
+
+        // 회원 상세
+        $("#memberList").on("click", ".info", function() {
+            let memberSeq = $(this).parent().attr("seq");
+
+            $.ajax({
+                type: "GET",
+                url: "/api/admin/member/"+memberSeq,
+                success: function (data) {
+                    console.log(data);
+                    for(let key in data) {
+                        if(data[key]==null || data[key]=="") {
+                            $("#"+key).text("-")
+                        }else {
+                            $("#"+key).text(data[key]);
+                        }
+                    }
+
+                }
+            });
+            $("#course-modal").css("display", "block");
+        });
+
+        // 선택한 회원 탈퇴 클릭
+        $(".gray-btn").click(function(){
+            if( $("#memberList .checked:checked").length == 0 ){
+                toastModal("탈퇴 처리 할 회원을 선택해주세요.");
+            }else {
+                let arrMemberSeq = new Array();
+                if( !confirm("선택한 회원을 탈퇴 처리 합니다.\n탈퇴 처리 된 회원은 로그인 할 수 없습니다.\n" +
+                    "또한 회원 관리 목록에서도 제거됩니다.\n계속 하시겠습니까?") ){
+                    $("#memberList .checked:checked").prop("checked", false);
+                    return;
+                }else {
+                    $("#memberList .checked:checked").each(function () {
+                        let memberSeq = $(this).parent().parent().attr("seq");
+                        arrMemberSeq.push(memberSeq);
+                    });
+
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/api/admin/member",
+                        async:false,
+                        contentType:"application/json",
+                        data: JSON.stringify({
+                            "memberSeqList": arrMemberSeq
+                        }),
+                        success: function () {
+                            toastModal("탈퇴 처리가 완료되었습니다.");
+                            setTimeout(() => location.reload(), 1000);
+                        }
+                    });
+                }
+            }
+        });
+
+    </script>
+
+</div>
+</html>

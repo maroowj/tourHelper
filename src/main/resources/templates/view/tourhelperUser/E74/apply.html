@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="E74-apply-wrap">
+
+                <div>
+                    <!-- 페이지별 타이틀 -->
+                    <div class="page-title"><span>E-7-4 자동배점 신청</span></div>
+
+                    <div class="content-wrap">
+                        <div>
+                            <div>
+                                <p>E-7-4 비자를 위한 자동배점 시스템을 구축하여<br>빠르고 정확하게 파악 할 수 있습니다.</p>
+                                <!-- 정보 입력 -->
+                                <div class="input-area">
+                                    <div class="input-wrap name">
+                                        <div class="title">이름</div>
+                                        <input id="name" type="text" placeholder="이름 입력"/>
+                                    </div>
+                                    <div class="input-wrap tel">
+                                        <div class="title">연락처</div>
+                                        <input id="phone" type="text" placeholder="‘-’ 없이 입력"/>
+                                    </div>
+                                    <div class="input-wrap select country">
+                                        <div class="title">국가</div>
+                                        <input id="country" class="select" type="text" placeholder="국가 선택" readonly/>
+                                    </div>
+                                    <div class="input-wrap address">
+                                        <div class="title">주소</div>
+                                        <!-- '주소검색(.searchAdress)' 클릭 시 주소API창 나타나기 -->
+                                        <input id="address1" class="searchAdress" type="text" placeholder="주소 검색"
+                                               readonly onclick="daumPostcode()"/>
+                                        <input id="address2" type="text" placeholder="상세주소 입력"/>
+                                    </div>
+                                    <div class="input-wrap company">
+                                        <div class="title">회사</div>
+                                        <input id="company" type="text" placeholder="회사명 입력"/>
+                                    </div>
+                                    <div class="input-wrap entry">
+                                        <div class="title">입사일</div>
+                                        <div>
+                                            <input type="text" id="year" placeholder="0000" maxlength="4"
+                                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                            <span class="text">년</span>
+                                            <input type="text" id="month" placeholder="00" maxlength="2"
+                                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                            <span class="text">월</span>
+                                            <input type="text" id="date" placeholder="00" maxlength="2"
+                                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                            <span class="text">일</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 동의 체크 -->
+                                <div class="check-wrap">
+                                    <div>
+                                        <input id="agreeAll" class="chkbox1" type="checkbox"/><label for="agreeAll">모두
+                                        동의</label>
+                                        <div class="check-essential-wrap">
+                                            <div>
+                                                <input id="use" class="chkbox1" type="checkbox"/><label for="use">서비스
+                                                이용약관 동의(필수)</label>
+                                                <span class="state-red">보기</span>
+                                            </div>
+                                            <div>
+                                                <input id="privacy" class="chkbox1" type="checkbox"/><label
+                                                    for="privacy">개인정보 수집 및 동의(필수)</label>
+                                                <span class="state-red">보기</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 자동배점 신청 버튼 -->
+                                <div class="btn-area">
+                                    <button id="saveVisa" class="btn-red">
+                                        <!-- onclick="location.href='/E74/apply/complete'"-->자동배점 신청
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script>
+                let country;
+
+                getMemberInfo();
+
+                // 동의 체크
+                $("#agreeAll").on("click", function () {
+                    if ($('#agreeAll').is(':checked') == false) {
+                        $(".check-essential-wrap input:checkbox").each(function () {
+                            $(this).prop("checked", false);
+                        });
+                    } else if ($('#agreeAll').is(':checked') == true) {
+                        $(".check-essential-wrap input:checkbox").each(function () {
+                            $(this).prop("checked", true);
+                        });
+                    }
+                });
+                $(".check-essential-wrap").on("click", "input:checkbox", function () {
+                    var chkNum = $(".check-essential-wrap input:checkbox").length;
+                    var checkedNum = $(".check-essential-wrap input:checkbox:checked").length;
+
+                    if (chkNum == checkedNum) {
+                        $("#agreeAll").prop("checked", true);
+                    } else {
+                        $("#agreeAll").prop("checked", false);
+                    }
+                });
+
+                // 국가 선택
+                $('.E74-apply-wrap .content-wrap .input-wrap.select.country input').on('click', function () {
+                    $('input[name="selCountry"]').val([country]);
+                    $("#btnSelCountry").off("click").on("click", function () {
+                        country = $('input[name="selCountry"]:checked').val();
+                        $("#country").val(country);
+                        $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+
+                $("#saveVisa").on("click", function () {
+                    saveVisa();
+                });
+
+                function saveVisa() {
+                    if ($("#name").val() == null || $("#name").val() == "") {
+                        toastModal("이름을 입력해주세요");
+                        return;
+                    }
+                    if ($("#phone").val() == null || $("#phone").val() == "") {
+                        toastModal("연락처를 입력해주세요");
+                        return;
+                    }
+                    if ($("#country").val() == null || $("#country").val() == "") {
+                        toastModal("국가를 선택해주세요");
+                        return;
+                    }
+                    if ($("#address1").val() == null || $("#address1").val() == "") {
+                        toastModal("주소를 입력해주세요");
+                        return;
+                    }
+                    if ($("#address2").val() == null || $("#address2").val() == "") {
+                        toastModal("주소를 입력해주세요");
+                        return;
+                    }
+                    if ($("#company").val() == null || $("#company").val() == "") {
+                        toastModal("회사를 입력해주세요");
+                        return;
+                    }
+                    if ($("#year").val() == null || $("#year").val() == "" || $("#month").val() == null || $("#month").val() == "" || $("#date").val() == null || $("#date").val() == "") {
+                        toastModal("입사일을 모두 입력해주세요");
+                        return;
+                    }
+                    if ($("#year").val().length != 4) {
+                        toastModal("입사년도는 4자리로 입력해주세요");
+                        return;
+                    }
+                    if ($("#month").val().length != 2) {
+                        toastModal("입사월은 2자리로 입력해주세요");
+                        return;
+                    }
+                    if ($("#date").val().length != 2) {
+                        toastModal("입사일은 2자리로 입력해주세요");
+                        return;
+                    }
+                    if (!$("#use").prop("checked")) {
+                        toastModal("서비스 이용약관에 동의해주세요");
+                        return;
+                    }
+                    if (!$("#privacy").prop("checked")) {
+                        toastModal("개인정보 수집에 동의해주세요");
+                        return;
+                    }
+
+                    let objVisa = {
+                        "name": $("#name").val(),
+                        "phone": $("#phone").val(),
+                        "country": $("#country").val(),
+                        "address1": $("#address1").val(),
+                        "address2": $("#address2").val(),
+                        "company": $("#company").val(),
+                        "joinDate": $("#year").val() + "-" + $("#month").val() + "-" + $("#date").val()
+                    }
+
+                    $.ajax({
+                        type: "post",
+                        url: "/api/user/visa",
+                        contentType: "application/json",
+                        data: JSON.stringify(objVisa),
+                        success: function () {
+                            location.href = '/E74/apply/complete';
+                        },
+                        error: function (request, status, error) {
+                            toastModal("이미 신청한 내역이 존재합니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                // 저장된 사용자 정보 불러오기
+                function getMemberInfo() {
+                    $.ajax({
+                        type: "get",
+                        url: "/api/user/member",
+                        success: function (data) {
+                            if (data.country != null) {
+                                country = data.country;
+                            }
+                            $("#name").val(data.name);
+                            $('input[name="gender"]').val([data.gender]);
+                            $("#phone").val(data.tel);
+                            $("#country").val(country);
+                        },
+                        error: function (request, status, error) {
+                            alert("로그인이 필요합니다.");
+                            location.href = "/login"
+                        }
+                    });
+                }
+
+                // 주소 API
+                function daumPostcode() {
+                    new daum.Postcode({
+                        oncomplete: function (data) {
+                            console.log(data);
+                            $("#address1").val(data.roadAddress);
+                            $("#address2").val("");
+                            $("#address2").focus();
+                        }
+                    }).open();
+                    $("#address1").val("");
+                    $("#address2").val("");
+                }
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

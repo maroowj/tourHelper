@@ -1,0 +1,2395 @@
+/* 모달 백그라운드 */
+.modal-back{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 9000;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-back2{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 9000;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal{
+    /* display: flex; */
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+    width: 100%;
+}
+.modal.sub{
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+    width: 100%;
+}
+.modal .modal-wrap{
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    /* position: fixed; */
+    z-index: 9999;
+    overflow: hidden;
+    outline: 0;
+    box-shadow: 0px 10px 30px #00000015;
+
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    position: relative;
+}
+.modal.sub .modal-wrap{
+    background-color: white;
+    border: none;
+    border-radius: 8px;
+    position: fixed;
+    z-index: 9999;
+    overflow: hidden;
+    outline: 0;
+    box-shadow: 0px 10px 30px #00000015;
+}
+.modal .modal-header{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 78px;
+    text-align: center;
+}
+.modal .modal-header p{
+    font-weight: 400;
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+}
+.modal .modal-body{
+    width: 100%;
+    /* height: 100%; */
+    padding: 0 20px;
+    /* overflow: hidden; */
+}
+.modal .modal-content{
+    word-break: break-all;
+    width: 100%;
+    /* height: 100%; */
+
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.modal .modal-content p{
+    font-weight: 400;
+}
+.modal .modal-footer{
+    padding: 30px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 18.18%, #FFFFFF 71.87%);
+}
+i.close{
+    cursor: pointer;
+}
+
+
+/* 햄버거 메뉴 */
+.hamburger-menu{
+    /* display: flex; */
+    display: none;
+    justify-content: center;
+    /* position: fixed; */
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+}
+.hamburger-menu > div:nth-child(1){
+    /* padding: 30px 0 20px 0; */
+    width: 220px;
+    background-color: var(--white);
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgba(43, 53, 53, 0.1);
+    position: absolute;
+    z-index: 99999;
+    overflow: hidden;
+}
+.hamburger-menu > div:nth-child(1) *{
+    font-size: 1rem;
+}
+.hamburger-menu > div:nth-child(1) .profile-wrap{
+    padding: 30px 20px 15px 20px;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid var(--light-grey2);
+}
+.hamburger-menu > div:nth-child(1) .profile-wrap .color{
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--red) 75%, var(--yellow) 25%);
+    top: 0;
+    left: 0;
+    position: absolute;
+    overflow: hidden;
+}
+.hamburger-menu > div:nth-child(1) .profile-wrap div.img-area{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background-color: var(--light-grey2);
+    margin-bottom: 15px;
+}
+.hamburger-menu > div:nth-child(1) .profile-wrap div.img-area img{
+    object-fit: cover;
+    overflow: hidden;
+    width: auto;
+    height: 100%;
+}
+.hamburger-menu > div:nth-child(1) .profile-wrap div:nth-child(2){
+    display: flex;
+    align-items: flex-start;
+}
+.hamburger-menu > div:nth-child(1) .profile-wrap div:nth-child(3){
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+.hamburger-menu > div:nth-child(1) .profile-wrap span{
+    font-weight: 700;
+    line-height: 1.5rem;
+    max-width: calc(100% - 20px);
+    word-break: break-all;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+.hamburger-menu > div:nth-child(1) .profile-wrap i.arrow{
+    background: url('/tourhelperUser/images/grey_arrow_simple.svg') no-repeat;
+    transform: rotate(-90deg);
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -1px;
+    margin-left: 4px;
+}
+.hamburger-menu > div:nth-child(1) .profile-wrap i.edit{
+    background: url('/tourhelperUser/images/black_pen.svg') no-repeat;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -1px;
+    cursor: pointer;
+}
+.hamburger-menu > div:nth-child(1) .menu-wrap{
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+.hamburger-menu > div:nth-child(1) .menu-wrap > div{
+    width: 100%;
+    height: 50px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
+.hamburger-menu > div:nth-child(1) .menu-wrap > div:nth-child(1){
+    /* color: var(--green); */
+}
+.hamburger-menu > div:nth-child(1) .menu-wrap > div{
+    font-weight: 500;
+}
+.hamburger-menu > div:nth-child(1) .menu-wrap > div.logout::before{
+    content: '';
+    display: inline-block;
+    width: calc(100% - 40px);
+    height: 1px;
+    background-color: var(--light-grey2);
+    position: absolute;
+    left: 20px;
+    top: 0;
+}
+.hamburger-menu > div:nth-child(1) .menu-wrap > div.logout{
+    color: var(--dark-grey);
+    position: relative;
+}
+.hamburger-menu > div:nth-child(1) .menu-wrap > div.logout i{
+    background: url('/tourhelperUser/images/grey_logout.svg') no-repeat;
+    height: 24px;
+    width: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -1px;
+    margin-left: -6px;
+}
+.hamburger-menu > .close{
+    width: 45px;
+    height: 45px;
+    background-color: var(--white);
+    border-radius: 100%;
+    overflow: hidden;
+    box-shadow: 0px 0px 20px rgba(43, 53, 53, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    z-index: 99999;
+}
+.hamburger-menu > .close i{
+    background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+
+/* 재직여부 저장 */
+/* 재직여부 수정 */
+#addSelEmploymentModal .modal-wrap,
+#editSelEmploymentModal .modal-wrap{
+    width: 320px;
+}
+#addSelEmploymentModal .modal-header i,
+#editSelEmploymentModal .modal-header i{
+    background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    right: 20px;
+    margin-right: -6px;
+}
+#addSelEmploymentModal .modal-body > p,
+#editSelEmploymentModal .modal-body > p{
+    font-size: 1.125rem;
+    font-weight: 700;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+
+
+/* 이미지 상세보기 */
+#imgDetailModal{
+    background: #000000;
+}
+#imgDetailModal .modal-wrap{
+    /* height: 100%; */
+    border-radius: unset;
+    background: transparent;
+}
+#imgDetailModal .modal-header{
+    height: 60px;
+    top: 0;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+}
+#imgDetailModal .modal-header i.close{
+    background: url('/tourhelperUser/images/white_X.svg') no-repeat;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-right: 16px;
+}
+#imgDetailModal .modal-body{
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#imgDetailModal .modal-wrap .imgArea{
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    height: 100%;
+}
+#imgDetailModal .modal-wrap .imgArea img{
+    object-fit: cover;
+    overflow: hidden;
+    height: auto;
+    max-height: 100%;
+    touch-action: auto;
+}
+#imgDetailModal .modal-footer {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99999;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: unset;
+}
+#imgDetailModal .modal-footer button.btn-download{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url('/tourhelperUser/images/white_download.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30px;
+    cursor: pointer;
+}
+
+
+
+.modal .modal-content p.t1{
+    font-weight: 700;
+    font-size: 1.125rem;
+    line-height: 2rem;
+    padding-bottom: 30px;
+}
+.modal .modal-content p.t2{
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding-bottom: 6px;
+}
+.modal .modal-content p.t3{
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding-bottom: 30px;
+}
+
+
+/*예약*/
+.reserve.modal .input-wrap:not(:last-of-type){
+    margin-bottom: 40px;
+}
+.reserve.modal .input-wrap .title{
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+.reserve.modal .input-wrap input[type='text']{
+    width: 100%;
+    margin-top: 20px;
+}
+.input-wrap.etc textarea{
+    width: -webkit-fill-available;
+    margin-top: 20px;
+}
+.reserve.modal .modal-footer{
+    padding: 30px;
+}
+
+
+@media screen and (max-width: 1199px){
+    /* 햄버거 메뉴 */
+    .hamburger-menu{
+        position: fixed;
+    }
+    .hamburger-menu > div:nth-child(1){
+        top: 10px;
+        right: 10px;
+    }
+    .hamburger-menu > .close{
+        /*top: 585px;*/
+        /*right: 100px;*/
+        /*display: flex;*/
+        display: none;
+    }
+
+
+    /* 관심분야1 선택 */
+    /* 관심분야2 선택 */
+    /* 국가 선택 */
+    #selInterestsModal1 .modal-wrap,
+    #selInterestsModal2 .modal-wrap,
+    #selCountryModal .modal-wrap,
+    #selTestModal .modal-wrap,
+    .modal.info .modal-wrap{
+        border-radius: unset;
+        height: 100vh;
+    }
+    #selInterestsModal1 .modal-header,
+    #selInterestsModal2 .modal-header,
+    #selCountryModal .modal-header,
+    #selTestModal .modal-header,
+    .modal.info .modal-header{
+        position: relative;
+    }
+    #selInterestsModal1 .modal-header i.close,
+    #selInterestsModal2 .modal-header i.close,
+    #selCountryModal .modal-header i.close,
+    #selTestModal .modal-header i.close,
+    .modal.info .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #selInterestsModal1 .modal-body,
+    #selInterestsModal2 .modal-body,
+    #selCountryModal .modal-body,
+    #selTestModal .modal-body,
+    .modal.info .modal-body{
+        padding: 0;
+    }
+    .modal.info .modal-content{
+        overflow-y: scroll;
+        height: calc(100vh - 60px);
+        padding: 0 30px;
+        padding-bottom: 60px;
+    }
+    #selInterestsModal1 .modal-body > p,
+    #selInterestsModal2 .modal-body > p,
+    #selCountryModal .modal-body > p,
+    #selTestModal .modal-body > p{
+        font-size: 1.125rem;
+        font-weight: 700;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+    }
+    #selInterestsModal1 .modal-content,
+    #selInterestsModal2 .modal-content,
+    #selCountryModal .modal-content,
+    #selTestModal .modal-content{
+        height: calc(100vh - 210px);
+    }
+    #selInterestsModal1 .modal-content .chk-list-area,
+    #selInterestsModal2 .modal-content .chk-list-area,
+    #selCountryModal .modal-content .chk-list-area,
+    #selTestModal .modal-content .chk-list-area{
+        display: flex;
+        flex-direction: column;
+    }
+    #selInterestsModal1 .modal-content .chk-list-area input + label,
+    #selInterestsModal2 .modal-content .chk-list-area input + label,
+    #selCountryModal .modal-content .chk-list-area input + label,
+    #selTestModal .modal-content .chk-list-area input + label{
+        margin: 0 20px;
+    }
+    #selInterestsModal1 .modal-footer,
+    #selInterestsModal2 .modal-footer,
+    #selCountryModal .modal-footer,
+    #selTestModal .modal-footer{
+        padding: 20px;
+    }
+
+    /* 학교선택 */
+    /* 기간 선택 */
+    #selUniversityModal .modal-wrap,
+    #selPeriodModal .modal-wrap{
+        border-radius: unset;
+        height: 100vh;
+    }
+    #selUniversityModal .modal-header,
+    #selPeriodModal .modal-header{
+        position: relative;
+    }
+    #selUniversityModal .modal-header i.close,
+    #selPeriodModal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #selUniversityModal .modal-body,
+    #selPeriodModal .modal-body{
+        padding: 0;
+    }
+    #selUniversityModal .modal-body > p,
+    #selPeriodModal .modal-body > p{
+        font-size: 1.125rem;
+        font-weight: 700;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+    }
+    #selUniversityModal .modal-content,
+    #selPeriodModal .modal-content{
+        height: calc(100vh - 210px);
+    }
+    #selUniversityModal .modal-content .chk-list-area,
+    #selPeriodModal .modal-content .chk-list-area{
+        display: flex;
+        flex-direction: column;
+    }
+    #selUniversityModal .modal-content .chk-list-area input + label,
+    #selPeriodModal .modal-content .chk-list-area input + label{
+        margin: 0 20px;
+    }
+    #selUniversityModal .modal-footer,
+    #selPeriodModal .modal-footer{
+        padding: 20px;
+    }
+
+
+    /* 과거 취직정보 보기 */
+    #companyHistoryModal .modal-wrap{
+        border-radius: unset;
+        height: 100vh;
+        position: relative;
+    }
+    #companyHistoryModal .modal-header p{
+        font-weight: 400;
+    }
+    #companyHistoryModal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #companyHistoryModal .modal-body{
+        padding: unset;
+    }
+    #companyHistoryModal .modal-content{
+        height: calc(100vh - 60px);
+        padding: 20px 20px 60px 20px;
+    }
+    #companyHistoryModal .company-info:not(:first-child){
+        margin-top: 40px;
+    }
+    #companyHistoryModal .company-info > div:first-child{
+        font-size: 0.875rem;
+        color: var(--dark-grey);
+    }
+    #companyHistoryModal .company-info > div:nth-child(2){
+        background-color: var(--light-grey1);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .top-wrap .name{
+        line-height: 1.5rem;
+        font-weight: 700;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .top-wrap .name span{
+        display: unset;
+        font-size: 0.75rem;
+        padding: 1px 6px;
+        margin-left: 10px;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap{
+        padding-top: 10px;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap > div{
+        display: flex;
+        align-items: center;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap > div > span:nth-child(1){
+        color: var(--dark-grey);
+        line-height: 1.5rem;
+        display: flex;
+        align-items: center;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap > div > span:nth-child(1)::after{
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 14px;
+        background-color: var(--grey);
+        margin: 0 6px;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap > div > span:nth-child(2){
+        display: flex;
+        align-items: flex-start;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap span.unit{
+        margin-left: 2px;
+    }
+    #companyHistoryModal .modal-wrap > .btn-add{
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 20px;
+        background-color: var(--white);
+        box-shadow: 0px 4px 20px 0px #2B35351A;
+        border: 1px solid var(--red);
+        position: absolute;
+        right: 30px;
+        bottom: 30px;
+    }
+    #companyHistoryModal .modal-wrap > .btn-add i{
+        background: url('/tourhelperUser/images/red_plus.svg');
+        width: 30px;
+        height: 30px;
+    }
+
+
+    /* 과거 취직정보 추가 */
+    /* 일자리 추가 */
+    /* 일자리 수정 */
+    #addCompanyHistoryModal .modal-wrap,
+    #editCompanyHistoryModal .modal-wrap,
+    #addEmploymentModal .modal-wrap,
+    #editEmploymentModal .modal-wrap{
+        border-radius: unset;
+        height: 100vh;
+    }
+    #addCompanyHistoryModal .modal-header p,
+    #editCompanyHistoryModal .modal-header p,
+    #addEmploymentModal .modal-header p,
+    #editEmploymentModal .modal-header p{
+        font-weight: 400;
+    }
+    #addCompanyHistoryModal .modal-header i.close,
+    #addEmploymentModal .modal-header i.close,
+    #editEmploymentModal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #addCompanyHistoryModal .modal-body,
+    #addEmploymentModal .modal-body,
+    #editEmploymentModal .modal-body{
+        padding: unset;
+        height: calc(100vh - 160px);
+    }
+    #addCompanyHistoryModal .modal-content,
+    #addEmploymentModal .modal-content,
+    #editEmploymentModal .modal-content{
+        height: 100%;
+        padding: 0 20px;
+        padding-bottom: 60px;
+    }
+    #addCompanyHistoryModal .modal-content > .input-area,
+    #addEmploymentModal .modal-content > .input-area,
+    #editEmploymentModal .modal-content > .input-area{
+        margin-top: 20px;
+    }
+    #addCompanyHistoryModal .input-wrap:not(:last-child),
+    #addEmploymentModal .input-wrap:not(:last-child),
+    #editEmploymentModal .input-wrap:not(:last-child){
+        margin-bottom: 40px;
+    }
+    #addCompanyHistoryModal .input-wrap > .title,
+    #addEmploymentModal .input-wrap > .title,
+    #editEmploymentModal .input-wrap > .title{
+        font-size: 1.25rem;
+        font-weight: 700;
+        padding: 20px 0;
+    }
+    #addCompanyHistoryModal .input-wrap input,
+    #addEmploymentModal .input-wrap input,
+    #editEmploymentModal .input-wrap input{
+        width: 100%;
+    }
+    #addCompanyHistoryModal .input-wrap:nth-child(1) > .title,
+    #addEmploymentModal .input-wrap:nth-child(1) > .title,
+    #editEmploymentModal .input-wrap:nth-child(1) > .title{
+        padding-top: 0;
+    }
+    #addCompanyHistoryModal .input-wrap.entry > div:nth-child(2) input:first-of-type,
+    #addCompanyHistoryModal .input-wrap.leave > div:nth-child(2) input:first-of-type,
+    #addEmploymentModal .input-wrap.entry > div:nth-child(2) input:first-of-type,
+    #addEmploymentModal .input-wrap.leave > div:nth-child(2) input:first-of-type,
+    #editEmploymentModal .input-wrap.entry > div:nth-child(2) input:first-of-type,
+    #editEmploymentModal .input-wrap.leave > div:nth-child(2) input:first-of-type{
+        width: 60px;
+    }
+    #addCompanyHistoryModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(2),
+    #addCompanyHistoryModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(3),
+    #addCompanyHistoryModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(2),
+    #addCompanyHistoryModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(3),
+    #addEmploymentModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(2),
+    #addEmploymentModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(3),
+    #addEmploymentModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(2),
+    #addEmploymentModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(3),
+    #editEmploymentModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(2),
+    #editEmploymentModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(3),
+    #editEmploymentModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(2),
+    #editEmploymentModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(3){
+        width: 40px;
+    }
+    #addCompanyHistoryModal .input-wrap.entry span,
+    #addCompanyHistoryModal .input-wrap.leave span,
+    #addEmploymentModal .input-wrap.entry span,
+    #addEmploymentModal .input-wrap.leave span,
+    #editEmploymentModal .input-wrap.entry span,
+    #editEmploymentModal .input-wrap.leave span{
+        margin-left: 4px;
+        margin-right: 10px;
+        font-size: 1.25rem;
+    }
+    #addCompanyHistoryModal .input-wrap.salary input,
+    #addEmploymentModal .input-wrap.salary input,
+    #editEmploymentModal .input-wrap.salary input{
+        width: calc(100% - 18.11px);
+    }
+    #addCompanyHistoryModal .input-wrap.salary > div:nth-child(2),
+    #addEmploymentModal .input-wrap.salary > div:nth-child(2),
+    #editEmploymentModal .input-wrap.salary > div:nth-child(2){
+        display: flex;
+        align-items: center;
+    }
+    #addCompanyHistoryModal .input-wrap.salary > div:nth-child(2) span,
+    #addEmploymentModal .input-wrap.salary > div:nth-child(2) span,
+    #editEmploymentModal .input-wrap.salary > div:nth-child(2) span{
+        font-size: 1.25rem;
+        margin-left: 4px;
+    }
+    #addCompanyHistoryModal .modal-footer,
+    #addEmploymentModal .modal-footer,
+    #editEmploymentModal .modal-footer{
+        padding: 20px;
+    }
+
+
+    /* 진행단계 보기(유학 상세) */
+    #progressModal .modal-wrap{
+        border-radius: unset;
+        height: 100vh;
+    }
+    #progressModal .modal-header p{
+        font-weight: 400;
+    }
+    #progressModal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #progressModal .modal-body{
+        padding: unset;
+        height: calc(100vh - 160px);
+    }
+    #progressModal .modal-content{
+        height: 100%;
+        /* padding: 0 30px; */
+        padding-bottom: 60px;
+    }
+    #progressModal .no-list{
+        width: 100%;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark-grey);
+    }
+    #progressModal .modal-content > div > div{
+        padding: 0 20px;
+    }
+    #progressModal .modal-content > div > div:nth-child(1){
+        padding-top: 20px;
+    }
+    #progressModal .modal-content > div > div:not(:nth-child(1)){
+        padding-top: 40px;
+    }
+    #progressModal .modal-content > div > div > p{
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+    #progressModal .modal-content .info-wrap2{
+        padding: unset;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        margin: 40px 0 0 0;
+        border: 1px solid var(--light-grey2);
+        border-left: unset;
+        border-right: unset;
+    }
+    #progressModal .modal-content .info-wrap2 > p{
+        font-size: 1rem;
+        padding: 0 30px;
+        padding-bottom: 20px;
+    }
+    #progressModal .modal-content .info-wrap2 > span{
+        padding: 0 30px;
+    }
+    #progressModal .modal-content .info-wrap2 span.state-green{
+        width: fit-content;
+        display: unset;
+        font-size: 0.75rem;
+        padding: 2px 10px;
+        margin-left: 10px;
+    }
+    #progressModal .modal-content .info-wrap1 > div{
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 400;
+    }
+    #progressModal .modal-content .info-wrap1 div span{
+        line-height: 2.7rem;
+    }
+    #progressModal .modal-content .info-wrap1 > div span.step{
+        font-weight: 700;
+        border-bottom: 2px solid var(--red);
+        width: fit-content;
+    }
+    #progressModal .modal-content .info-wrap1 > div:nth-child(1){
+        display: flex;
+        align-items: flex-start;
+        box-sizing: border-box;
+        margin-right: 10px;
+        word-break: break-all;
+        width: calc(100%);
+    }
+    #progressModal .modal-content .info-wrap1 > div:nth-child(1):before{
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 10px;
+        background-color: var(--red);
+        border-radius: 100%;
+        margin-top: 22px;
+    }
+    #progressModal .modal-content .info-wrap1 .step-guide2{
+        margin-left: 20px;
+    }
+    #progressModal .modal-content .info-wrap1 .step-guide2{
+        width: fit-content;
+        padding-top: 10px;
+    }
+    #progressModal .modal-content .info-wrap3 > p,
+    #progressModal .modal-content .info-wrap4 > p{
+        padding-bottom: 20px;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap{
+        overflow: hidden;
+        padding-bottom: 75%;
+        position: relative;
+        margin-top: 20px;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step1{
+        background: url('/tourhelperUser/images/progress/step1.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step2{
+        background: url('/tourhelperUser/images/progress/step2.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step3{
+        background: url('/tourhelperUser/images/progress/step3.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step4{
+        background: url('/tourhelperUser/images/progress/step4.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step5{
+        background: url('/tourhelperUser/images/progress/step5.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step6{
+        background: url('/tourhelperUser/images/progress/step6.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step7{
+        background: url('/tourhelperUser/images/progress/step7.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step8{
+        background: url('/tourhelperUser/images/progress/step8.png') no-repeat;
+        width: 100%;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step9{
+        background: url('/tourhelperUser/images/progress/step9.png') no-repeat;
+        width: 100%;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step10{
+        background: url('/tourhelperUser/images/progress/step10.png') no-repeat;
+        width: 100%;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step11{
+        background: url('/tourhelperUser/images/progress/step11.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step12{
+        background: url('/tourhelperUser/images/progress/step12.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap{
+        display: flex;
+        align-items: center;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap:not(:nth-of-type(1)){
+        padding-top: 20px;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap .btn-del{
+        min-width: 30px;
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 1px solid var(--light-grey2);
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap .btn-del i{
+        display: inline-block;
+        background: url('/tourhelperUser/images/black_hyphen.svg');
+        width: 20px;
+        height: 20px;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap .input-area{
+        width: 100%;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap span.txt{
+        font-weight: 700;
+        display: block;
+        margin-bottom: 1rem;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap input[type="text"]{
+        width: 100%;
+        cursor: default;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap input[type="text"]:not(:last-of-type){
+        margin-bottom: 20px;
+    }
+    #progressModal .modal-content .info-wrap4 .btn-area{
+        margin-top: 30px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #progressModal .modal-content .info-wrap4 .btn-area span{
+        text-align: center;
+        color: var(--red);
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    #progressModal .modal-content .info-wrap4 .btn-area span::before{
+        content: '';
+        display: inline-block;
+        background: url('/tourhelperUser/images/red_plus.svg');
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+        margin-top: 1px;
+    }
+    #progressModal .modal-footer{
+        padding: 20px;
+    }
+
+
+    /* 상담하기 */
+    #messageModal .modal-wrap{
+        border-radius: unset;
+        height: 100vh;
+    }
+    #messageModal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #messageModal .modal-body{
+        padding: unset;
+    }
+    #messageModal .view-prev{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        background-color: var(--light-yellow);
+        height: 35px;
+        cursor: pointer;
+    }
+    #messageModal .cancel-view-prev{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        background-color: var(--light-green);
+        height: 35px;
+        cursor: pointer;
+    }
+    #messageModal .modal-content{
+        height: calc(100vh - 155px);
+        /* padding: 0 30px; */
+    }
+    #messageModal .modal-content .chat-area .message-area{
+        padding-bottom: 20px;
+
+        -webkit-user-select: text;
+        -moz-user-select: elements;
+        -ms-user-select: elements;
+        user-select: text;
+    }
+    #messageModal .modal-content .chat-area .message-area .date-area{
+        color: var(--dark-grey);
+        font-size: 0.75rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    #messageModal .modal-content .chat-area .message-area .message-wrap-helper{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 0 20px;
+    }
+    #messageModal .modal-content .chat-area .message-area .message-wrap-user{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        padding: 0 20px;
+    }
+    #messageModal .modal-content .chat-area .message-area .message{
+        max-width: 380px;
+        display: flex;
+        align-items: flex-end;
+        margin-top: 10px;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .txt,
+    #messageModal .modal-content .chat-area .message-area .message .file{
+        border-radius: 10px;
+        background-color: var(--light-grey1);
+        line-height: 1.4rem;
+        padding: 1rem;
+        max-width: 300px;
+        width: 100%;
+        margin-right: 10px;
+        font-size: 0.9375rem;
+
+        -webkit-user-select: text;
+        -moz-user-select: elements;
+        -ms-user-select: elements;
+        user-select: text;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .file{
+        color: var(--green);
+        cursor: pointer;
+        font-size: 0.9375rem;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .file:hover{
+        text-decoration: underline;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .img{
+        max-width: 100px;
+        height: 100px;
+        background-color: var(--light-grey1);
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .img img{
+        height: 100%;
+        width: auto;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .time{
+        color: var(--dark-grey);
+        font-size: 0.625rem;
+        min-width: 38.55px;
+        word-break: keep-all;
+    }
+    #messageModal .modal-content .chat-area .message-area .message-wrap-user .message .txt,
+    #messageModal .modal-content .chat-area .message-area .message-wrap-user .message .file,
+    #messageModal .modal-content .chat-area .message-area .message-wrap-user .message .img{
+        background-color: var(--light-yellow);
+        margin-left: 10px;
+        margin-right: unset;
+    }
+    #messageModal .modal-content .chat-area .message-area .message-wrap-user .message{
+        display: flex;
+        justify-content: right;
+    }
+    #messageModal .modal-footer{
+        padding: unset;
+        background: unset;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        padding-left: unset;
+        padding-right: unset;
+    }
+    #messageModal .modal-footer .send-area{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+        padding: 0 10px;
+    }
+    #messageModal .modal-footer .send-area .input-area{
+        width: 100%;
+        padding: 0 10px;
+    }
+    #messageModal .modal-footer .send-area .input-area textarea{
+        border: 1px solid var(--light-grey2);
+        border-radius: 10px;
+        background: var(--white);
+        font-size: 1rem;
+        text-align: left;
+        height: 28px;
+        padding: 6px 10px;
+        resize: none;
+        width: -webkit-fill-available;
+    }
+    #messageModal .modal-footer .send-area > div:nth-child(1),
+    #messageModal .modal-footer .send-area > div:nth-child(3){
+        width: 40px;
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    #messageModal .modal-footer .send-area > div.add-file i{
+        display: inline-block;
+        background: url('/tourhelperUser/images/red_plus.svg');
+        background-size: 28px;
+        width: 28px;
+        height: 28px;
+        margin-top: 7px;
+    }
+    #messageModal .modal-footer .send-area > div.close i{
+        display: inline-block;
+        background: url('/tourhelperUser/images/red_plus.svg');
+        transform: rotate(45deg);
+        background-size: 30px;
+        width: 30px;
+        height: 30px;
+        margin-top: 6px;
+    }
+    #messageModal .modal-footer .send-area > div:nth-child(3) i{
+        display: inline-block;
+        background: url('/tourhelperUser/images/red_send.svg');
+        background-size: 24px;
+        width: 24px;
+        height: 24px;
+        margin-top: 7px;
+    }
+    #messageModal .modal-footer .add-file-area{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        /* position: absolute; */
+        /* top: -50px; */
+        background-color: var(--white);
+        border: 1px solid var(--light-grey2);
+        border-left: unset;
+        border-right: unset;
+        position: relative;
+        margin-bottom: 10px;
+    }
+    #messageModal .modal-footer .add-file-area div{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    #messageModal .modal-footer .add-file-area div:nth-child(1):after{
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 16px;
+        background-color: var(--grey);
+        position: absolute;
+        right: 0;
+    }
+    #messageModal .modal-footer .add-file-area span{
+        color: var(--dark-grey);
+        display: flex;
+        align-items: center;
+    }
+    #messageModal .modal-footer .add-file-area div:nth-child(1) span::before{
+        content: '';
+        display: inline-block;
+        background: url('/tourhelperUser/images/grey_album.svg');
+        width: 24px;
+        height: 24px;
+    }
+    #messageModal .modal-footer .add-file-area div:nth-child(2) span::before{
+        content: '';
+        display: inline-block;
+        background: url('/tourhelperUser/images/grey_file.svg');
+        width: 24px;
+        height: 24px;
+    }
+    #messageModal .modal-footer .btn-bottom{
+        width: 45px;
+        height: 45px;
+        position: absolute;
+        right: 30px;
+        top: -60px;
+        background-color: var(--white);
+        border: 1px solid var(--red);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        z-index: 5000;
+    }
+    #messageModal .modal-footer .btn-bottom i{
+        background: url('/tourhelperUser/images/black_arrow.svg');
+        width: 30px;
+        height: 30px;
+        transform: rotate(-90deg);
+    }
+
+
+    /*비즈니스 예약*/
+    /*여행지(미얀마, 한국) 예약*/
+    .reserve.modal .modal-wrap{
+        border-radius: unset;
+        height: 100vh;
+    }
+    .reserve.modal .modal-header p{
+         font-weight: 400;
+    }
+    .reserve.modal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    .reserve.modal .modal-body{
+        padding: unset;
+        height: calc(100vh - 160px);
+    }
+    .reserve.modal .modal-content{
+        height: 100%;
+        padding: 0 20px;
+        padding-bottom: 60px;
+    }
+    .reserve.modal .modal-footer{
+        padding: 20px;
+    }
+
+}
+
+
+@media screen and (min-width: 1200px){
+    /* 햄버거 메뉴 */
+    .hamburger-menu{
+        width: unset;
+        height: unset;
+    }
+    .hamburger-menu > div:nth-child(1){
+        top: 100px;
+        margin-right: -980px;
+    }
+    .hamburger-menu > div:nth-child(1){
+        position: fixed;
+    }
+    .hamburger-menu > div:nth-child(1) .menu-wrap > div{
+        cursor: pointer;
+    }
+    .hamburger-menu > div:nth-child(1) .menu-wrap > div:hover{
+        font-weight: 700;
+        color: var(--red);
+    }
+    .hamburger-menu > div:nth-child(1) .menu-wrap > div.logout:hover > i{
+        background: url('/tourhelperUser/images/red_logout.svg') no-repeat;
+    }
+    .hamburger-menu > .close{
+        margin-right: -970px;
+        top: 721.16px;
+    }
+    .hamburger-menu > .close{
+        display: none;
+    }
+    .hamburger-menu .modal-back{
+        display: none;
+    }
+
+
+    /* 관심분야1 선택 */
+    /* 관심분야2 선택 */
+    /* 국가 선택 */
+    /* 한국어 능력시험 선택 */
+    #selInterestsModal1 .modal-wrap,
+    #selInterestsModal2 .modal-wrap,
+    #selCountryModal .modal-wrap,
+    #selTestModal .modal-wrap{
+        width: 500px;
+    }
+    #selInterestsModal1 .modal-header i.close,
+    #selInterestsModal2 .modal-header i.close,
+    #selCountryModal .modal-header i.close,
+    #selTestModal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #selInterestsModal1 .modal-body > p,
+    #selInterestsModal2 .modal-body > p,
+    #selCountryModal .modal-body > p,
+    #selTestModal .modal-body > p{
+        font-size: 1.125rem;
+        font-weight: 700;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+    }
+    #selInterestsModal1 .modal-body,
+    #selInterestsModal2 .modal-body,
+    #selCountryModal .modal-body,
+    #selTestModal .modal-body{
+        padding: 0;
+    }
+    #selInterestsModal1 .modal-content,
+    #selInterestsModal2 .modal-content,
+    #selCountryModal .modal-content,
+    #selTestModal .modal-content{
+        height: calc(100vh - 350px);
+    }
+    #selInterestsModal1 .modal-content .chk-list-area input + label,
+    #selInterestsModal2 .modal-content .chk-list-area input + label,
+    #selCountryModal .modal-content .chk-list-area input + label,
+    #selTestModal .modal-content .chk-list-area input + label{
+        margin: 0 20px;
+    }
+
+
+    /* 학교 선택 */
+    /* 기간 선택 */
+    #selUniversityModal .modal-wrap,
+    #selPeriodModal .modal-wrap{
+        width: 500px;
+    }
+    #selUniversityModal .modal-header i.close,
+    #selPeriodModal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #selUniversityModal .modal-body > p,
+    #selPeriodModal .modal-body > p{
+        font-size: 1.125rem;
+        font-weight: 700;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+    }
+    #selUniversityModal .modal-body,
+    #selPeriodModal .modal-body{
+        padding: 0;
+    }
+    #selUniversityModal .modal-content,
+    #selPeriodModal .modal-content{
+        height: calc(100vh - 350px);
+    }
+    #selUniversityModal .modal-content .chk-list-area input + label,
+    #selPeriodModal .modal-content .chk-list-area input + label{
+        margin: 0 20px;
+    }
+
+
+    /* 과거 취직정보 보기 */
+    #companyHistoryModal .modal-wrap{
+        width: 500px;
+        position: relative;
+    }
+    #companyHistoryModal .modal-header p{
+        font-weight: 400;
+    }
+    #companyHistoryModal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #companyHistoryModal .modal-body{
+        padding: unset;
+    }
+    #companyHistoryModal .modal-content{
+        height: calc(100vh - 230px);
+        padding: 20px 20px 60px 20px;
+    }
+    #companyHistoryModal .company-info:not(:first-child){
+        margin-top: 40px;
+    }
+    #companyHistoryModal .company-info > div:first-child{
+        font-size: 0.875rem;
+        color: var(--dark-grey);
+    }
+    #companyHistoryModal .company-info > div:nth-child(2){
+        background-color: var(--light-grey1);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .top-wrap .name{
+        line-height: 1.5rem;
+        font-weight: 700;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .top-wrap .name span{
+        display: unset;
+        font-size: 0.75rem;
+        padding: 1px 6px;
+        margin-left: 10px;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap{
+        padding-top: 10px;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap > div{
+        display: flex;
+        align-items: center;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap > div > span:nth-child(1){
+        color: var(--dark-grey);
+        line-height: 1.5rem;
+        display: flex;
+        align-items: center;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap > div > span:nth-child(1)::after{
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 14px;
+        background-color: var(--grey);
+        margin: 0 6px;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap > div > span:nth-child(2){
+        display: flex;
+        align-items: flex-start;
+    }
+    #companyHistoryModal .company-info > div:nth-child(2) .bottom-wrap span.unit{
+        margin-left: 2px;
+    }
+    #companyHistoryModal .modal-wrap > .btn-add{
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 20px;
+        background-color: var(--white);
+        box-shadow: 0px 4px 20px 0px #2B35351A;
+        border: 1px solid var(--red);
+        position: absolute;
+        right: 30px;
+        bottom: 30px;
+        cursor: pointer;
+    }
+    #companyHistoryModal .modal-wrap > .btn-add i{
+        background: url('/tourhelperUser/images/red_plus.svg');
+        width: 30px;
+        height: 30px;
+    }
+
+
+    /* 과거 취직정보 추가 */
+    /* 일자리 추가 */
+    /* 일자리 수정 */
+    #addCompanyHistoryModal .modal-wrap,
+    #editCompanyHistoryModal .modal-wrap,
+    #addEmploymentModal .modal-wrap,
+    #editEmploymentModal .modal-wrap,
+    .modal.info .modal-wrap,
+    .reserve.modal .modal-wrap{
+        width: 500px;
+        position: relative;
+    }
+    #addCompanyHistoryModal .modal-header p,
+    #editCompanyHistoryModal .modal-header p,
+    #addEmploymentModal .modal-header p,
+    #editEmploymentModal .modal-header p,
+    .modal.info .modal-header p,
+    .reserve.modal .modal-header p{
+        font-weight: 400;
+    }
+    #addCompanyHistoryModal .modal-header i.close,
+    #addEmploymentModal .modal-header i.close,
+    #editEmploymentModal .modal-header i.close,
+    .modal.info .modal-header i.close,
+    .reserve.modal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #addCompanyHistoryModal .modal-body,
+    #addEmploymentModal .modal-body,
+    #editEmploymentModal .modal-body,
+    .modal.info .modal-body,
+    .reserve.modal .modal-body{
+        padding: unset;
+    }
+    #addCompanyHistoryModal .modal-content,
+    #addEmploymentModal .modal-content,
+    #editEmploymentModal .modal-content,
+    .modal.info .modal-content,
+    .reserve.modal .modal-content{
+        height: calc(100vh - 350px);
+        padding: 0 30px;
+        padding-bottom: 60px;
+    }
+    #addCompanyHistoryModal .modal-content > .input-area,
+    #addEmploymentModal .modal-content > .input-area,
+    #editEmploymentModal .modal-content > .input-area{
+        margin-top: 20px;
+    }
+    #addCompanyHistoryModal .input-wrap:not(:last-child),
+    #addEmploymentModal .input-wrap:not(:last-child),
+    #editEmploymentModal .input-wrap:not(:last-child){
+        margin-bottom: 40px;
+    }
+    #addCompanyHistoryModal .input-wrap > .title,
+    #addEmploymentModal .input-wrap > .title,
+    #editEmploymentModal .input-wrap > .title{
+        font-size: 1.25rem;
+        font-weight: 700;
+        padding: 20px 0;
+    }
+    #addCompanyHistoryModal .input-wrap input,
+    #addEmploymentModal .input-wrap input,
+    #editEmploymentModal .input-wrap input{
+        width: 100%;
+    }
+    #addCompanyHistoryModal .input-wrap:nth-child(1) > .title,
+    #addEmploymentModal .input-wrap:nth-child(1) > .title,
+    #editEmploymentModal .input-wrap:nth-child(1) > .title{
+        padding-top: 0;
+    }
+    #addCompanyHistoryModal .input-wrap.entry > div:nth-child(2) input:first-of-type,
+    #addCompanyHistoryModal .input-wrap.leave > div:nth-child(2) input:first-of-type,
+    #addEmploymentModal .input-wrap.entry > div:nth-child(2) input:first-of-type,
+    #addEmploymentModal .input-wrap.leave > div:nth-child(2) input:first-of-type,
+    #editEmploymentModal .input-wrap.entry > div:nth-child(2) input:first-of-type,
+    #editEmploymentModal .input-wrap.leave > div:nth-child(2) input:first-of-type{
+        width: 60px;
+    }
+    #addCompanyHistoryModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(2),
+    #addCompanyHistoryModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(3),
+    #addCompanyHistoryModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(2),
+    #addCompanyHistoryModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(3),
+    #addEmploymentModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(2),
+    #addEmploymentModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(3),
+    #addEmploymentModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(2),
+    #addEmploymentModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(3),
+    #editEmploymentModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(2),
+    #editEmploymentModal .input-wrap.entry > div:nth-child(2) input:nth-of-type(3),
+    #editEmploymentModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(2),
+    #editEmploymentModal .input-wrap.leave > div:nth-child(2) input:nth-of-type(3){
+        width: 40px;
+    }
+    #addCompanyHistoryModal .input-wrap.entry span,
+    #addCompanyHistoryModal .input-wrap.leave span,
+    #addEmploymentModal .input-wrap.entry span,
+    #addEmploymentModal .input-wrap.leave span,
+    #editEmploymentModal .input-wrap.entry span,
+    #editEmploymentModal .input-wrap.leave span{
+        margin-left: 4px;
+        margin-right: 10px;
+        font-size: 1.25rem;
+    }
+    #addCompanyHistoryModal .input-wrap.salary input,
+    #addEmploymentModal .input-wrap.salary input,
+    #editEmploymentModal .input-wrap.salary input{
+        width: calc(100% - 18.11px);
+    }
+    #addCompanyHistoryModal .input-wrap.salary > div:nth-child(2),
+    #addEmploymentModal .input-wrap.salary > div:nth-child(2),
+    #editEmploymentModal .input-wrap.salary > div:nth-child(2){
+        display: flex;
+        align-items: center;
+    }
+    #addCompanyHistoryModal .input-wrap.salary > div:nth-child(2) span,
+    #addEmploymentModal .input-wrap.salary > div:nth-child(2) span,
+    #editEmploymentModal .input-wrap.salary > div:nth-child(2) span{
+        font-size: 1.25rem;
+        margin-left: 4px;
+    }
+
+
+    /* 진행단계 보기(유학 상세) */
+    #progressModal .modal-wrap{
+        width: 500px;
+        position: relative;
+    }
+    #progressModal .modal-header p{
+        font-weight: 400;
+    }
+    #progressModal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #progressModal .modal-body{
+        padding: unset;
+    }
+    #progressModal .modal-content{
+        height: calc(100vh - 350px);
+        /* padding: 0 30px; */
+        padding-bottom: 60px;
+    }
+    #progressModal .no-list{
+        width: 100%;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark-grey);
+    }
+    #progressModal .modal-content > div > div{
+        padding: 0 30px;
+    }
+    #progressModal .modal-content > div > div:nth-child(1){
+        padding-top: 20px;
+    }
+    #progressModal .modal-content > div > div:not(:nth-child(1)){
+        padding-top: 40px;
+    }
+    #progressModal .modal-content > div > div > p{
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+    #progressModal .modal-content .info-wrap2{
+        padding: unset;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        margin: 40px 0 0 0;
+        border: 1px solid var(--light-grey2);
+        border-left: unset;
+        border-right: unset;
+    }
+    #progressModal .modal-content .info-wrap2 > p{
+        font-size: 1rem;
+        padding: 0 30px;
+        padding-bottom: 20px;
+    }
+    #progressModal .modal-content .info-wrap2 > span{
+        padding: 0 30px;
+    }
+    #progressModal .modal-content .info-wrap2 span.state-green{
+        width: fit-content;
+        display: unset;
+        font-size: 0.75rem;
+        padding: 2px 10px;
+        margin-left: 10px;
+    }
+    #progressModal .modal-content .info-wrap1 > div{
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 400;
+    }
+    #progressModal .modal-content .info-wrap1 div span{
+        line-height: 2.7rem;
+    }
+    #progressModal .modal-content .info-wrap1 > div span.step{
+        font-weight: 700;
+        border-bottom: 2px solid var(--red);
+        width: fit-content;
+    }
+    #progressModal .modal-content .info-wrap1 > div:nth-child(1){
+        display: flex;
+        align-items: flex-start;
+        box-sizing: border-box;
+        margin-right: 10px;
+        word-break: break-all;
+        width: calc(100);
+    }
+    #progressModal .modal-content .info-wrap1 > div:nth-child(1):before{
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 10px;
+        background-color: var(--red);
+        border-radius: 100%;
+        margin-top: 22px;
+    }
+    #progressModal .modal-content .info-wrap1 .step-guide2{
+        margin-left: 20px;
+    }
+    #progressModal .modal-content .info-wrap1 .step-guide2{
+        width: fit-content;
+        padding-top: 10px;
+    }
+    #progressModal .modal-content .info-wrap3 > p,
+    #progressModal .modal-content .info-wrap4 > p{
+        padding-bottom: 20px;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap{
+        overflow: hidden;
+        padding-bottom: 75%;
+        position: relative;
+        margin-top: 20px;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step1{
+        background: url('/tourhelperUser/images/progress/step1.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step2{
+        background: url('/tourhelperUser/images/progress/step2.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step3{
+        background: url('/tourhelperUser/images/progress/step3.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step4{
+        background: url('/tourhelperUser/images/progress/step4.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step5{
+        background: url('/tourhelperUser/images/progress/step5.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step6{
+        background: url('/tourhelperUser/images/progress/step6.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step7{
+        background: url('/tourhelperUser/images/progress/step7.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step8{
+        background: url('/tourhelperUser/images/progress/step8.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step9{
+        background: url('/tourhelperUser/images/progress/step9.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step10{
+        background: url('/tourhelperUser/images/progress/step10.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step11{
+        background: url('/tourhelperUser/images/progress/step11.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap3 .img-wrap > div.step12{
+        background: url('/tourhelperUser/images/progress/step12.png') no-repeat;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        /* object-fit: cover; */
+        background-position: top;
+        position: absolute;
+        top: 0;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap{
+        display: flex;
+        align-items: center;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap:not(:nth-of-type(1)){
+        padding-top: 20px;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap .btn-del{
+        min-width: 30px;
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 1px solid var(--light-grey2);
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap .btn-del i{
+        display: inline-block;
+        background: url('/tourhelperUser/images/black_hyphen.svg');
+        width: 20px;
+        height: 20px;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap .input-area{
+        width: 100%;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap span.txt{
+        font-weight: 700;
+        display: block;
+        margin-bottom: 1rem;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap input[type="text"]{
+        width: 100%;
+        cursor: default;
+    }
+    #progressModal .modal-content .info-wrap4 .upload-wrap .flex-wrap input[type="text"]:not(:last-of-type){
+        margin-bottom: 20px;
+    }
+    #progressModal .modal-content .info-wrap4 .btn-area{
+        margin-top: 30px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #progressModal .modal-content .info-wrap4 .btn-area span{
+        text-align: center;
+        color: var(--red);
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    #progressModal .modal-content .info-wrap4 .btn-area span::before{
+        content: '';
+        display: inline-block;
+        background: url('/tourhelperUser/images/red_plus.svg');
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+        margin-top: 1px;
+    }
+
+
+    /* 상담하기 */
+    #messageModal .modal-wrap{
+        width: 500px;
+        position: relative;
+    }
+    #messageModal .modal-header i.close{
+        background: url('/tourhelperUser/images/black_X.svg') no-repeat;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 20px;
+        margin-right: -6px;
+    }
+    #messageModal .modal-body{
+        padding: unset;
+    }
+    #messageModal .view-prev{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        background-color: var(--light-yellow);
+        height: 35px;
+        cursor: pointer;
+    }
+    #messageModal .cancel-view-prev{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        background-color: var(--light-green);
+        height: 35px;
+        cursor: pointer;
+    }
+    #messageModal .modal-content{
+        height: calc(100vh - 285px);
+        /* padding: 0 30px; */
+    }
+    #messageModal .modal-content .chat-area .message-area{
+        padding-bottom: 20px;
+    }
+    #messageModal .modal-content .chat-area .message-area .date-area{
+        color: var(--dark-grey);
+        font-size: 0.75rem;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    #messageModal .modal-content .chat-area .message-area .message-wrap-helper{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 0 20px;
+    }
+    #messageModal .modal-content .chat-area .message-area .message-wrap-user{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        padding: 0 20px;
+    }
+    #messageModal .modal-content .chat-area .message-area .message{
+        max-width: 380px;
+        display: flex;
+        align-items: flex-end;
+        margin-top: 10px;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .txt,
+    #messageModal .modal-content .chat-area .message-area .message .file{
+        border-radius: 10px;
+        background-color: var(--light-grey1);
+        line-height: 1.4rem;
+        padding: 1rem;
+        max-width: 300px;
+        width: 100%;
+        margin-right: 10px;
+        font-size: 0.9375rem;
+
+        -webkit-user-select: text;
+        -moz-user-select: elements;
+        -ms-user-select: elements;
+        user-select: text;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .file{
+        color: var(--green);
+        cursor: pointer;
+        font-size: 0.9375rem;
+        cursor: pointer;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .file:hover{
+        text-decoration: underline;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .img{
+        max-width: 100px;
+        height: 100px;
+        background-color: var(--light-grey1);
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .img img{
+        height: 100%;
+        width: auto;
+    }
+    #messageModal .modal-content .chat-area .message-area .message .time{
+        color: var(--dark-grey);
+        font-size: 0.625rem;
+        min-width: 38.55px;
+        word-break: keep-all;
+    }
+    #messageModal .modal-content .chat-area .message-area .message-wrap-user .message .txt,
+    #messageModal .modal-content .chat-area .message-area .message-wrap-user .message .file,
+    #messageModal .modal-content .chat-area .message-area .message-wrap-user .message .img{
+        background-color: var(--light-yellow);
+        margin-left: 10px;
+        margin-right: unset;
+    }
+    #messageModal .modal-content .chat-area .message-area .message-wrap-user .message{
+        display: flex;
+        justify-content: right;
+    }
+    #messageModal .modal-footer{
+        padding: unset;
+        background: unset;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        padding-left: unset;
+        padding-right: unset;
+    }
+    #messageModal .modal-footer .send-area{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+        padding: 0 10px;
+    }
+    #messageModal .modal-footer .send-area .input-area{
+        width: 100%;
+        padding: 0 10px;
+    }
+    #messageModal .modal-footer .send-area .input-area textarea{
+        border: 1px solid var(--light-grey2);
+        border-radius: 10px;
+        background: var(--white);
+        font-size: 1rem;
+        text-align: left;
+        height: 40px;
+        padding: 6px 10px;
+        resize: none;
+        width: -webkit-fill-available;
+    }
+    #messageModal .modal-footer .send-area > div:nth-child(1),
+    #messageModal .modal-footer .send-area > div:nth-child(3){
+        width: 40px;
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        cursor: pointer;
+    }
+    #messageModal .modal-footer .send-area > div.add-file i{
+        display: inline-block;
+        background: url('/tourhelperUser/images/red_plus.svg');
+        background-size: 28px;
+        width: 28px;
+        height: 28px;
+        margin-top: 7px;
+    }
+    #messageModal .modal-footer .send-area > div.close i{
+        display: inline-block;
+        background: url('/tourhelperUser/images/red_plus.svg');
+        transform: rotate(45deg);
+        background-size: 30px;
+        width: 30px;
+        height: 30px;
+        margin-top: 6px;
+    }
+    #messageModal .modal-footer .send-area > div:nth-child(3) i{
+        display: inline-block;
+        background: url('/tourhelperUser/images/red_send.svg');
+        background-size: 24px;
+        width: 24px;
+        height: 24px;
+        margin-top: 7px;
+    }
+    #messageModal .modal-footer .add-file-area{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        /* position: absolute; */
+        /* top: -50px; */
+        background-color: var(--white);
+        border: 1px solid var(--light-grey2);
+        border-left: unset;
+        border-right: unset;
+        position: relative;
+        margin-bottom: 10px;
+    }
+    #messageModal .modal-footer .add-file-area div{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background-color: var(--white);
+    }
+    #messageModal .modal-footer .add-file-area div:nth-child(1):after{
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 16px;
+        background-color: var(--grey);
+        position: absolute;
+        right: 0;
+    }
+    #messageModal .modal-footer .add-file-area span{
+        color: var(--dark-grey);
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    #messageModal .modal-footer .add-file-area div:nth-child(1) span::before{
+        content: '';
+        display: inline-block;
+        background: url('/tourhelperUser/images/grey_album.svg');
+        width: 24px;
+        height: 24px;
+    }
+    #messageModal .modal-footer .add-file-area div:nth-child(2) span::before{
+        content: '';
+        display: inline-block;
+        background: url('/tourhelperUser/images/grey_file.svg');
+        width: 24px;
+        height: 24px;
+    }
+    #messageModal .modal-footer .btn-bottom{
+        width: 45px;
+        height: 45px;
+        position: absolute;
+        right: 30px;
+        top: -60px;
+        background-color: var(--white);
+        border: 1px solid var(--red);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        z-index: 5000;
+    }
+    #messageModal .modal-footer .btn-bottom i{
+        background: url('/tourhelperUser/images/black_arrow.svg');
+        width: 30px;
+        height: 30px;
+        transform: rotate(-90deg);
+    }
+
+}
+
+
+
+/* 가로모드 */
+@media (orientation: landscape){
+    /* 이미지 상세보기 */
+#imgDetailModal .modal-wrap .img {
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        overflow: hidden;
+        height: 100%;
+    }
+#imgDetailModal .modal-wrap .img img {
+        width: auto;
+        max-height: 100%;
+        object-fit: cover;
+        overflow: hidden;
+    }
+}

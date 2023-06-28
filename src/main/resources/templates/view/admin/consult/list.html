@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+    #memberList td.add-d-flex{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #memberList span.user{
+        max-width: calc(100% - 70px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
+    #memberList span.kakao{
+        background-color: var(--kakao);
+        border-radius: 4px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-left: 8px;
+    }
+    #memberList span.kakao i{
+        display: inline-block;
+        width: 10.71px;
+        height: 10px;
+        background: url('/tourhelperUser/images/logo_kakao.svg') no-repeat;
+        background-size: 10.71px 10px;
+    }
+    #memberList span.facebook{
+        background-color: var(--facebook);
+        border-radius: 4px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-left: 8px;
+    }
+    #memberList span.facebook i{
+        display: inline-block;
+        width: 5.56px;
+        height: 10px;
+        background: url('/tourhelperUser/images/logo_facebook.svg') no-repeat;
+        background-size: 5.56px 10px;
+    }
+    .search-wrap {
+        position: relative;
+        /*padding: 15px 47px 15px 30px;*/
+        padding: unset;
+        margin-bottom: 15px;
+        /*border-bottom: 1px solid var(--light-grey2);*/
+    }
+    .search-wrap > input{
+        width: 100%;
+        height: 50px;
+        border: 1px solid var(--light-grey2);
+        background: var(--light-grey1);
+        border-radius: 5px;
+        padding: 0 50px 0 20px;
+        font-size: 15px;
+    }
+    .search-wrap .search-icon {
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50px;
+        text-align: center;
+        font-size: 20px;
+    }
+    span.kakao{
+        background-color: var(--kakao);
+        border-radius: 4px;
+        min-width: 20px !important;
+        max-width: 20px !important;
+        height: 20px !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-left: 8px;
+    }
+    span.kakao i{
+        display: inline-block;
+        width: 10.71px;
+        height: 10px;
+        background: url('/tourhelperUser/images/logo_kakao.svg') no-repeat;
+        background-size: 10.71px 10px;
+    }
+    span.facebook{
+        background-color: var(--facebook);
+        border-radius: 4px;
+        min-width: 20px !important;
+        max-width: 20px !important;
+        height: 20px !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-left: 8px;
+    }
+    span.facebook i{
+        display: inline-block;
+        width: 5.56px;
+        height: 10px;
+        background: url('/tourhelperUser/images/logo_facebook.svg') no-repeat;
+        background-size: 5.56px 10px;
+    }
+    i.prev{
+        cursor: pointer;
+        font-size: 2rem;
+    }
+    main .message {
+        padding: unset !important;
+        background: unset !important;
+        color: unset !important;
+    }
+    .modal-wrap {
+        position: unset !important;
+        top: unset !important;
+        left: unset !important;
+        transform: unset !important;
+        background: unset !important;
+        width: unset !important;
+        z-index: unset !important;
+        border-radius: unset !important;
+        overflow: unset !important;
+    }
+</style>
+
+<div layout:fragment="content">
+
+    <main role="main" class="main-content">
+        <script>
+            const main_menu = 6;
+        </script>
+
+        <!--컨텐츠 영역-->
+        <div class="contents">
+            <div class="admin-contents-title">
+                <h3 class="admin-title">상담신청 관리</h3>
+            </div><!--admin-contents-title-->
+
+            <div class="course2-list-wrap">
+                <!--검색-->
+                <div id="search-wrap" class="search-wrap">
+                    <input type="text" placeholder="키워드 검색" id="keyword" class="keyword" onkeyup="getMemberList($(this).val())">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                </div>
+
+                <div class="admin-table-title-wrap">
+                    <div class="admin-table-title">
+                        <p class="title">전체</p>
+                        <p class="detail-text">상담신청 리스트</p>
+                    </div>
+                </div>
+
+                <!--상담신청 리스트로 가기 버튼-->
+                <i class="prev fas fa-arrow-left d-none" alt="뒤로가기" title="뒤로가기"></i>
+
+                <!--상담 신청자 리스트 START-->
+                <div class="consultMemberList-wrap">
+                    <div class="content-wrap">
+                        <div class="list-title">
+                            <span>이름</span>
+                            <span>계정</span>
+                            <span>연락처</span>
+                            <span>관심분야1</span>
+                            <span>관심분야2</span>
+                        </div>
+                        <div id="memberList" class="list-wrap">
+                            <!--리스트는 최대 10줄씩/페이지네이션으로 리스트 확인-->
+                            <div class="list">
+                                <span class="name">이미영</span>
+                                <span class="account">lee@kakao.com<span class="kakao"><i></i></span></span>
+                                <span class="tel">010-0000-0000</span>
+                                <span class="interest1">비자</span><!--관심분야-->
+                                <span class="interest2">유학/어학원</span><!--관심분야-->
+                            </div>
+                        </div>
+                        <div id="pagination"></div>
+                    </div>
+                </div>
+                <!--상담 신청자 리스트 END-->
+
+                <!--상담신청 리스트 START-->
+                <div class="consultPage-wrap d-none">
+                    <!--페이지 준비중-->
+                    <div class="no-content d-none">
+                        <img src="/tourhelperUser/images/preparation.svg" onerror="this.style.background='var(--light-grey2)';"/>
+                    </div>
+
+                    <div class="content-wrap">
+                        <div>
+                            <div class="content">
+                                <div class="part list">
+                                    <span>상담목록</span>
+
+                                    <!-- 진행중인 상담내역이 없을 경우 -->
+                                    <span id="no-category" class="no-list d-none">진행중인 상담내역이 없습니다.</span>
+
+                                    <div id="category-list" class="message-area">
+                                        <!-- 진행중인 상담내역이 있을 경우 -->
+                                        <!--<div class="message-wrap">
+                                            <div class="top-wrap">
+                                                <div><span>퇴직금</span><span class="count-red">100+</span></div>
+                                                <span>오후 2:10</span>
+                                            </div>
+                                            <div class="bottom-wrap">
+                                                <span>상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                            </div>
+                                        </div>
+                                        <div class="message-wrap">
+                                            <div class="top-wrap">
+                                                <div><span>유학/어학원</span><span class="count-red">5</span></div>
+                                                <span>어제</span>
+                                            </div>
+                                            <div class="bottom-wrap">
+                                                <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                            </div>
+                                        </div>
+                                        <div class="message-wrap">
+                                            <div class="top-wrap">
+                                                <div><span>비자</span><span class=""></span></div>
+                                                <span>2022-10-11</span>
+                                            </div>
+                                            <div class="bottom-wrap">
+                                                <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                            </div>
+                                        </div>
+                                        <div class="message-wrap">
+                                            <div class="top-wrap">
+                                                <div><span>산재</span><span class=""></span></div>
+                                                <span>2022-10-11</span>
+                                            </div>
+                                            <div class="bottom-wrap">
+                                                <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                            </div>
+                                        </div>
+                                        <div class="message-wrap">
+                                            <div class="top-wrap">
+                                                <div><span>부모님 초청</span><span class=""></span></div>
+                                                <span>2022-10-11</span>
+                                            </div>
+                                            <div class="bottom-wrap">
+                                                <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                            </div>
+                                        </div>
+                                        <div class="message-wrap">
+                                            <div class="top-wrap">
+                                                <div><span>미얀마 여행</span><span class=""></span></div>
+                                                <span>2022-10-11</span>
+                                            </div>
+                                            <div class="bottom-wrap">
+                                                <span>상담내용상담내용상담내용상담내용상담내용상담내용</span>
+                                            </div>
+                                        </div>-->
+                                    </div>
+<!--                                    <div id="view-more" class="view-more"><span>상담목록 더보기</span></div>-->
+                                </div>
+
+                                <div class="part chat">
+                                    <div class="sel-category-area">
+                                        <span>상담 카테고리 선택</span>
+                                        <div class="category-list">
+                                            <input id="c-chk1" class="yellow pc-category" type="radio" name="selCategory" value="비자"/><label for="c-chk1">비자</label>
+                                            <input id="c-chk2" class="yellow pc-category" type="radio" name="selCategory" value="퇴직금"/><label for="c-chk2">퇴직금</label>
+                                            <input id="c-chk3" class="yellow pc-category" type="radio" name="selCategory" value="산재"/><label for="c-chk3">산재</label>
+                                            <input id="c-chk4" class="yellow pc-category" type="radio" name="selCategory" value="비즈니스"/><label for="c-chk4">비즈니스</label>
+                                            <input id="c-chk5" class="yellow pc-category" type="radio" name="selCategory" value="항공권"/><label for="c-chk5">항공권</label>
+                                            <input id="c-chk6" class="yellow pc-category" type="radio" name="selCategory" value="부모님초청"/><label for="c-chk6">부모님초청</label>
+                                            <input id="c-chk7" class="yellow pc-category" type="radio" name="selCategory" value="유학"/><label for="c-chk7">유학</label>
+                                            <input id="c-chk8" class="yellow pc-category" type="radio" name="selCategory" value="한국여행"/><label for="c-chk8">한국여행</label>
+                                            <input id="c-chk9" class="yellow pc-category" type="radio" name="selCategory" value="미얀마여행"/><label for="c-chk9">미얀마 여행</label>
+                                        </div>
+                                        <!-- 카테고리선택 모바일 -->
+                                        <div class="category-list-mobile">
+                                            <div>
+                                                <input id="m-chk1" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk1">비자</label>
+                                                <input id="m-chk2" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk2">퇴직금</label>
+                                                <input id="m-chk3" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk3">산재</label>
+                                            </div>
+                                            <div>
+                                                <input id="m-chk4" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk4">비즈니스</label>
+                                                <input id="m-chk5" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk5">항공권</label>
+                                                <input id="m-chk6" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk6">부모님 초청</label>
+                                            </div>
+                                            <div>
+                                                <input id="m-chk7" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk7">유학/어학원</label>
+                                                <input id="m-chk8" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk8">한국여행</label>
+                                                <input id="m-chk9" class="yellow m-category" type="radio" name="selCategory"/><label for="m-chk9">미얀마 여행</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 선택한 카테고리에 따라 보이는 메세지 내용 상이 -->
+                                    <div class="chat-area pc-layout">
+                                        <!-- 상담내역을 선택하지 않거나 존재하지 않는 경우 -->
+                                        <span id="no-list" class="no-list d-none">상담 카테고리 혹은 진행중인 상담목록을 선택해주세요.</span>
+
+                                        <!-- 상담내역이 존재하는 경우 -->
+                                        <!-- 이전 상담내역이 있는 경우 -->
+                                        <div class="view-prev-area">
+                                            <div id="view-prev" class="view-prev">이전 상담이력 보기</div>
+                                        </div>
+
+                                        <!-- 상담내역이 존재하는 경우 -->
+                                        <div id="message-list" class="message-area">
+
+                                            <!-- 날짜 -->
+                                            <span class="date-area">2022-09-05&nbsp;(월)</span>
+                                            <!-- 상담사 메시지 영역 -->
+                                            <div class="message-wrap-helper">
+                                                <div class="message">
+                                                    <div class="txt">메세지 내용<br>메세지 내용메세지 내용메세지 내용메세지 내용메세지 내용메세지 내용</div>
+                                                    <div class="time">오후 5:00</div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="img">
+                                                        <img src="/tourhelperUser/images/3D_check.png" onerror="this.style.background='var(--light-grey2)';">
+                                                    </div>
+                                                    <div class="time">오후 5:30</div>
+                                                </div>
+                                            </div>
+                                            <!-- 사용자 메시지 영역 -->
+                                            <div class="message-wrap-user">
+                                                <div class="message">
+                                                    <div class="time">오후 5:01</div>
+                                                    <div class="txt">메세지 내용<br>메세지 내용</div>
+                                                </div>
+
+                                                <!-- 날짜 -->
+                                                <span class="date-area">2022-09-06&nbsp;(화)</span>
+
+                                                <div class="message">
+                                                    <div class="time">오후 5:01</div>
+                                                    <div class="txt">메세지 내용<br>메세지 내용</div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="time">오후 5:30</div>
+                                                    <div class="file">파일이름.pdf</div>
+                                                </div>
+                                                <div class="message">
+                                                    <div class="time">오후 5:30</div>
+                                                    <div class="img">
+                                                        <img src="/tourhelperUser/images/3D_check.png" onerror="this.style.background='var(--light-grey2)';">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 채팅입력 및 보내기 영역 -->
+                                        <div id="send-area" class="send-area">
+                                            <div class="input-area">
+                                                <!-- <input type="text" placeholder="메세지 입력"/> -->
+                                                <textarea rows="5" id="msg-content-pc" placeholder="메세지 입력" style="border:1px solid #ddd;"></textarea>
+                                            </div>
+                                            <div class="send-wrap">
+                                                <div class="add-file-area">
+                                                    <div class="add-album"><span>사진</span><input id="pc-image" class="photo d-none" type="file" accept=".jpeg, .jpg, .png, .gif"/></div>
+                                                    <div class="add-file"><span>파일</span><input id="pc-file" class="file d-none" type="file"/></div>
+                                                </div>
+                                                <span id="btn-send-pc" class="btn-send" style="width:200px;">전송</span>
+                                            </div>
+
+                                            <!-- bottom 버튼 -->
+                                            <!--<div class="btn-bottom">
+                                                <i></i>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--상담신청 리스트 END-->
+            </div>
+
+        </div><!--contents-->
+
+
+        <!--modal START-->
+        <!-- 이미지 상세보기 -->
+        <div id="imgDetailModal" class="modal" style="">
+            <div class="modal-wrap w100pro" style="">
+                <div class="modal-header">
+                    <i class="close"></i>
+                </div>
+                <div class="modal-body">
+                    <div class="imgArea">
+                        <img id="preview_img" src="/tourhelperUser/images/sample_sunsetSea.jpg"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-download" class="btn-download"></button>
+                </div>
+            </div>
+        </div>
+        <!--modal END-->
+
+    </main>
+
+    <script th:inline="javascript">
+        let page=1;
+        let memberSeq;
+        let category;
+
+        getMemberList();
+
+        // 상담 신청 리스트 불러오기
+        function getMemberList(keyword){
+            keyword = $("#keyword").val();
+            $.ajax({
+                type: "GET",
+                url: "/api/admin/board/member",
+                async:false,
+                data: {
+                    "page": page-1,
+                    "size": 10,
+                    "keyword": keyword
+                },
+                success: function(data){
+                    // console.log(data);
+                    let tag = "";
+
+                    if( data.content.length != 0 ) {
+                        data.content.forEach(function (data) {
+                            let id = data.memberId;
+                            let name = data.memberName;
+                            let tel = data.tel;
+                            let preference1 = data.preference1;
+                            let preference2 = data.preference2;
+                            let arrData = [id, name, tel, preference1, preference2];
+                            for(i=0; i<arrData.length; i++) {
+                                if(arrData[i]==null) {
+                                    arrData[i] = "-";
+                                }
+                            }
+
+                            let countTag = '';
+                            if(data.newPostCount!=0) {
+                                countTag = "<span class='count-red2'>"+data.newPostCount+"</span>";
+                            }else {
+                                countTag = '';
+                            }
+
+                            tag +=
+                                "<div class='list' seq='"+data.memberSeq+"'>" +
+                                // "<td><input type='checkbox' class='checked'></td>" +
+                                // "<td class='info'>"+data.rowNum+"</td>" +
+                                "<span class='name'>"+arrData[1]+countTag+"</span>" +
+                                "<span class='account'>"+arrData[0]+"<span class='"+data.provider+"'><i></i></span></span>" +
+                                "<span class='tel'>"+arrData[2]+"</span>" +
+                                "<span class='interest1'>"+arrData[3]+"</span>" +
+                                "<span class='interest2'>"+arrData[4]+"</span>" +
+                                '</div>';
+                        });
+                        fPagination(data, page);
+                    }else{
+                        tag = '<div style="text-align: center; margin-top: 10px;"><span style="margin: auto;">상담 신청 내역이 없습니다.</span></div>';
+                    }
+                    $("#memberList").html(tag);
+                }
+            });
+        }
+
+        $("#pagination").on("click", "ul li a", function() {
+            page = parseInt($(this).attr("gopage"));
+            getMemberList();
+        });
+
+        $("#category-list").off("click").on("click", ".pc-category-item", function(){
+            category=$(this).attr("category");
+            $("input[name='selCategory'][value="+category+"]").prop("checked", "true");
+            $("#no-list").addClass('d-none');
+            $("#message-list").removeClass('d-none');
+            $(".send-area").removeClass("d-none");
+            $('.view-prev-area').addClass('d-none');
+            page=1;
+            getMessages(memberSeq, category);
+            getCategoryList(memberSeq);
+            let pcMsgContent = document.querySelector('.consultPage-wrap .content .part.chat .chat-area .message-area');
+            $("#message-list").scrollTop(pcMsgContent.scrollHeight);
+        });
+
+        $(".pc-category").off("click").on("click", function() {
+            category=$(this).val();
+            $("input[name='selCategory'][value="+category+"]").prop("checked", "true");
+            $("#no-list").addClass('d-none');
+            $("#message-list").removeClass('d-none');
+            $(".send-area").removeClass("d-none");
+            $('.view-prev-area').addClass('d-none');
+            page=1;
+            getMessages(memberSeq, category);
+            getCategoryList(memberSeq);
+            let pcMsgContent = document.querySelector('.consultPage-wrap .content .part.chat .chat-area .message-area');
+            $("#message-list").scrollTop(pcMsgContent.scrollHeight);
+        });
+
+        function getCategoryList(memberSeq) {
+            $.ajax({
+                type:"get",
+                url:"/api/admin/board/category",
+                data: {
+                    "memberSeq":memberSeq
+                },
+                async:false,
+                success:function(data) {
+                    // console.log(data);
+                    let tag = '';
+                    if(data!=null && data.length!=0) {
+                        data.forEach(function(arg){
+                            let categoryTag = '';
+                            if(arg.newPostCount!=0) {
+                                categoryTag = '<div><span>'+arg.category+'</span><span class="count-red">'+arg.newPostCount+'</span></div>';
+                            }else {
+                                categoryTag = '<div><span>'+arg.category+'</span></div>';
+                            }
+                            tag += '<div class="message-wrap category pc-category-item" category="'+arg.category+'">' +
+                                '<div class="top-wrap">' +
+                                categoryTag +
+                                '<span>'+arg.createDate.substring(0,10)+'</span>' +
+                                '</div>' +
+                                '<div class="bottom-wrap">' +
+                                '<span>'+arg.content+'</span>' +
+                                '</div>' +
+                                '</div>';
+                        });
+                        $("#category-list").html(tag);
+                        $("#no-category").addClass("d-none");
+                        $("#category-list").removeClass("d-none");
+                    }else {
+                        $("#no-category").removeClass("d-none");
+                        $("#category-list").addClass("d-none");
+                    }
+
+                    $(".pc-category-item").removeClass("active");
+                    $(".pc-category-item").each(function(){
+                        let cate = $(this).attr("category");
+                        if(cate==category) {
+                            $(this).addClass("active");
+                            return false;
+                        }
+                    });
+
+                    if(category==null || category==undefined) {
+                        $("#no-list").removeClass('d-none');
+                        $('.view-prev-area').addClass('d-none');
+                        $("#message-list").addClass('d-none');
+                        $(".send-area").addClass("d-none");
+                    }
+
+                },
+                error: function (request, status, error) {
+                    toastModal("상담 카테고리를 불러오는데 실패했습니다.");
+                    console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                }
+
+            });
+        }
+
+        $("#view-prev").off("click").on("click", function(){
+            page++;
+            getMessages(memberSeq, category);
+        });
+
+        function getMessages(memberSeq, category) {
+            $.ajax({
+                type:"get",
+                url:"/api/admin/board",
+                async:false,
+                data:{
+                    "memberSeq":memberSeq,
+                    "category":category,
+                    "page":page-1,
+                    "size":10
+                },
+                success:function(data) {
+                    console.log(data);
+                    let list = data.content;
+                    let tag = '';
+                    if(list.length!=0) {
+
+                        let lastIdx = (list.length)-1;
+                        let lastDate = "";
+                        for(i=lastIdx; i>=0; i--) {
+                            let createDate = list[i].createDate.substring(0, 16);
+                            createDate=createDate.replaceAll("Mon", "월");
+                            createDate=createDate.replaceAll("Tue", "화");
+                            createDate=createDate.replaceAll("Wed", "수");
+                            createDate=createDate.replaceAll("Thu", "목");
+                            createDate=createDate.replaceAll("Fri", "금");
+                            createDate=createDate.replaceAll("Sat", "토");
+                            createDate=createDate.replaceAll("Sun", "일");
+
+                            if(lastDate!=createDate) {
+                                lastDate=createDate;
+                                tag += '<span class="date-area">'+lastDate+'</span>';
+                            }
+
+                            let content = list[i].content;
+                            if(content!=null) {
+                                content = content.replaceAll(/(?:\r\n|\r|\n)/g, '<br/>')
+                            }
+
+                            if(!list[i].answer) {
+                                tag += '<div class="message-wrap-helper">';
+
+                                if(list[i].image!=null) {
+                                    tag+= '<div class="message">' +
+                                        '<div class="img">' +
+                                        '<img src="'+list[i].image.fileUrl+'" onerror="this.style.background=\'var(--light-grey2)\';">' +
+                                        '</div>' +
+                                        '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                        '</div>';
+                                }
+                                if(list[i].file!=null) {
+                                    tag+= '<div class="message">' +
+                                        '<div style="margin-top: 12px;"><a href="'+list[i].file.fileUrl+'" download="'+list[i].file.fileName+'" class="file">'+list[i].file.fileName+'</a></div>' +
+                                        '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                        '</div>';
+                                }
+                                if(list[i].image==null && list[i].file==null) {
+                                    tag +='<div class="message">' +
+                                        '<div class="txt">'+content+'</div>' +
+                                        ' <div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                        '</div>';
+                                }
+                                tag += '</div>';
+                            }else {
+                                tag += '<div class="message-wrap-user">';
+
+                                if(list[i].image!=null) {
+                                    tag+= '<div class="message">' +
+                                        '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                        '<div class="img">' +
+                                        '<img src="'+list[i].image.fileUrl+'" onerror="this.style.background=\'var(--light-grey2)\';">' +
+                                        '</div>' +
+                                        '</div>';
+                                }
+                                if(list[i].file!=null) {
+                                    tag+= '<div class="message">' +
+                                        '<div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                        '<div style="margin-top: 12px;"><a href="'+list[i].file.fileUrl+'" download="'+list[i].file.fileName+'" class="file">'+list[i].file.fileName+'</a></div>' +
+                                        '</div>';
+                                }
+                                if(list[i].image==null && list[i].file==null) {
+                                    tag +='<div class="message">' +
+                                        ' <div class="time">'+list[i].createDate.substring(17, 22)+'</div>' +
+                                        '<div class="txt">'+content+'</div>' +
+                                        '</div>';
+                                }
+                                tag += '</div>';
+                            }
+                        }
+                        if(page==1) {
+                            $("#message-list").html(tag);
+                        }else {
+                            $("#message-list").prepend(tag);
+                        }
+                    }else {
+                        if(page==1) {
+                            $("#message-list").html(tag);
+                            $(".view-prev-area").addClass("d-none");
+                        }else {
+                            toastModal("이전 메시지가 없습니다.");
+                            return;
+                        }
+                    }
+
+                    //이미지 미리보기
+                    $('.consultPage-wrap .content .part.chat .chat-area .message-area .message .img').on('click', function(){
+                        let src = $(this).children().attr("src");
+                        $("#preview_img").attr("src", src);
+                        $('#imgDetailModal').css('display', 'flex');
+
+                    });
+                },
+                error: function (request, status, error) {
+                    toastModal("상담 메시지를 불러오는데 실패했습니다.");
+                    console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                }
+            });
+        }
+
+        /** pc **/
+        $("#btn-send-pc").on("click", function() {
+            let content = $("#msg-content-pc").val();
+            if(content==null || content=="") {
+                toastModal("메시지를 입력하세요");
+                return;
+            }
+
+            pcSendMsg(content, null, null);
+            $("#msg-content-pc").val("");
+            $("#msg-content-pc").focus();
+
+            let pcMsgContent = document.querySelector('.consultPage-wrap .content .part.chat .chat-area .message-area');
+            $("#message-list").scrollTop(pcMsgContent.scrollHeight);
+        });
+
+        $("#pc-image").on("change", function() {
+            let image = $("#pc-image")[0].files[0];
+            pcSendMsg(null, image, null);
+            $("#msg-content-pc").focus();
+
+            let pcMsgContent = document.querySelector('.consultPage-wrap .content .part.chat .chat-area .message-area');
+            $("#message-list").scrollTop(pcMsgContent.scrollHeight);
+        });
+
+        $("#pc-file").on("change", function() {
+            let file = $("#pc-file")[0].files[0];
+            pcSendMsg(null, null, file);
+            $("#msg-content-pc").focus();
+
+            let pcMsgContent = document.querySelector('.consultPage-wrap .content .part.chat .chat-area .message-area');
+            $("#message-list").scrollTop(pcMsgContent.scrollHeight);
+        });
+        /** pc **/
+
+
+        function pcSendMsg(content, image, file) {
+            let formData = new FormData();
+
+            if(content!=null && content!=undefined) {
+                formData.append("content", content);
+            }
+
+            if(image!=null && image!=undefined) {
+                formData.append("image", image);
+            }
+
+            if(file!=null && file!=undefined) {
+                formData.append("file", file);
+            }
+            formData.append("memberSeq", memberSeq);
+            formData.append("category", category);
+
+            $.ajax({
+                type:"post",
+                url:"/api/admin/board",
+                data: formData,
+                processData: false,
+                contentType: false,
+                async:false,
+                success:function() {
+                    page=1;
+                    getCategoryList(memberSeq);
+                    getMessages(memberSeq, category);
+                },
+                error: function (request, status, error) {
+                    toastModal("메시지를 전송하는데 실패했습니다.");
+                    console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                }
+            });
+        }
+
+        $("#btn-download").on("click", function(){
+            let link = $("#preview_img").attr("src");
+            let fileName = link.split('/')[3];
+            let a = document.createElement('a');
+            a.href=link;
+            a.download=fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+
+    </script>
+
+</div>
+</html>

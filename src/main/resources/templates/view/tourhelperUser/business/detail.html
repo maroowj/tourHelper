@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="detailPage-wrap business">
+
+                <!-- 페이지별 타이틀 -->
+                <div class="page-title"><span>비즈니스 정보 상세</span></div>
+
+
+                <div class="detail-area-wrap">
+                    <div>
+                        <div class="detail-info-wrap">
+                            <div class="img-area">
+                                <!-- .img-box에 이미지 삽입 예)background-image: url('image.jpg') -->
+                                <div class="img-box"></div>
+                            </div>
+                            <div class="info-area">
+                                <p id="title" class="name"></p>
+                                <div>
+                                    <span>주소</span>
+                                    <span id="address"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="btn-area">
+                    <button id="btnJoin" class="btn-red">신청하기</button>
+                </div>
+                <div class="content-wrap">
+                    <div id="description">
+                        <!--<img src="/tourhelperUser/images/sample_country.jpg" onerror="this.style.backgroundColor='var(&#45;&#45;light-grey2)';"/>-->
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script th:inline="javascript">
+                let tourSeq = [[${param.tourSeq}]][0];
+
+                getDetails(tourSeq);
+
+                function getDetails(tourSeq){
+                    $.ajax({
+                        type:"get",
+                        url:"/api/common/tour/"+tourSeq,
+                        success:function(data){
+                            // console.log(data);
+                            $("#title").text(data.secondCourseTitle);
+                            $("#address").text(data.address);
+                            $("#description").html(data.descriptionImage);
+                            if(data.thumbnailImage!=null) {
+                                $(".img-box").css("background-image", "url("+data.thumbnailImage.url+")");
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert("잘못된 접근입니다.");
+                            history.back();
+                        }
+                    });
+                }
+
+                // 사용자 정보 불러오기
+                function getMemberDetails() {
+                    $.ajax({
+                        type: "get",
+                        url: "/api/user/member",
+                        async:false,
+                        success: function (data) {
+                            $("#reserveBusinessModal").find(".txtName").val(data.name);
+                            $("#reserveBusinessModal").find(".txtTel").val(data.tel);
+                        },
+                        error: function (request, status, error) {
+                            alert("로그인이 필요합니다.");
+                            location.href = "/login"
+                        }
+                    });
+                }
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

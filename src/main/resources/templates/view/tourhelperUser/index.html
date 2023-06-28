@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="main-wrap">
+
+                <!-- 슬라이딩 배너 -->
+                <div class="banner-wrap">
+                    <div class="swiper">
+                        <div class="banner-area swiper-wrapper">
+                            <div class="img-area swiper-slide" onclick="location.href='/abroad/info'">
+                                <img class="mainbanner1" src="" onerror="this.style.background='var(--light-grey2)';"/>
+                            </div>
+                            <div class="img-area swiper-slide" onclick="location.href='/E74/apply'">
+                                <img class="mainbanner2" src="" onerror="this.style.background='var(--light-grey2)';"/>
+                            </div>
+                            <div class="img-area swiper-slide" onclick="location.href='/info'">
+                                <img class="mainbanner3" src="" onerror="this.style.background='var(--light-grey2)';"/>
+                            </div>
+                            <div class="img-area swiper-slide" onclick="location.href='/abroad/list'">
+                                <img class="mainbanner4" src="" onerror="this.style.background='var(--light-grey2)';"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination-area">
+                        <!-- 배너 페이지 -->
+                        <div class="main-banner-pagination"></div>
+                        <!-- 배너 슬라이드 이동 버튼 -->
+                        <div class="arrow-btn-area">
+                            <div><i class="prev"></i></div>
+                            <div><i class="next"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 메뉴 -->
+                <div class="menu-wrap">
+                    <div>
+                        <div onclick="location.href='/consult'">
+                            <div>
+                                <i></i>
+                                <div>항공권 상담</div>
+                            </div>
+                        </div>
+                        <div onclick="location.href='/E74/apply'">
+                            <div>
+                                <i></i>
+                                <div>E-7-4 신청</div>
+                            </div>
+                        </div>
+                        <div onclick="location.href='/abroad/info'">
+                            <div>
+                                <i></i>
+                                <div>유학 정보</div>
+                            </div>
+                        </div>
+                        <div onclick="location.href='/consult'">
+                            <div>
+                                <i></i>
+                                <div>상담 신청</div>
+                            </div>
+                        </div>
+                        <div onclick="location.href='/info'">
+                            <div>
+                                <i></i>
+                                <div>비즈니스 정보</div>
+                            </div>
+                        </div>
+                        <div onclick="location.href='/calculator'">
+                            <div>
+                                <i></i>
+                                <div>퇴직금 계산기</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="banner-wrap2">
+                    <div class="banner-area">
+                        <div class="img-area"><img src="/tourhelperUser/images/sample_visa.jpg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                    </div>
+                </div>
+
+
+                <!-- 컨텐츠 -->
+                <div class="content-wrap">
+                    <div class="part abroad">
+                        <div>
+                            <div class="title">
+                                <span>유학</span>
+                                <div>
+                                    <span>더보기</span>
+                                    <i></i>
+                                </div>
+                            </div>
+                            <div class="list-wrap swiper">
+                                <div id="school-list-swiper-div" class="list-area swiper-wrapper">
+                                    <!--<div class="box swiper-slide">
+                                        <div class="img-area"><img src="/tourhelperUser/images/sample_school.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                        <div class="title">
+                                            <span>경인여대경인여대경인여대경인여대경인여대&nbsp;(2년제&nbsp;/&nbsp;5학기)</span>
+                                        </div>
+                                    </div>
+                                    <div class="box swiper-slide">
+                                        <div class="img-area"><img src="/tourhelperUser/images/sample_school.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                        <div class="title">
+                                            <span>경인여대&nbsp;(2년제&nbsp;/&nbsp;5학기)</span>
+                                        </div>
+                                    </div>
+                                    <div class="box swiper-slide">
+                                        <div class="img-area"><img src="/tourhelperUser/images/sample_school.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                        <div class="title">
+                                            <span>경인여대&nbsp;(2년제&nbsp;/&nbsp;5학기)</span>
+                                        </div>
+                                    </div>
+                                    <div class="box swiper-slide">
+                                        <div class="img-area"><img src="/tourhelperUser/images/sample_school.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                        <div class="title">
+                                            <span>경인여대&nbsp;(2년제&nbsp;/&nbsp;5학기)</span>
+                                        </div>
+                                    </div>
+                                    <div class="box swiper-slide">
+                                        <div class="img-area"><img src="/tourhelperUser/images/sample_school.jpg" onerror="this.style.background='var(&#45;&#45;light-grey2)'"/></div>
+                                        <div class="title">
+                                            <span>경인여대&nbsp;(2년제&nbsp;/&nbsp;5학기)</span>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="arrow-prev-area"><i class="prev"></i></div>
+                            <div class="arrow-next-area"><i class="next"></i></div>
+                        </div>
+                    </div>
+                    <div class="part tour">
+                        <div>
+                            <div class="title">
+                                <span>국내 여행정보</span>
+                                <div>
+                                    <span>더보기</span>
+                                    <i></i>
+                                </div>
+                            </div>
+                            <div class="list-wrap swiper">
+                                <div class="list-area swiper-wrapper">
+                                    <div class="box swiper-slide">
+                                        <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                        <div class="title">
+                                            <span>함께 떠나는 섬 여행 함께 떠나는 섬 여행 함께 떠나는 섬 여행 함께 떠나는 섬 여행 함께 떠나는 섬 여행 함께 떠나는 섬 여행</span>
+                                        </div>
+                                    </div>
+                                    <div class="box swiper-slide">
+                                        <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                        <div class="title">
+                                            <span>함께 떠나는 섬 여행</span>
+                                        </div>
+                                    </div>
+                                    <div class="box swiper-slide">
+                                        <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                        <div class="title">
+                                            <span>함께 떠나는 섬 여행</span>
+                                        </div>
+                                    </div>
+                                    <div class="box swiper-slide">
+                                        <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                        <div class="title">
+                                            <span>함께 떠나는 섬 여행</span>
+                                        </div>
+                                    </div>
+                                    <div class="box swiper-slide">
+                                        <div class="img-area"><img src="/tourhelperUser/images/sample_trip.jpg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                        <div class="title">
+                                            <span>함께 떠나는 섬 여행</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="arrow-prev-area"><i class="prev"></i></div>
+                        <div class="arrow-next-area"><i class="next"></i></div>
+                    </div>
+                    <div class="part helper">
+                        <div>
+                            <div>
+                                <div class="title">
+                                    <span>투어 도우미 TV</span>
+                                </div>
+
+                                <!-- mobile -->
+                                <div class="list-wrap mobile">
+                                    <div class="list-area">
+                                        <!--
+                                        <a href="https://www.youtube.com/watch?v=e-itiCaID-Q" target="_blank">
+                                            <div class="box">
+                                                <div class="movie-area"><i class="hover background"></i><img src="/tourhelperUser/images/sample_helper.jpg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>[경인여자대학교] CM송 천재 정여진이 부른 경인여자대학교 CM송</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        -->
+                                        <a href="https://www.youtube.com/watch?v=e-itiCaID-Q" target="_blank">
+                                            <div class="box">
+                                                <div class="movie-area"><i class="hover background"></i><img src="https://i.ytimg.com/vi/e-itiCaID-Q/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAvlErSQetsn5h9GAMLCtJH3m7_eQ" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>[경인여자대학교] CM송 천재 정여진이 부른 경인여자대학교 CM송</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="https://www.youtube.com/watch?v=vwDTa_40FQM" target="_blank">
+                                            <div class="box">
+                                                <div class="movie-area"><i class="hover background"></i><img src="https://i.ytimg.com/vi/vwDTa_40FQM/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAMwCaVpEv5PpF7Q986GmANbl7aGg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>삼육대학교|Sahmyook University|하늘에서 본 삼육대학교~얼마나 이쁘게유~~</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="https://www.youtube.com/watch?v=Xm7UL2xWEzM" target="_blank">
+                                            <div class="box">
+                                                <div class="movie-area"><i class="hover background"></i><img src="https://i.ytimg.com/vi/Xm7UL2xWEzM/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCxzN_lklBcJq74UsHGUp6v7xXi_g" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>한국영상대학교 공식 홍보영상</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="https://youtu.be/Q_5Byp-6WCw" target="_blank">
+                                            <div class="box">
+                                                <div class="movie-area"><i class="hover background"></i><img src="https://i.ytimg.com/vi/Q_5Byp-6WCw/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD6NcyRDHzAQSBhbYdPCyXldBNWxg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>한라인이 누리는 다양한 혜택! HL그룹이 설립한 원주 한라대학교를 소개합니다!</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="https://www.youtube.com/watch?v=B7F5mVg4dC8" target="_blank">
+                                            <div class="box">
+                                                <div class="movie-area"><i class="hover background"></i><img src="https://i.ytimg.com/vi/B7F5mVg4dC8/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBXPTi2-luyr8IIhKLeqbJ9bQsReA" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>한국 유학 5년차 태국인, 일본인이 말하는 한국 유학 생활(feat.고려대)</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="https://www.youtube.com/watch?v=JVv7szHnziQ" target="_blank">
+                                            <div class="box">
+                                                <div class="movie-area"><i class="hover background"></i><img src="https://i.ytimg.com/vi/JVv7szHnziQ/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDppBCz2fv2l_lx2HFAoCspp2Xr7A" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                <div class="title">
+                                                    <span>캠퍼스에 말들이 돌아다니는 대학ㅋㅋㅋㅋ 송곡대학교는 어떤 모습일까?</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                                <!-- pc -->
+                                <div class="list-wrap pc">
+                                    <div class="list-area">
+                                        <div class="box play">
+                                            <div class="player-area" style="margin-right: 20px" title="영상 재생">
+                                                <iframe id="player" type="text/html" width="100%" max-width="600" height="330"
+                                                        src="https://www.youtube.com/embed/B7F5mVg4dC8"
+                                                        frameborder="0"></iframe>
+                                            </div>
+                                            <div class="title">
+                                                <span>한국 유학 5년차 태국인, 일본인이 말하는 한국 유학 생활(feat.고려대)</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- 재생 목록(6개) -->
+                                        <div class="play-list">
+                                            <!--
+                                            <div class="box" title="클릭하여 영상 재생">
+                                                <a>
+                                                    <div class="movie-area" data-url="https://www.youtube.com/watch?v=e-itiCaID-Q"><i class="hover background"></i><img src="/tourhelperUser/images/sample_sunsetSea.jpg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                    <div class="title">
+                                                        <span>[경인여자대학교] CM송 천재 정여진이 부른 경인여자대학교 CM송</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            -->
+
+                                            <div class="box" title="클릭하여 영상 재생">
+                                                <a>
+                                                    <div class="movie-area" data-url="https://www.youtube.com/embed/e-itiCaID-Q"><i class="hover background"></i><img src="https://i.ytimg.com/vi/e-itiCaID-Q/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAvlErSQetsn5h9GAMLCtJH3m7_eQ" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                    <div class="title">
+                                                        <span>[경인여자대학교] CM송 천재 정여진이 부른 경인여자대학교 CM송</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="box" title="클릭하여 영상 재생">
+                                                <a>
+                                                    <div class="movie-area" data-url="https://www.youtube.com/embed/vwDTa_40FQM"><i class="hover background"></i><img src="https://i.ytimg.com/vi/vwDTa_40FQM/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAMwCaVpEv5PpF7Q986GmANbl7aGg/tourhelperUser/images/sample_sunsetSea.jpg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                    <div class="title">
+                                                        <span>삼육대학교|Sahmyook University|하늘에서 본 삼육대학교~얼마나 이쁘게유~~</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="box" title="클릭하여 영상 재생">
+                                                <a>
+                                                    <div class="movie-area" data-url="https://www.youtube.com/embed/Xm7UL2xWEzM"><i class="hover background"></i><img src="https://i.ytimg.com/vi/Xm7UL2xWEzM/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCxzN_lklBcJq74UsHGUp6v7xXi_g" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                    <div class="title">
+                                                        <span>한국영상대학교 공식 홍보영상</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="box" title="클릭하여 영상 재생">
+                                                <a>
+                                                    <div class="movie-area" data-url="https://www.youtube.com/embed/Q_5Byp-6WCw"><i class="hover background"></i><img src="https://i.ytimg.com/vi/Q_5Byp-6WCw/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLD6NcyRDHzAQSBhbYdPCyXldBNWxg" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                    <div class="title">
+                                                        <span>한라인이 누리는 다양한 혜택! HL그룹이 설립한 원주 한라대학교를 소개합니다!</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="box" title="클릭하여 영상 재생">
+                                                <a>
+                                                    <div class="movie-area" data-url="https://www.youtube.com/embed/e-itiCaID-Q"><i class="hover background"></i><img src="https://i.ytimg.com/vi/B7F5mVg4dC8/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBXPTi2-luyr8IIhKLeqbJ9bQsReA" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                    <div class="title">
+                                                        <span>한국 유학 5년차 태국인, 일본인이 말하는 한국 유학 생활(feat.고려대)</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="box" title="클릭하여 영상 재생">
+                                                <a>
+                                                    <div class="movie-area" data-url="https://www.youtube.com/embed/JVv7szHnziQ"><i class="hover background"></i><img src="https://i.ytimg.com/vi/JVv7szHnziQ/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDppBCz2fv2l_lx2HFAoCspp2Xr7A" onerror="this.style.background='var(--light-grey2)'"/></div>
+                                                    <div class="title">
+                                                        <span>캠퍼스에 말들이 돌아다니는 대학ㅋㅋㅋㅋ 송곡대학교는 어떤 모습일까?</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="part consult">
+                        <div class="">
+                            <div class="title">
+                                <span>상담 신청</span>
+                                <div>
+                                    <span>상담신청 바로가기</span>
+                                    <i></i>
+                                </div>
+                            </div>
+                            <div class="list swiper" onclick="location.href='/consult';">
+                                <!-- 로그인 되어있지 않은 경우 -->
+                                <!--<li class="no-login d-none">로그인 하세요.</li>-->
+
+                                <!-- 상담내역이 없는 경우 -->
+                                <!--<li class="no-list d-none">상담내역이 없습니다.</li>-->
+
+                                <!-- 상담내역 20개씩 롤링 -->
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <li><span>유학/어학원</span><span>문의합니다.</span></li>
+                                        <li><span>미얀마 여행</span><span>문의합니다.</span></li>
+                                        <li><span>비자</span><span>문의합니다.</span></li>
+                                        <li><span>산재</span><span>문의합니다.</span></li>
+                                        <li><span>부모님 초청</span><span>문의합니다.</span></li>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <li><span>비자</span><span>문의합니다.</span></li>
+                                        <li><span>미얀마 여행</span><span>문의합니다.</span></li>
+                                        <li><span>유학/어학원</span><span>문의합니다.</span></li>
+                                        <li><span>유학/어학원</span><span>문의합니다.</span></li>
+                                        <li><span>부모님 초청</span><span>문의합니다.</span></li>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <li><span>유학/어학원</span><span>문의합니다.</span></li>
+                                        <li><span>산재</span><span>문의합니다.</span></li>
+                                        <li><span>유학/어학원</span><span>문의합니다.</span></li>
+                                        <li><span>유학/어학원</span><span>문의합니다.</span></li>
+                                        <li><span>산재</span><span>문의합니다.</span></li>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <li><span>국내 여행</span><span>문의합니다.</span></li>
+                                        <li><span>국내 여행</span><span>문의합니다.</span></li>
+                                        <li><span>유학/어학원</span><span>문의합니다.</span></li>
+                                        <li><span>비자</span><span>문의합니다.</span></li>
+                                        <li><span>비자</span><span>문의합니다.</span></li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!--script START-->
+            <!-- 반응형 이미지 슬라이드 script -->
+            <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+            <script>
+                $(document).ready(function (){
+                    goPage();
+                });
+
+                $(window).resize(function() {
+                    goPage();
+                });
+
+                function goPage(){
+                    if(matchMedia("screen and (max-width: 1199px)").matches){
+                        // 유학 더보기
+                        $('.main-wrap .content-wrap > .part.abroad .title > div i').on('click', function (){
+                            location.href='/abroad/list'
+                        });
+
+                        // 상담신청 가기
+                        $('.main-wrap .content-wrap > .part.consult .title > div i').on('click', function (){
+                            location.href='/consult'
+                        });
+                    }
+                    if(matchMedia("screen and (min-width: 1200px)").matches){
+                        // 유학 더보기
+                        $('.main-wrap .content-wrap > .part.abroad .title > div').on('click', function (){
+                            location.href='/abroad/list'
+                        });
+
+                        // 상담신청 가기
+                        $('.main-wrap .content-wrap > .part.consult .title > div').on('click', function (){
+                            location.href='/consult'
+                        });
+                    }
+                }
+
+                getSchoolList();
+
+                function getSchoolList() {
+                    $.ajax({
+                        type:"get",
+                        url:"/api/common/school",
+                        async:false,
+                        data:{
+                            "size":20,
+                            "page":0
+                        },
+                        success:function(data){
+                            let list = data.content;
+                            let sTag = '';
+
+                            //console.log(list);
+
+                            if(data!=null && list.length!=0) {
+                                let num = 1;
+                                for(num=1; num<5; num++) {
+                                    for(i=0; i<list.length; i++) {
+                                        let imgUrl = '/tourhelperUser/images/sample_school.jpg';
+                                        if(list[i].thumbnailImage!=null && list[i].thumbnailImage.url!='') {
+                                            imgUrl = list[i].thumbnailImage.url;
+                                        }
+                                        let details = list[i].courseDetail.split('|');
+                                        let terms = '';
+                                        details.forEach(function (arg) {
+                                            let args = arg.split('/');
+                                            terms += args[0] + '/'
+                                        });
+                                        terms = terms.substring(0, terms.length - 1);
+
+                                        sTag += '<div class="box swiper-slide" style="cursor: pointer;" onclick="location.href=\'/abroad/detail?schoolSeq='+list[i].firstCourseSeq+'\'">' +
+                                            '<div class="img-area"><img src="'+imgUrl+'" onerror="this.style.background=\'var(--light-grey2)\'"/></div>' +
+                                            '<div class="title">' +
+                                            '<span>'+list[i].firstCourseTitle+'&nbsp;('+terms+')</span>' +
+                                            '</div>' +
+                                            '</div>';
+
+                                        num++;
+                                    }
+                                }
+                            }
+                            $("#school-list-swiper-div").html(sTag);
+                        }
+                    });
+                }
+
+
+                $(".list-wrap.pc .play-list .box .movie-area").click(function() {
+                   let playSrc = $(this).data("url");
+                   $(".list-wrap.pc .player-area #player").attr("src", playSrc);
+                });
+
+
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<th:block th:fragment="topMenuFragment">
+
+    <!-- 헤더 -->
+    <!-- mobile & pc -->
+    <div class="header-wrap">
+        <div>
+            <i></i>
+            <i></i>
+            <i class="hamburger"></i>
+        </div>
+    </div>
+
+    <!-- pc -->
+    <div class="header-wrap-pc">
+        <div>
+            <div>
+                <div class="menu1">유학 정보</div>
+                <div class="menu2">E-7-4 자동배점 신청</div>
+                <div class="menu3">퇴직금 계산기</div>
+                <div class="menu4">비즈니스 정보</div>
+                <div class="menu5">미얀마 여행</div>
+                <div class="menu6">국내 여행</div>
+            </div>
+            <div id="login-div">
+                <div class="mypage">마이페이지</div>
+                <div class="login">로그인</div>
+                <div class="join">회원가입</div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 헤더 팝업(유학신청 진행단계 알림) -->
+    <div class="pop-up-wrap d-none">
+        <div>
+            <div class="text">
+                <!-- 현재 진행단계 설명 -->
+                <span>현재 신청단계입니다. 00서류를 접수하세요. 현재 신청단계입니다. 00서류를 접수하세요.</span>
+                <!-- 팝업창 닫기 -->
+                <i class="close"></i>
+            </div>
+            <span class="go-direct">바로가기</span>
+        </div>
+    </div>
+
+
+    <!-- 햄버거 메뉴 -->
+    <div class="hamburger-menu">
+        <div class="hamburger-menu-wrap">
+            <div class="profile-wrap hamburger-menu-profile">
+                <div class="color"></div>
+                <!--프로필 사진-->
+                <div class="img-area">
+                    <img id="profilePicture" src="/tourhelperUser/images/black_user_profile.svg">
+                </div>
+                <div>
+                    <!-- 로그인 시 해당 계정 이름 나타나기 -->
+                    <span class="yesLogin d-none"></span>
+                    <span class="noLogin">로그인 하세요.</span>
+
+                    <!-- 로그인 시 i태그에 edit 클래스만 추가 -->
+                    <!-- 미로그인 시 i태그에 arrow 클래스만 추가 -->
+                    <i id="hamburger-i" class="arrow"></i>
+                </div>
+            </div>
+            <div class="menu-wrap hamburger-menu-list">
+                <div class="menu1">마이페이지</div>
+                <div class="menu2">유학정보</div>
+                <div class="menu3">상담신청</div>
+                <div class="menu4">E-7-4 자동배점 신청</div>
+                <div class="menu5">퇴직금 계산기</div>
+                <div class="menu6">비즈니스 정보</div>
+                <div class="menu7">미얀마 여행</div>
+                <div class="menu8">국내여행</div>
+                <!-- 로그인 하지 않은 경우 로그아웃(.logout) 숨기기 -->
+                <div class="logout"><i></i>로그아웃</div>
+            </div>
+        </div>
+        <div class="close"><i></i></div>
+        <div class="modal-back"></div>
+    </div>
+
+    <script>
+        let chkLogin = false;
+        loginChk();
+        function loginChk() {
+            $.ajax({
+                type:"get",
+                url:"/api/common/login",
+                async:false,
+                success:function(data) {
+                    if(data.login) {
+                        chkLogin=true;
+                        $("#login-div").html(
+                            '<div class="mypage">마이페이지</div>' +
+                            '<div class="logout" onclick="location.href=\'/user/logout\'">로그아웃</div>'
+                        );
+
+                        // 햄버거
+
+                        if(data.profilePicture!=null && data.profilePicture!="") {
+                            $("#profilePicture").attr("src", data.profilePicture);
+                        }else {
+                            $("#profilePicture").attr("src", "/tourhelperUser/images/black_user_profile.svg");
+                        }
+                        $(".noLogin").addClass("d-none");
+                        if(data.name==null || data.name=="") {
+                            $(".yesLogin").text("이름을 입력해주세요");
+                        }else {
+                            $(".yesLogin").text(data.name)
+                        }
+                        $(".yesLogin").removeClass("d-none");
+                        $("#hamburger-i").addClass("edit");
+                        $("#hamburger-i").removeClass("arrow");
+                        $(".logout").removeClass("d-none");
+                    }else {
+                        chkLogin=false;
+                        $("#login-div").html(
+                            '<div class="mypage">마이페이지</div>' +
+                            '<div class="login">로그인</div>' +
+                            '<div class="join">회원가입</div>'
+                        );
+
+                        //햄버거
+                        $(".noLogin").removeClass("d-none");
+                        $(".yesLogin").addClass("d-none");
+                        $("#hamburger-i").removeClass("edit");
+                        $("#hamburger-i").addClass("arrow");
+                        $("#profilePicture").attr("src", "/tourhelperUser/images/black_user_profile.svg");
+                        $(".logout").addClass("d-none");
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                }
+            });
+        }
+    </script>
+
+</th:block>
+</html>

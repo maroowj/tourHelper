@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="abroad-apply-wrap">
+
+                <div>
+                    <!-- 페이지별 타이틀 -->
+                    <div class="page-title"><span>유학 신청</span></div>
+
+                    <div class="content-wrap">
+                        <div>
+                            <div>
+                                <p>신청양식을 작성해주세요.</p>
+
+                                <!-- 정보 입력 -->
+                                <div class="input-area">
+                                    <div class="input-wrap select university">
+                                        <div class="title">학교</div>
+                                        <input id="schoolTitle" class="select" type="text" placeholder="학교 선택"
+                                               readonly/>
+                                    </div>
+                                    <!-- 학교를 선택하기 전에는 학교정보(.university-info-wrap) 보이지 않기 -->
+                                    <div class="university-info-wrap">
+                                        <p>학교 정보</p>
+                                        <div>
+                                            <div class="img-area">
+                                                <img src="/tourhelperUser/images/sample_school.jpg" id="thumbnailImage"
+                                                     onerror="this.style.backgroundColor='var(--light-grey2)';"/>
+                                            </div>
+                                            <div class="info-type-area">
+                                                <div>
+                                                    <span>학위유형</span>
+                                                    <span id="degree"></span>
+                                                </div>
+                                                <!--<div>
+                                                    <span>장학금</span>
+                                                    <span class="scholarship"><span class="amount">3000000</span><span class="unit">원</span></span>
+                                                </div>-->
+                                                <div>
+                                                    <span>특화</span>
+                                                    <span id="specialization"></span>
+                                                </div>
+                                                <div>
+                                                    <span>주소</span>
+                                                    <span id="address"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-wrap select period">
+                                        <div class="title">기간</div>
+                                        <input id="period" class="select" type="text" placeholder="기간 선택" readonly/>
+                                    </div>
+                                    <div class="input-wrap select test">
+                                        <div class="title">한국어 능력시험</div>
+                                        <input id="topik" class="select" type="text" placeholder="선택" readonly/>
+                                    </div>
+                                    <div class="privacy-wrap">
+                                        <span>개인정보</span>
+                                        <div>
+                                            <div class="input-wrap name">
+                                                <div class="title">이름</div>
+                                                <input id="name" type="text" placeholder="이름 입력"/>
+                                            </div>
+                                            <div class="input-wrap name">
+                                                <div class="title">생년월일</div>
+                                                <input id="birth" type="text" placeholder="YYYYMMDD (8자리 입력)" maxlength="8" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                            </div>
+                                            <div class="input-wrap gender">
+                                                <div class="title">성별</div>
+                                                <div style="text-align: center;">
+                                                    <input id="g-chk1" class="radio1" type="radio" name="gender"
+                                                           value="male"/><label for="g-chk1">남자</label>
+                                                    <input id="g-chk2" class="radio1" type="radio" name="gender"
+                                                           value="female"/><label for="g-chk2">여자</label>
+                                                </div>
+                                            </div>
+                                            <div class="input-wrap tel">
+                                                <div class="title">연락처</div>
+                                                <input id="tel" type="text" placeholder="‘-’ 없이 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                            </div>
+                                            <div class="input-wrap email">
+                                                <div class="title">이메일</div>
+                                                <input id="email" type="text" placeholder="이메일 입력"/>
+                                            </div>
+                                            <div class="input-wrap select country">
+                                                <div class="title">국가</div>
+                                                <input id="country" class="select" type="text" placeholder="국가 선택"
+                                                       readonly/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 동의 체크 -->
+                                <div class="check-wrap">
+                                    <div>
+                                        <input id="agreeAll" class="chkbox1" type="checkbox"/><label for="agreeAll">모두
+                                        동의</label>
+                                        <div class="check-essential-wrap">
+                                            <div>
+                                                <input id="use" class="chkbox1" type="checkbox"/><label for="use">서비스
+                                                이용약관 동의(필수)</label>
+                                                <span class="state-red">보기</span>
+                                            </div>
+                                            <div>
+                                                <input id="privacy" class="chkbox1" type="checkbox"/><label
+                                                    for="privacy">개인정보 수집 및 동의(필수)</label>
+                                                <span class="state-red">보기</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 유학 신청 버튼 -->
+                                <div class="btn-area">
+                                    <button id="saveAbroad" class="btn-red">
+                                        <!--onclick="location.href='/abroad/apply/complete'"-->유학 신청
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--script START-->
+            <script th:inline="javascript">
+                let schoolSeq = [[${param.schoolSeq}]][0];
+                let country;
+
+                getMemberInfo();
+                getSchoolDetails(schoolSeq);
+
+                $("#saveAbroad").on("click", function () {
+                    saveAbroad();
+                });
+
+                // 유학 신청
+                function saveAbroad() {
+                    if ($("#schoolTitle").val() == null || $("#schoolTitle").val() == "") {
+                        toastModal("학교를 선택해주세요");
+                        return;
+                    }
+                    if ($("#period").val() == null || $("#period").val() == "") {
+                        toastModal("기간을 선택해주세요");
+                        return;
+                    }
+                    if ($("#name").val() == null || $("#name").val() == "") {
+                        toastModal("이름을 입력해주세요");
+                        return;
+                    }
+                    if ($("#birth").val() == null || $("#birth").val() == "") {
+                        toastModal("생년월일을 입력해주세요");
+                        return;
+                    }
+
+                    if ($('input[name="gender"]:checked').val() == null || $('input[name="gender"]:checked').val() == "" || $('input[name="gender"]:checked').val() == "off") {
+                        toastModal("성별을 선택해주세요");
+                        return;
+                    }
+                    if ($("#tel").val() == null || $("#tel").val() == "") {
+                        toastModal("연락처를 입력해주세요");
+                        return;
+                    }
+                    if ($("#email").val() == null || $("#email").val() == "") {
+                        toastModal("이메일을 입력해주세요");
+                        return;
+                    }
+                    if ($("#country").val() == null || $("#country").val() == "") {
+                        toastModal("국가를 선택해주세요");
+                        return;
+                    }
+                    if(!$("#use").prop("checked")) {
+                        toastModal("서비스 이용약관에 동의해주세요");
+                        return;
+                    }
+                    if(!$("#privacy").prop("checked")) {
+                        toastModal("개인정보 수집에 동의해주세요");
+                        return;
+                    }
+
+                    let objAbroad = {
+                        "schoolSeq" : schoolSeq,
+                        "name": $("#name").val(),
+                        "period": $("#period").val(),
+                        "topik": $("#topik").val(),
+                        "gender": $('input[name="gender"]:checked').val(),
+                        "phone": $("#tel").val(),
+                        "country": $("#country").val(),
+                        "birth":$("#birth").val()
+                    }
+
+                    $.ajax({
+                        type:"post",
+                        url:"/api/user/study",
+                        contentType:"application/json",
+                        data:JSON.stringify(objAbroad),
+                        success:function () {
+                            location.href="/abroad/apply/complete";
+                        },
+                        error: function (request, status, error) {
+                            toastModal("유학신청에 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+                // 동의 체크
+                $("#agreeAll").on("click", function () {
+                    if ($('#agreeAll').is(':checked') == false) {
+                        $(".check-essential-wrap input:checkbox").each(function () {
+                            $(this).prop("checked", false);
+                        });
+                    } else if ($('#agreeAll').is(':checked') == true) {
+                        $(".check-essential-wrap input:checkbox").each(function () {
+                            $(this).prop("checked", true);
+                        });
+                    }
+                });
+                $(".check-essential-wrap").on("click", "input:checkbox", function () {
+                    var chkNum = $(".check-essential-wrap input:checkbox").length;
+                    var checkedNum = $(".check-essential-wrap input:checkbox:checked").length;
+
+                    if (chkNum == checkedNum) {
+                        $("#agreeAll").prop("checked", true);
+                    } else {
+                        $("#agreeAll").prop("checked", false);
+                    }
+                });
+
+                // 학교 선택
+                $('.abroad-apply-wrap .content-wrap .input-wrap.select.university input').on('click', function () {
+                    optSchoolList();
+                    $("#btnSelUniversity").off("click").on("click", function () {
+                        schoolSeq = $('input[name="selUniversity"]:checked').val();
+
+                        $(this).parent().parent().parent().fadeOut(150);
+                        getSchoolDetails(schoolSeq);
+                    });
+                });
+
+                // 기간선택
+                $('.abroad-apply-wrap .content-wrap .input-wrap.select.period input').on('click', function () {
+                    $("#btnSelPeriod").off("click").on("click", function () {
+                        $("#period").val($('input[name="selPeriod"]:checked').val());
+                        $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+                // 한국어 능력시험 선택
+                $('.abroad-apply-wrap .content-wrap .input-wrap.select.test input').on('click', function () {
+                    $("#btnSelTest").off("click").on("click", function () {
+                        $("#topik").val($('input[name="selTest"]:checked').val());
+                        $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+                // 국가 선택
+                $('.abroad-apply-wrap .content-wrap .input-wrap.select.country input').on('click', function () {
+                    $('input[name="selCountry"]').val([country]);
+                    $("#btnSelCountry").off("click").on("click", function () {
+                        country = $('input[name="selCountry"]:checked').val();
+                        $("#country").val(country);
+                        $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+
+                function optSchoolList() {
+                    $.ajax({
+                        type: "get",
+                        url: "/api/common/school",
+                        data: {
+                            "size": 100,
+                        },
+                        async: false,
+                        success: function (data) {
+                            let list = data.content;
+                            let oTag = '';
+                            if (list.length != 0) {
+                                for (i = 0; i < list.length; i++) {
+                                    oTag += '<input id="u-chk' + (i + 1) + '" class="radio1 optSchool" type="radio" name="selUniversity" value="' + list[i].firstCourseSeq + '"/><label for="u-chk' + (i + 1) + '">' + list[i].firstCourseTitle + '</label>';
+                                }
+                            }
+                            $("#optSchool").html(oTag);
+                            $('input[name="selUniversity"]').val([schoolSeq]);
+                            // $(".optSchool").each(function(){
+                            //    if(schoolSeq==$(this).val()) {
+                            //        $(this).prop("checked", true);
+                            //    }
+                            // });
+
+                        }
+                    });
+                }
+
+                function getSchoolDetails(schoolSeq) {
+                    $.ajax({
+                        type: "get",
+                        url: "/api/common/school/detail",
+                        data: {
+                            "schoolSeq": schoolSeq
+                        },
+                        async: false,
+                        success: function (data) {
+                            $("#schoolTitle").val(data.firstCourseTitle);
+                            let details = data.courseDetail.split("|");
+                            let degree = data.terms2;
+                            if (degree == null || degree == "") {
+                                degree = "없음";
+                            }
+                            $("#degree").text(degree);
+                            let specialization = data.terms4;
+                            if (specialization == null || specialization == '') {
+                                specialization = "-";
+                            }
+                            $("#specialization").text(specialization);
+                            let address = data.address
+                            if (address == null || address == "") {
+                                address = "-";
+                            }
+                            $("#address").text(address);
+                            let imgUrl = '/tourhelperUser/images/sample_school.jpg';
+                            if (data.thumbnailImage != null && data.thumbnailImage != '') {
+                                imgUrl = data.thumbnailImage.url;
+                            }
+                            $("#thumbnailImage").attr("src", imgUrl);
+                        }
+                    });
+                }
+
+                // 저장된 사용자 정보 불러오기
+                function getMemberInfo() {
+                    $.ajax({
+                        type: "get",
+                        url: "/api/user/member",
+                        success: function (data) {
+                            if (data.country != null) {
+                                country = data.country;
+                            }
+                            $("#name").val(data.name);
+                            $('input[name="gender"]').val([data.gender]);
+                            $("#tel").val(data.tel);
+                            $("#country").val(country);
+                        },
+                        error: function (request, status, error) {
+                            alert("로그인이 필요합니다.");
+                            location.href = "/login"
+                        }
+                    });
+                }
+
+
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>

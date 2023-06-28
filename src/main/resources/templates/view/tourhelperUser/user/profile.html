@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/tourhelperUser/layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<style layout:fragment="css">
+</style>
+
+<div layout:fragment="content">
+    <main role="main" class="main-content">
+        <div class="tourHelper">
+            <div class="inputPrivacy-wrap">
+
+                <!-- 페이지별 타이틀 -->
+                <div class="page-title"><span>개인정보</span></div>
+
+                <div class="content-wrap">
+                    <div>
+                        <div class="input-area">
+                            <div class="input-wrap name">
+                                <div class="title">이름</div>
+                                <input id="name" type="text" placeholder="이름 입력"/>
+                            </div>
+                            <div class="input-wrap tel">
+                                <div class="title">연락처</div>
+                                <input id="tel" type="text" placeholder="‘-’ 없이 입력"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                            </div>
+                            <div class="input-wrap select interest1">
+                                <div class="title">관심분야 1</div>
+                                <input id="preference1" class="select" type="text" placeholder="관심분야 선택" readonly/>
+                            </div>
+                            <div class="input-wrap select interest2">
+                                <div class="title">관심분야 2</div>
+                                <input id="preference2" class="select" type="text" placeholder="관심분야 선택" readonly/>
+                            </div>
+                            <div class="input-wrap select country">
+                                <div class="title">국가</div>
+                                <input id="country" class="select" type="text" placeholder="국가 선택" readonly/>
+                            </div>
+                            <div class="btn-area">
+                                <button id="btnUpdateInfo" class="btn-red" onclick="updateInfo()">저장</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--script START-->
+            <script>
+                let preference1;
+                let preference2;
+                let country;
+                getMemberDetails();
+
+                $('.inputPrivacy-wrap .content-wrap .input-wrap.interest1 input').on('click', function(){
+                    $('input[name="selInterests1"]').val([preference1]);
+                    $("#btnSelPreference1").off("click").on("click", function () {
+                        preference1 = $('input[name="selInterests1"]:checked').val();
+                        $("#preference1").val(preference1);
+                        $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+                $('.inputPrivacy-wrap .content-wrap .input-wrap.interest2 input').on('click', function(){
+                    $('input[name="selInterests2"]').val([preference2]);
+                    $("#btnSelPreference2").off("click").on("click", function () {
+                        preference2 = $('input[name="selInterests2"]:checked').val();
+                        $("#preference2").val(preference2);
+                        $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+                $('.inputPrivacy-wrap .content-wrap .input-wrap.country input').on('click', function(){
+                    $('input[name="selCountry"]').val([country]);
+                    $("#btnSelCountry").off("click").on("click", function () {
+                        country = $('input[name="selCountry"]:checked').val();
+                        $("#country").val(country);
+                        $(this).parent().parent().parent().fadeOut(150);
+                    });
+                });
+
+                // 사용자 정보 불러오기
+                function getMemberDetails() {
+                    $.ajax({
+                        type: "get",
+                        url: "/api/user/member",
+                        async:false,
+                        success: function (data) {
+                            $("#name").val(data.name);
+                            $("#tel").val(data.tel);
+                            $("#preference1").val(data.preference1);
+                            $("#preference2").val(data.preference2);
+                            $("#country").val(data.country);
+                            preference1 = data.preference1;
+                            preference2 = data.preference2;
+                            country = data.country;
+                        },
+                        error: function (request, status, error) {
+                            alert("로그인이 필요합니다.");
+                            location.href = "/login"
+                        }
+                    });
+                }
+
+                function updateInfo(){
+                    if($("#name").val()==null || $("#name").val()=="") {
+                        toastModal("이름을 입력해주세요");
+                        return;
+                    }
+                    if($("#tel").val()==null || $("#tel").val()=="") {
+                        toastModal("연락처를 입력해주세요");
+                        return;
+                    }
+                    if($("#preference1").val()==null || $("#preference1").val()=="") {
+                        toastModal("관심분야1을 입력해주세요");
+                        return;
+                    }
+                    if($("#preference2").val()==null || $("#preference2").val()=="") {
+                        toastModal("관심분야2를 입력해주세요");
+                        return;
+                    }
+                    if($("#country").val()==null || $("#country").val()=="") {
+                        toastModal("국가를 입력해주세요");
+                        return;
+                    }
+
+                    let objInfo = {
+                        "name": $("#name").val(),
+                        "tel": $("#tel").val(),
+                        "preference1": $("#preference1").val(),
+                        "preference2": $("#preference2").val(),
+                        "country": $("#country").val()
+                    };
+
+                    $.ajax({
+                        type:"put",
+                        url:"/api/user/member",
+                        contentType:"application/json",
+                        data:JSON.stringify(objInfo),
+                        success:function () {
+                            toastModal("정보가 수정되었습니다.");
+                            setTimeout(() => location.reload(), 500);
+                        },
+                        error: function (request, status, error) {
+                            toastModal("정보 수정을 실패했습니다.");
+                            console.log(request.status + ' ' + error.statusText + ' ' + request.responseText);
+                        }
+                    });
+                }
+
+            </script>
+            <!--script END-->
+        </div>
+    </main>
+</div>
+</html>
